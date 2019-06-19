@@ -476,7 +476,7 @@ Suppose $(\cat{C}, I, \otimes)$ is a symmetric monoidal category, $m\in\nn$ is a
 \]
 with the convention that when $m=0$ and $!\colon\ord{0}\to \cat{C}$ the unique function, we put $\bigotimes != I$. If $c(i)=c(j)$ for all $i,j\in\ord{m}$, we denote this by $c\tpow{m}\coloneqq\bigotimes_{i\in\ord{m}}c$. We take this to be the canonical parenthesation, so $c\otimes d\otimes e$ denotes $(c\otimes d)\otimes e$. 
 
-Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{maclane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$, and composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms. Finally, nothing changes if we replace $\cat{C}$ by a symmetric monoidal category $\cat{C}$, because by definition all diagrams of 2-cells commute in $\cat{C}$.
+Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$, and composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms. Finally, nothing changes if we replace $\cat{C}$ by a symmetric monoidal category $\cat{C}$, because by definition all diagrams of 2-cells commute in $\cat{C}$.
 
 
 If $m,n\in\nn$ are natural numbers, and $c\colon \ord{m}\times \ord{n}\to\cat{C}$ is a family of objects in $\cat{C}$, we also have a natural isomorphism
@@ -640,83 +640,6 @@ Consider the prop $\ccat{I}$ whose morphisms are given as follows:
 For a morphism $f\colon c\to d$ to be an involution-homomorphisms just means $f$ commutes with the chosen involutions, i.e.\ $f\cp i_d=i_c\cp f$.
 \end{example}
 
-\begin{definition}[Comonoids]\label{def.prop_comonoids}
-The \emph{prop for comonoids} is given by two generators
-\begin{equation}\label{eqn.gen_comonoid}
-\begin{tikzpicture}[WD]
-	\node[bb={1}{0}, fill=gray] (eta') {};
-	\draw (eta'_in1) to +(-.8,0);
-	\node[bb={1}{2}, fill=gray, right=4 of eta'] (mu') {};
-	\draw (mu'_in1) -- +(-.8,0);
-	\draw (mu'_out1) -- +(.8,0);
-	\draw (mu'_out2) -- +(.8,0);
-\end{tikzpicture}
-\end{equation}
-and three equations:
-\begin{equation}\label{eqn.rel_comonoid}
-\begin{tikzpicture}
-	\node (Q11) {
-	\begin{tikzpicture}[WD]
-		\node[bb={1}{2}, fill=gray] (a) {};
-		\coordinate (a1) at ($(a_out1)+(1,0)$);
-		\coordinate (a2) at ($(a_out2)+(1,0)$);
-		\draw (a_out2) to[out=0, in=180] (a1);
-		\draw (a_out1) to[out=0, in=180] (a2);
-		\draw (a_in1) -- +(-.5,0);
-	\end{tikzpicture}
-	};
-	\node (Q12) [right=.8 of Q11] {
-	\begin{tikzpicture}[WD]
-		\node[bb={1}{2}, fill=gray] (a) {};
-		\draw (a_out1) -- +(.5,0);
-		\draw (a_out2) -- +(.5,0);
-		\draw (a_in1) -- +(-.5,0);
-	\end{tikzpicture}
-	};
-	\node[label=above:{\tiny commutative}] at ($(Q11.east)!.5!(Q12.west)$) {$=$};
-%
-	\node (Q21) [right=1 of Q12] {
-  \begin{tikzpicture}[WD]
-  	\node[bb={1}{2}, fill=gray] (a1) {};
-  	\node[bb={1}{0}, fill=gray, right=.5 of a1_out1] (a2) {};
-  	\draw (a2_in1) -- (a1_out1);
-  	\draw (a1_out2) -- +(2,0);
-  	\draw (a1_in1) -- +(-.5,0);
-	\end{tikzpicture}
-	};
-	\node (Q22) [right=.8 of Q21] {
-	\begin{tikzpicture}[WD]
-		\draw (0,0) -- (2,0);
-	\end{tikzpicture}
-	};	
-	\node[label=above:{\tiny unital}] at ($(Q21.east)!.5!(Q22.west)$) {$=$};
-%
-	\node (Q31) [right=1 of Q22] {
-	\begin{tikzpicture}[WD]
-		\node[bb={1}{2}, fill=gray] (a1) {};
-		\node[bb={1}{2}, fill=gray, minimum height=1ex, right=.5 of a1_out1] (a2) {};
-		\draw (a2_in1) -- (a1_out1);
-		\draw (a1_out2) -- +(2,0);
-		\draw (a2_out1) -- +(.5,0);
-		\draw (a2_out2) -- +(.5,0);
-		\draw (a1_in1) -- +(-.5,0);
-	\end{tikzpicture}
-	};
-	\node (Q32) [right=.8 of Q31] {
-	\begin{tikzpicture}[WD]
-		\node[bb={1}{2}, fill=gray] (a1) {};
-		\node[bb={1}{2}, fill=gray, minimum height=1ex, right=.5 of a1_out2] (a2) {};
-		\draw (a2_in1) -- (a1_out2);
-		\draw (a1_out1) -- +(2,0);
-		\draw (a2_out1) -- +(.5,0);
-		\draw (a2_out2) -- +(.5,0);
-		\draw (a1_in1) -- +(-.5,0);
-	\end{tikzpicture}
-	};
-	\node[label=above:{\tiny associative}] at ($(Q31.east)!.5!(Q32.west)$) {$=$};
-\end{tikzpicture}
-\end{equation}
-\end{definition}
 
 \begin{definition}[Monoids]\label{def.prop_monoids}
 The \emph{prop for monoids} is given by two generators
@@ -796,9 +719,12 @@ and three equations:
 \end{equation}
 \end{definition}
 
+\begin{remark}
+The prop for monoids is equivalent to the skeleton of $\finset$, i.e. with $\Hom(m,n)\coloneqq\smset(\ord{m},\ord{n})$. For example, the generators shown in \cref{eqn.gen_monoid} correspond to the unique functions $\ord{0}\to\ord{1}$ and $\ord{2}\to\ord{1}$ respectively.
+\end{remark}
 
-\begin{example}[Supply of monoids and comonoids]
-Consider the prop given by the skeleton of $\finset$, i.e. with $\Hom(m,n)\coloneqq\smset(\ord{m},\ord{n})$. Calling this prop ``the prop for monoids'' is reasonable in the sense that a supply of this prop in $\cat{C}$ gives a map $\mu_c\colon c\otimes c\to c$ and $\eta\colon I\to c$ for every object $c$, compatible with tensor product in $\cat{C}$ and satisfying the usual monoid laws. A morphism $f\colon c\to d$ is a homomorphism for monoids if $\mu_c\cp f=(f\otimes f)\cp \mu_d$ and $\eta_c\cp f=\eta_d$.
+\begin{example}
+ A supply of monoids (the prop from \cref{def.prop_monoids}) in $\cat{C}$ gives a map $\mu_c\colon c\otimes c\to c$ and $\eta\colon I\to c$ for every object $c$, compatible with tensor product in $\cat{C}$ and satisfying the usual monoid laws. A morphism $f\colon c\to d$ is a monoid-homomorphism if $\mu_c\cp f=(f\otimes f)\cp \mu_d$ and $\eta_c\cp f=\eta_d$.
 
 Similarly, by a supply of comonoids, we mean a supply of the prop given by the skeleton of $\finset\op$. We saw in the introduction that $\rel$ supplies comonoids.
 \end{example}
@@ -1020,22 +946,14 @@ Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
 \begin{proof}
 The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product by $\cdot n$.
 
-Given $\mu\colon m\to n$ in $\pp$, we need to define a monoidal natural transformation
-\[
-\begin{tikzcd}[column sep=60pt]
-	\pp\ar[r, bend left, "-\cdot m" name=m]\ar[r, bend right, "-\cdot m"' name=n]&
-	\pp
-	\ar[from=m, to=n, Rightarrow, shorten <=4pt, shorten >=4pt, "s(\mu)"]
-\end{tikzcd}
-\]
-We define the component $s(\mu)_k\colon k\cdot m\to k\cdot n$ for an object $k\in\pp$ by conjugating by the symmetries and applying $\mu$, on each of the $k$ pieces:
+Choose any $k\in\pp$; we need a functor $s_k\colon\pp\to\pp$ with $s_k(1)=k$. On objects put $s_k(n)\coloneqq k\cdot n$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating by the symmetries and applying $\mu$, on each of the $k$ pieces:
 \begin{equation}\label{eqn.conjugation}
 	k\cdot m\To{\sigma_{k,m}}
 	m\cdot k\To{\mu\cdot k}
 	n\cdot k\To{\sigma_{n,k}}
 	k\cdot n.
 \end{equation}
-It is an easy exercise to show that the two maps $k_1\cdot m+k_2\cdot m\to (k_1+k_2)\cdot n$ from \cref{eqn.supply_commute_tensors} agree for any $k_1,k_2\in\pp$. If $\mu\leq\mu'$ then $s(\mu)_k\leq s(\mu')_k$ by whiskering \cref{eqn.conjugation}.
+It is an easy exercise to show that the diagrams in \cref{eqn.supply_commute_tensors} commute for any $k_1,k_2\in\pp$.
 \end{proof}
 
 
