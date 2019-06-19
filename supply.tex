@@ -562,7 +562,7 @@ The pointwise condition says that the monoidal unit in $\smf(\cat{C},\cat{D})$ i
 \]
 
 
-\begin{proposition}
+\begin{proposition}\label{prop.biprod_smf_strict}
 Let $\cat{C}_1,\cat{C}_2,\cat{D}_1,\cat{D}_2$ be symmetric monoidal categories. The functor
 \begin{equation}\label{eqn.strict_smf_biprod}\oplus\colon\smf(\cat{C}_1,\cat{D}_1)\times\smf(\cat{C}_2,\cat{D}_2)\to\smf(\cat{C}_1\oplus\cat{C}_2,\cat{D}_1\oplus\cat{D}_2)
 \end{equation}
@@ -869,7 +869,7 @@ The prop for frobenius monoids is $\cospan$. A category supplying frobenius mono
 \Cref{thm.supply_v2} gives an alternative, slightly more compact definition of supply, but it also shows that all coherence isomorphisms---associator and unitors---are homomorphisms for the supply. Before stating it, we need the following definition, which puts all the coherence isomorphisms into a single monoidal subcategory.
 
 %==== Section ====%
-\section{Main theorems}
+\section{Main theorem}
 
 \begin{definition}\label{def.mob}
 For any symmetric monoidal category $\cat{C}$, let $\mob{\cat{C}}\ss\cat{C}$ denote the smallest subcategory containing
@@ -959,6 +959,48 @@ The same sort of argument holds for the unitors, with one additional element: th
 The left-hand and middle diagrams commute by \cref{eqn.supply_commute_tensors} and the right-hand diagram commutes by the unitor axiom.
 \end{proof}
 
+\begin{corollary}\label{cor.change_of_supply}
+Let $F\colon\pp\to\qq$ be a prop functor. For any supply $s$ of $\qq$ in $\cat{C}$, we have a supply $(F\cp s)$ of $\pp$ in $\cat{C}$.
+\end{corollary}
+\begin{proof}
+Given a strict monoidal functor $\qq\to\smf(\mob{\cat{C}},\cat{C})$, we compose it with $F$ (which is strict) to get the required supply of $\pp$; see \cref{thm.supply_v2}.
+\end{proof}
+
+\begin{example}
+  Since there is a prop functor from the prop for dualities to the prop for frobenius monoids, every hypergraph category is a self-dual compact closed category.
+  \todo{Explain}
+\end{example}
+
+\begin{corollary}
+If $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$.
+\end{corollary}
+\begin{proof}
+This follows from \cref{prop.biprod_smf_strict,thm.supply_v2}.
+\end{proof}
+
+\begin{corollary}\label{cor.strong_bo}
+Suppose $F\colon\cat{C}\to\cat{D}$ is a strong monoidal functor that is bijective on objects. If $\cat{C}$ supplies $\cat{P}$ then so does $\cat{D}$.
+\end{corollary}
+\begin{proof}
+The functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$ is an equivalence, thus so is $\smf(\mob{F},\cat{D})\colon\smf(\mob{\cat{D}},\cat{D})\to\smf(\mob{\cat{C}},\cat{D})$. Now given $s$ as in the following diagram, one simply defines $t$ using the inverse of $\smf(\mob{F},\cat{D})$:
+\[
+\begin{tikzcd}[column sep=50pt]
+	\pp\ar[r, "s"]\ar[d, dashed, "t"']&
+	\smf(\mob{\cat{C}},\cat{C})\ar[d, "{\smf(\mob{\cat{C}},F)}"]\\
+	\smf(\mob{\cat{D}},\cat{D})\ar[r, "\cong"']&
+	\smf(\mob{\cat{C}},\cat{D})
+\end{tikzcd}
+\qedhere
+\]
+\end{proof}
+
+\begin{remark}
+Using \cref{cor.strong_bo}, the supply of comonoids on $\rel$ can be obtained from the one on $\smset$ (see \cref{ex.cart_grant_comonoids}) via the inclusion bijective-on-objects strong monoidal inclusion $\smset\to\rel$.
+\end{remark}
+
+%==== Section ====%
+\section{Further theory}
+
 \begin{theorem}\label{thm.homos_form_subcat}
 Let $s$ be a supply of $\pp$ in $\cat{C}$. Then the collection of $s$-homomorphisms forms a monoidal subcategory $\mob{\cat{C}}\ss\cat{C}'\ss\cat{C}$, and the functor $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ from \cref{thm.supply_v2} factors through a strict monoidal functor
 \[s'\colon\pp\to\smf(\cat{C}',\cat{C}).\]
@@ -970,16 +1012,6 @@ We showed in \cref{thm.supply_v2} that every coherence isomorphism in $\cat{C}$ 
 
 The final statement is just a repackaging of the statement that every morphism in $\cat{C}'$ is an $s$-homomorphism; compare \cref{eqn.nat_means_homo,eqn.C_0_homos}.
 \end{proof}
-
-\begin{theorem}
-If $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$.
-\end{theorem}
-\begin{proof}
-**
-\end{proof}
-
-%==== Section ====%
-\section{Further theory}
 
 
 \begin{proposition}\label{prop.p_supplies_itself}
@@ -1006,23 +1038,13 @@ We define the component $s(\mu)_k\colon k\cdot m\to k\cdot n$ for an object $k\i
 It is an easy exercise to show that the two maps $k_1\cdot m+k_2\cdot m\to (k_1+k_2)\cdot n$ from \cref{eqn.supply_commute_tensors} agree for any $k_1,k_2\in\pp$. If $\mu\leq\mu'$ then $s(\mu)_k\leq s(\mu')_k$ by whiskering \cref{eqn.conjugation}.
 \end{proof}
 
-\begin{proposition}\label{prop.change_of_supply}
-Let $F\colon\pp\to\qq$ be a prop functor. For any supply $s$ of $\qq$ in $\cat{C}$, we have a supply $(F\cp s)$ of $\pp$ in $\cat{C}$.
-\end{proposition}
-\begin{proof}
-Given a strict monoidal functor $\qq\to\smf(\mob{\cat{C}},\cat{C})$, we compose it with $F$ (which is strict) to get the required supply of $\pp$; see \cref{thm.supply_v2}.
-\end{proof}
-
-\begin{example}
-  Since there is a prop functor from the prop for dualities to the prop for frobenius monoids, every hypergraph category is a self-dual compact closed category.
-  \todo{Explain}
-\end{example}
-
 
 
 
 % Subsection %
 \subsection{Preservation of supply}
+
+\todo{Reorganize so simple definition is first.}
 
 \begin{proposition}\label{prop.nat_strong_isos}
 Let $(F,\varphi)\colon\cat{C}\to\cat{D}$ be a strong monoidal functor. The following commutes up to natural isomorphism:
@@ -1091,29 +1113,6 @@ Let $s$ be a supply of $\pp$ in $\cat{C}$. Recall that there is a unique supply 
 \begin{example}\label{ex.preserve_involutions}
 Suppose we have a supply $s$ of involutions in $\cat{C}$ and a supply $t$ of involutions in $\cat{D}$. As we saw in \cref{ex.supply_involutions} this just means that every object $x$ is equipped with an involution $i_x\colon x\cong x$. A symmetric monoidal functor $F\colon\cat{C}\to\cat{D}$ preserves the supply if $F(i_x)=i_{F(x)}$.
 \end{example}
-
-\begin{proposition}
-  The strong monoidal functor of \cref{cor.supply_each_object} preserves the supply.
-\end{proposition}
-\begin{proof}
-  \todo{Prove.}
-\end{proof} 
-
-\begin{proposition}\label{prop.strong_bo}
-Suppose $F\colon\cat{C}\to\cat{D}$ is a strong monoidal functor that is bijective on objects. Then if $\cat{C}$ supplies $\cat{P}$ then so does $\cat{D}$ in such a way that $F$ preserves the supply.
-\end{proposition}
-\begin{proof}
-Given $s$ as in the following diagram, one simply defines $t$ using the inverse of the isomorphism $\smf(\mob{F},\cat{D})$:
-\[
-\begin{tikzcd}[column sep=50pt]
-	\pp\ar[r, "s"]\ar[d, dashed, "t"']&
-	\smf(\mob{\cat{C}},\cat{C})\ar[d, "{\smf(\mob{\cat{C}},F)}"]\\
-	\smf(\mob{\cat{D}},\cat{D})\ar[r, "\cong"']&
-	\smf(\mob{\cat{C}},\cat{D})
-\end{tikzcd}
-\qedhere
-\]
-\end{proof}
 
 
 
