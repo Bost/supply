@@ -1,0 +1,3696 @@
+\documentclass[11pt, oneside, article]{memoir}
+
+\settrims{0pt}{0pt} % page and stock same size
+\settypeblocksize{*}{35pc}{*} % {height}{width}{ratio}
+\setlrmargins{*}{*}{1} % {spine}{edge}{ratio}
+\setulmarginsandblock{1.1in}{1.4in}{*} % height of typeblock computed
+\setheadfoot{\onelineskip}{2\onelineskip} % {headheight}{footskip}
+\setheaderspaces{*}{1.5\onelineskip}{*} % {headdrop}{headsep}{ratio}
+\checkandfixthelayout
+
+\usepackage[centertags,sumlimits,intlimits,namelimits,reqno]{amsmath}
+\usepackage{latexsym}
+\usepackage{footmisc}
+\usepackage{amsfonts,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage[cal=euler,scr=rsfso]{mathalfa}
+\usepackage[boxslash]{stmaryrd}
+\usepackage{newpxtext}
+%\usepackage{exscale}
+\usepackage{enumitem}
+\usepackage{ifthen}
+%\usepackage[T1]{fontenc}
+%\usepackage{breakcites}
+\usepackage[colorlinks,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue,breaklinks=true]{hyperref}
+\usepackage{tikz}
+\usepackage[capitalize]{cleveref}
+\usepackage[backend=biber, bibencoding=utf8, maxbibnames = 10, style = alphabetic]{biblatex}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\usepackage{xstring}
+\usepackage{ebproof}
+\usepackage[export]{adjustbox} %vertical align includegraphics
+%\usepackage{scalefnt}
+%\usepackage{anyfontsize} %arbitrary font size
+\usepackage{graphicx}
+
+\usepackage[color=white, textsize=footnotesize]{todonotes}
+
+\presetkeys%
+    {todonotes}%
+    {inline}{}
+    
+%% code from mathabx.sty and mathabx.dcl
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10>
+      <10.95> <12> <14.4> <17.28> <20.74> <24.88>
+      mathx10
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+\DeclareMathAccent{\widecheck}{0}{mathx}{"71}
+
+% amsmath %
+	\allowdisplaybreaks
+	
+% cleveref %
+  \newcommand{\creflastconjunction}{, and\nobreakspace} % serial comma
+  \definecolor{darkblue}{rgb}{0,0,0.7} 
+
+
+% tikz %
+  \usetikzlibrary{ 
+  	cd,
+  	math,
+  	decorations.markings,
+		decorations.pathreplacing,
+  	positioning,
+	 	circuits.logic.US,
+ 		arrows.meta,
+  	shapes,
+		shadows,
+		shadings,
+  	calc,
+  	fit,
+  	quotes,
+  	intersections,
+  }
+
+  \input{tikz-stuff}
+	
+% biblatex %
+  \addbibresource{Library20190610.bib} 
+
+% enumitem %
+  \setlist{noitemsep, nolistsep}
+	\setlist[description]{leftmargin=0em, itemindent=2em}
+		
+%-------------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter] %change [] to chapter if we want to change global numbering
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{axiom}{Axiom}
+\newtheorem*{axiom*}{Axiom}
+
+\theoremstyle{remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{question}[theorem]{Question}
+
+\crefalias{chapter}{section}
+
+%------------------Begin author macros-----------------------
+
+\newcommand{\Set}[1]{\mathrm{#1}}%a named set
+\newcommand{\ord}[1]{\underline{#1}}%a natural number, considered as a finite set
+\newcommand{\const}[1]{\mathtt{#1}}%a constant, named element of a set, sort of thing
+\newcommand{\cat}[1]{\mathcal{#1}}%a generic category
+\newcommand{\ccat}[1]{\mathbb{#1}}%a generic po-category
+\newcommand{\Cat}[1]{{\mathsf{#1}}}%a named category
+\newcommand{\CCat}[1]{\mathbb{\StrLeft{#1}{1}}\Cat{\StrGobbleLeft{#1}{1}}}%a named po-category; does not seem to work in section headers...
+\newcommand{\funn}[1]{\mathrm{#1}}%a function
+\newcommand{\funr}[1]{\mathcal{#1}}%a generic functor
+\newcommand{\Funr}[1]{\mathsf{#1}}%a named functor
+\newcommand{\ffunr}[1]{\mathbf{#1}}%a generic 2-functor
+
+
+\DeclareMathOperator{\ob}{\Set{Ob}}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\cod}{cod}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator*{\colim}{colim}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\inc}{inc}
+\DeclarePairedDelimiter{\pair}{\langle}{\rangle}
+\DeclarePairedDelimiter{\unary}{{\langle\,}}{{\,\rangle}}
+\DeclarePairedDelimiter{\copair}{[}{]}
+\DeclarePairedDelimiter{\classify}{{\raisebox{1pt}{$\ulcorner$}}}{{\raisebox{1pt}{$\urcorner$}}}
+\DeclarePairedDelimiter{\church}{\xxbracket}{\rrbracket}
+
+\newcommand{\tn}[1]{\textnormal{#1}}
+\newcommand{\op}{^{\tn{op}}}
+\newcommand{\co}{^{\tn{co}}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\tp}{^\dagger}
+\newcommand{\tpow}[1]{^{\otimes #1}}
+
+\newcommand{\finset}{\Cat{FinSet}}
+\newcommand{\smset}{\Cat{Set}}
+\newcommand{\ssmf}{\CCat{SMF}}
+\newcommand{\ssmc}{\CCat{SMC}}
+
+\renewcommand{\aa}{\mathbb{A}} %Not sure what old \aa did
+\renewcommand{\ll}{\mathbb{L}} %Old \ll is <<
+\newcommand{\cc}{\mathbb{C}}
+\newcommand{\dd}{\mathbb{D}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\pp}{\mathbb{P}}
+\newcommand{\qq}{\mathbb{Q}}
+\newcommand{\xx}{\mathbb{X}} 
+\newcommand{\zz}{\mathbb{Z}}
+\newcommand{\fgab}{\Cat{fgAb}}
+\newcommand{\ab}{\Cat{Ab}}
+\newcommand{\abcat}{\Cat{AbCat}}
+\newcommand{\spabcat}{\Cat{AbCat}_{sp}}
+\newcommand{\abcalc}{\Cat{AbCalc}}
+\newcommand{\sub}{\Funr{Sub}}
+\newcommand{\quo}{\Funr{Quo}}
+\newcommand{\syn}{\Funr{ASyn}}
+\newcommand{\rsyn}{\Funr{RSyn}}
+\newcommand{\csyn}{\Funr{CSyn}}
+\newcommand{\sss}{\Funr{s}}
+\newcommand{\ppp}{\Funr{p}}
+\newcommand{\id}{\funn{id}}
+\newcommand{\Neg}[1]{\funn{N}_{#1}}
+\newcommand{\comp}{\mathtt{comp}}
+
+\newcommand{\mob}[1]{#1_0}
+
+
+\newcommand{\ctosyn}{B} % functor from the domain of a regular calculus to the syntactic category
+\newcommand{\abc}{P} % default name for an abelian calculus
+\newcommand{\lint}{\mathbin{\oplus}} % linrel tensor symbol
+\newcommand{\newcalc}[1]{\hat{#1}}
+
+\newcommand{\cp}{\mathbin{\fatsemi}}
+\newcommand{\cocolon}{:\!}
+\newcommand{\iso}{\cong}
+\newcommand{\too}{\longrightarrow}
+\newcommand{\tto}{\rightrightarrows}
+\newcommand{\To}[1]{\xrightarrow{#1}}
+\newcommand{\Too}[1]{\To{\;\;#1\;\;}}
+\newcommand{\from}{\leftarrow}
+\newcommand{\From}[1]{\xleftarrow{#1}}
+\newcommand{\Fromm}[1]{\xleftarrow{\;\;#1\;\;}}
+\newcommand{\tofrom}{\leftrightarrows}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\rightarrowtail}
+\newcommand{\Surj}[1]{\overset{#1}{\twoheadrightarrow}}
+\newcommand{\Inj}[1]{\overset{#1}{\rightarrowtail}}
+\newcommand{\frsurj}{\twoheadleftarrow}
+\newcommand{\frinj}{\leftarrowtail}
+\newcommand{\ul}[1]{\underline{#1}}
+\renewcommand{\ss}{\subseteq}
+\newcommand{\sq}{\Cat{SQ}}
+
+\newcommand{\types}{\Set{T}}
+
+\newcommand{\lsh}[1]{#1_!}
+\newcommand{\ust}[1]{#1^\ast}
+
+\newcommand{\inp}{\Set{inp}}
+\newcommand{\outp}{\Set{outp}}
+\newcommand{\bpg}{\Set{BPG}}
+\newcommand{\cospan}{\Cat{Cospan}}
+\newcommand{\petri}{\Cat{Petri}}
+\newcommand{\ppetri}{\CCat{Petri}}
+
+\newcommand{\rrel}[1]{\CCat{Rel}_{#1}}
+\newcommand{\rel}[1]{\Cat{Rel}_{#1}}
+\newcommand{\llinrel}{\CCat{LinRel}}
+\newcommand{\lin}{\Cat{Lin}}
+\newcommand{\pposet}{\CCat{Poset}}
+\newcommand{\poset}{\Cat{Poset}}
+\newcommand{\zero}{\const{O}}
+\newcommand{\true}{\const{true}}
+\newcommand{\false}{\const{false}}
+\newcommand{\frg}[1][\types]{
+  \ifthenelse{\equal{#1}{blank}}{\Cat{FRg}}{\Cat{FRg}(#1)}
+}
+\newcommand{\ffrg}[1][\types]{
+  \ifthenelse{\equal{#1}{blank}}{\CCat{FRg}}{\CCat{FRg}(#1)}
+}
+\newcommand{\ladj}{\Cat{LAdj}}% the category of left adjoints
+\newcommand{\radj}{\Cat{RAdj}}% the category of right adjoints
+
+\newcommand{\qqand}{\qquad\text{and}\qquad}
+\newcommand{\qand}{\quad\text{and}\quad}
+
+\newcommand{\hide}[2][]{#1}
+
+\newcommand{\adjphantom}[3][-.6pt]{\ar[#2, phantom, "#3" yshift=#1]}
+\newcommand{\adj}[5][30pt]{%[size] Cat L, Left, Right, Cat R.
+\begin{tikzcd}[ampersand replacement=\&, column sep=#1]
+  #2\ar[r, shift left=5pt, "{#3}"]\adjphantom{r}{\Rightarrow}\&
+  #5\ar[l, shift left=5pt, "{#4}"]
+\end{tikzcd}
+}
+
+\newcommand{\adjr}[5][30pt]{%[size] Cat R, Right, Left, Cat L.
+\begin{tikzcd}[ampersand replacement=\&, column sep=#1]
+  #2\ar[r, shift left=5pt, "{#3}"]\adjphantom{r}{\Leftarrow}\&
+  #5\ar[l, shift left=5pt, "{#4}"]
+\end{tikzcd}
+}
+
+\newcommand{\pb}[1][very near start]{\ar[dr, phantom, #1, "\lrcorner"]}
+\newcommand{\po}[1][very near start]{\ar[ul, phantom, #1, "\ulcorner"]}
+
+\setlength\tabcolsep{3pt}
+\linespread{1.10}
+
+%================ Document ================%
+\begin{document}   
+
+\title{Abelian calculi}
+\author{Brendan Fong$^*$ \and David I.\ Spivak\thanks{Spivak and Fong acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.}}
+  
+\maketitle
+
+\tableofcontents*
+
+%======== Chapter ========%
+\chapter{Introduction}
+
+The following is \cite[1.4.1]{Borceux:1994b}.
+\begin{definition}\label{def.abelian}
+A category $\cat{A}$ is \emph{abelian} if
+\begin{enumerate}
+	\item it has a zero object $0$;
+	\item every pair of objects has a product and a coproduct;
+	\item every morphism has a kernel and a cokernel; and
+	\item every monomorphism is a kernel and every epimorphism is a cokernel.
+\end{enumerate}
+\end{definition}
+
+\section{Notation}\label{sec.notation}
+For a natural number $n\in\nn$ we denote the corresponding ordinal by $\ord{n}=\{1,\ldots,n\}\in\smset$. Given a finite set $S$, we write $|S|\in\nn$ for its cardinality.
+
+We denote composition of $f\colon a\to b$ and $g\colon b\to c$ by $(f\cp g)\colon a\to c$, i.e.\ we use diagrammatic order. When using application order, we write $g\circ f$. When $c$ is an object we denote the identity morphism on it either by $c$ or by $\id_c$. Similarly, when we consider matrices as functions, they act in diagrammatic order, e.g. $1\choose 1$ represents the function $\zz^2\to\zz$ sending $(a,b)\mapsto (a\; b){1 \choose 1}=a+b$.
+
+We denote inclusions of all sorts by $\inc$. Given any set $S$ and element $s\in S$, we denote the constant function $S'\To{!}\{*\}\To{s}S$ by $s!$ for any set $S'$.
+
+Given morphisms $f\colon A\to C$ and $g\colon B\to C$ in a category with coproducts, we denote the copairing of $f$ and $g$ by $\copair{f,g}\colon(A\sqcup B)\to C$. Similarly if the category has products, we denote the pairing of $f\colon A\to B$ and $g\colon A\to C$ by $\pair{f,g}\colon A\to B\times C$.
+
+In any category $\cat{C}$, a \emph{subobject} of $c\in\cat{C}$ is an isomorphism class of monomorphisms into $c$, i.e.\ two monomorphisms $i\colon a\to c$ and $i'\colon a'\to c$ are identified if there is an isomorphism $j\colon a\to a'$ such that $j\cp i'=i$. This defines a poset $\sub(c)$.
+
+We denote by $\fgab$ the category of finitely generated abelian groups.
+
+%======== Chapter ========%
+\chapter{Background}
+
+%==== Section ====%
+\section{Monoidal po-categories}
+
+We use the prefix \emph{po-} as an abbreviation for \emph{locally posetal}.
+
+\begin{definition}[Po-category]
+By a \emph{po-category} we mean a locally-posetal 2-category. A \emph{po-functor} is simply a 2-functor between po-categories.
+\end{definition}
+A po-category $\cc$ can also be thought of as a category enriched in $(\poset,\times,\ord{1})$. More explicitly, $\cc$ has, for every pair of objects $c,c'\in\cc$, a poset $\cc(c,c')$, where we denote the order relation by $\leq$. Composition $\cp\colon\cc(c,c')\times \cc(c',c'')\to\cc(c,c'')$ in a po-category is required to be monotonic: $f\leq g$ and $f'\leq g'$ imply $(f\cp f')\leq(g\cp g')$. From this perspective, every po-category has an underlying category, and a po-functor is a functor between the underlying categories that is required to preserve the order on morphisms. A \emph{natural transformation} between po-functors is just a natural transformation between the underlying functors.
+
+\begin{definition}[Symmetric monoidal po-category]
+A \emph{symmetric monoidal structure} on a po-category $\cc$ consists of a pair $(\otimes,I)$ where
+\begin{enumerate}
+	\item $\otimes\colon\cc\times\cc\to\cc$ is a po-functor,
+	\item $I\in\cc$ is an object,
+\end{enumerate}
+together with an associator, left and right unitor, and braiding isomorphisms satisfying the usual axioms of symmetric monoidal categories.
+
+A \emph{lax monoidal structure} on po-functor $F\colon\cc\to\cc'$ consists of a morphism  $\varphi\colon I'\to F(I)$ and a natural maps $\varphi_{c_1,c_2}\colon F(c_1)\otimes' F(c_2)\to F(c_1\otimes c_2)$, that appropriately commute with the associators, unitors, and braiding. We say that $F$ is \emph{strong monoidal} if $\varphi$ and each $\varphi_{c_1,c_2}$ is an isomorphism, and we say $F$ is strict if these are all identities.
+\end{definition}
+
+\begin{definition}[$\ssmf(\cc,\dd)$]\label{def.smf}
+Let $\cc$ and $\dd$ be symmetric monoidal po-categories. Define a symmetric monoidal po-category $\ssmf(\cc,\dd)$ whose objects are strong monoidal functors, whose 1-morphisms are monoidal natural transformations, whose 2-morphisms are modifications, and whose monoidal structure is given pointwise.
+\end{definition}
+We unpack the definition a bit. An object of $\ssmf(\cc,\dd)$ is a strong monoidal functor $F\colon\cc\to\dd$, and a morphism $\alpha\colon F\to G$ is a monoidal natural transformation. We say that $\alpha\leq\alpha'$ if for every object $c\in\cc$ one has an inequality
+\[
+\begin{tikzcd}
+	F(c)\ar[r, bend left, "\alpha_c"]\ar[r, bend right, "\alpha'_c"']\ar[r, phantom, "\Downarrow"]&
+	G(c)
+\end{tikzcd}
+\]
+in $\dd(F(c),G(c)$. Finally, the pointwise condition says that the monoidal unit in $\ssmf(\cc,\dd)$ is given by the constant functor at the monoidal unit of $\dd$ and the monoidal product is given by $(F\otimes G)(c)\coloneqq F(c)\otimes G(c).$ This is strong monoidal because for any $c,c'\in\cc$ we have natural symmetry isomorphisms
+\[
+	\big(F(c)\otimes G(c)\big)\otimes\big(F(c')\otimes G(c')\big)
+	\cong
+	\big(F(c)\otimes F(c')\big)\otimes\big(G(c')\otimes G(c')\big).
+\]
+
+\begin{theorem}
+The 2-category $\ssmc$ of symmetric monoidal categories, strong monoidal functors, and monoidal natural transformations has strong 2-biproducts. The same is true for symmetric monoidal po-categories and strong monoidal po-functors.
+\end{theorem}
+\begin{proof}
+The terminal category is symmetric monoidal, and it is a zero object
+Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. We will show that their product $\cat{C}\times\cat{D}$ as categories is in fact a symmetric monoidal category, and that it is their biproduct; we denote it $\cat{C}\oplus\cat{D}\coloneqq\cat{C}\times\cat{D}$.
+
+As a symmetric monoidal structure on $\cat{C}\oplus\cat{D}$, take $(I,I)$ to be the monoidal unit and $(c_1,d_1)\otimes(c_2,d_2)\coloneqq(c_1\otimes c_2,d_1\otimes d_2)$ to be the monoidal product. The associators, unitors, and braiding are given pointwise.
+
+The functor $\pair{\cat{C},I}\colon\cat{C}\to\cat{C}\oplus\cat{D}$ sending $c\mapsto (c,I)$ is clearly strong monoidal. We claim that it and $\pair{I,\cat{D}}$ form the coprojections under which $\cat{C}\oplus\cat{D}$ is the coproduct. Indeed, given strong monoidal functors $F\colon\cat{C}\to\cat{X}$ and $G\colon\cat{D}\to\cat{X}$, define $\copair{F,G}\colon\cat{C}\oplus\cat{D}\to\cat{X}$ by $\copair{F,G}(c,d)\coloneqq F(c)\otimes G(d)$, and similarly for morphisms. This is strong monoidal using the isomorphisms
+\begin{align*}
+	\copair{F,G}(c_1,d_1)\otimes\copair{F,G}(c_2,d_2)&=
+	F(c_1)\otimes G(d_1)\otimes F(c_2)\otimes G(d_2)\\&\cong
+	F(c_1)\otimes F(c_2)\otimes G(d_1)\otimes G(d_2)\\&\cong
+	\copair{F,G}\big((c_1,d_1)\otimes(c_2,d_2)\big).
+\end{align*}
+where the first isomorphism is the braiding in $\cat{C}$ and the second isomorphism uses the (strong) laxators from $F$ and $G$. It is straightforward to check that this satisfies the necessary axioms to be a laxator%
+\hide[.]{
+, e.g.\ the commutativity of the following diagram
+\[
+\begin{tikzcd}
+	Fc_1\otimes Gd_1\otimes Fc_2\otimes Gd_2\otimes Fc_3\otimes Gd_3\ar[r, "\sigma"]\ar[d, "\sigma"']&
+	Fc_1\otimes Gd_1\otimes Fc_2\otimes Fc_3\otimes Gd_2\otimes Gd_3\ar[d]\\
+	Fc_1\otimes Fc_2\otimes Gc_1\otimes Gc_2\otimes Fc_3\otimes Gd_3\ar[d]&
+	Fc_1\otimes Gd_1\otimes F(c_2\otimes c_3)\otimes G(d_2\otimes d_3)\ar[d, "\sigma"]\\
+	F(c_1\otimes c_2)\otimes G(d_1\otimes d_2)\otimes Fc_3\otimes Gd_3\ar[d, "\sigma"']&
+	Fc_1\otimes F(c_2\otimes c_3)\otimes Gd_1\otimes G(d_2\otimes d_3)\ar[d]\\
+	F(c_1\otimes c_2)\otimes Fc_3\otimes G(d_1\otimes d_2)\otimes Gd_3\ar[r]&
+	F(c_1\otimes c_2\otimes c_3)\otimes G(d_1\otimes d_2\otimes d_3)	
+\end{tikzcd}
+\]
+}
+It is also easy to check that the unitors provide natural isomorphisms
+\begin{equation}\label{eqn.coproduct_smc}
+\begin{tikzcd}[sep=large]
+	\cat{C}\ar[r, "\pair{\cat{C},I}"]\ar[dr, bend right=20pt, "F"', "" name=F]&
+	|[alias=CD]|\cat{C}\oplus\cat{D}\ar[d, "\copair{F,G}" description]&
+	\cat{D}\ar[l, "\pair{I,\cat{D}}"']\ar[dl, bend left=20pt, "G", ""' name=G]\\&
+	\cat{X}
+	\ar[from=G, to=CD, phantom, near start, "\cong"]
+	\ar[from=F, to=CD, phantom, near start, "\cong"]
+\end{tikzcd}
+\end{equation}
+e.g.\ $c\otimes I\cong c$ for any $c\in\cat{C}$. The map $\copair{F,G}$ is determined (up to canonical isomorphism) by this property because every object in $\cat{C}\oplus\cat{D}$ is of the form $(c,I)\otimes(I,d)$, and similarly for morphisms. Thus we have established that $\cat{C}\oplus\cat{D}$ is the 2-categorical coproduct.
+
+We claim it is also the 2-categorical product using the usual projections, e.g.\ $\pi_{\cat{C}}\colon\cat{C}\times\cat{D}\to\cat{C}$. These functors are easily seen to be strong monoidal. Given any symmetric monoidal category $\cat{X}$ and functors $F\colon\cat{X}\to\cat{C}$ and $G\colon\cat{X}\to\cat{D}$, we get a universal functor $\pair{F,G}\colon\cat{X}\to\cat{C}\times\cat{D}$; we need to see that if $F$ and $G$ are strong monoidal then so is $\pair{F,G}$. Indeed we have
+\begin{align*}
+	\pair{F,G}(x_1)\otimes\pair{F,G}(x_2)&=
+	\big(F(x_1),G(x_1)\big)\otimes\big(F(x_2),G(x_2)\big)\\&=
+	\big(F(x_1)\otimes F(x_2),G(x_1)\otimes G(x_2)\big)\\&\cong
+	\big(F(x_1\otimes x_2),G(x_1\otimes x_2)\big)\\&=
+	\pair{F,G}(x_1\otimes x_2).
+\end{align*}
+The product universal property diagram analogous to \cref{eqn.coproduct_smc} commutes, completing the proof that $\ssmc$ has biproducts.
+
+Finally, if $\cat{C}$ and $\cat{D}$ are replaced by symmetric monoidal po-categories $\ccat{C}$ and $\ccat{D}$, the proof runs analogously.
+\end{proof}
+
+\begin{proposition}
+Let $\ccat{C}_1,\ccat{C}_2,\ccat{D}_1,\ccat{D}_2$ be symmetric monoidal po-categories. The po-functor
+\begin{equation}\label{eqn.strict_smf_biprod}\oplus\colon\ssmf(\ccat{C}_1,\ccat{D}_1)\times\ssmf(\ccat{C}_2,\ccat{D}_2)\to\ssmf(\ccat{C}_1\oplus\ccat{C}_2,\ccat{D}_1\oplus\ccat{D}_2)
+\end{equation}
+is strict monoidal.
+\end{proposition}
+\begin{proof}
+Since $\oplus$ is a Cartesian product (in fact biproduct), the map $\oplus$ from \cref{eqn.strict_smf_biprod} is indeed a po-functor. We need to check that it is strict monoidal. The monoidal unit in the domain is the pair $(I,I)$ of constant functors, and it is clearly sent to the monoidal unit $(I,I)$ in the codomain.
+
+Suppose given $F_1, F_1'\colon\ccat{C}_1\to\ccat{D}_1$ and $F_2,F_2'\colon\ccat{C}_2\to\ccat{D}_2$. Then for any $c_1\in\ccat{C}_1$ and $c_2\in\ccat{C}_2$ we have equalities
+\begin{align*}
+	\big((F_1\otimes F_1')\oplus(F_2\otimes F_2')\big)(c_1,c_2)&=
+	\big(F_1(c_1)\otimes F_1'(c_1),F_2(c_2)\otimes F_2'(c_2)\big)\\&=
+	\big(F_1(c_1),F_2(c_2)\big)\otimes\big(F_1'(c_1),F_2'(c_2)\big)\\&=
+	(F_1\oplus F_2)(c_1,c_2)\otimes(F_1'\oplus F_2')(c_1,c_2)\\&=
+	\big((F_1\oplus F_2)\otimes(F_1'\oplus F_2')\big)(c_1,c_2)
+\end{align*}
+This establishes strictness, and similar calculations show that $\oplus$ is monoidal with respect to morphisms and preserves the braiding. 
+\end{proof}
+
+\begin{definition}\label{def.mob}
+For any symmetric monoidal po-category $\cc$, let $\mob{\cc}\ss\cc$ denote the smallest sub po-category containing
+\begin{enumerate}
+	\item all objects of $\cc$ (and identity morphisms and 2-morphisms), and
+	\item all structural 1-morphisms---unitors, associators, and braiding---from $\cc$.
+\end{enumerate}
+Thus $\mob{\cc}$ is symmetric monoidal, and locally discrete. We refer to it as the \emph{symmetric monoidal category of $\cc$-objects}. There is a strict monoidal functor $\inc\colon\mob{\cc}\to\cc$. 
+
+Any monoidal po-functor $F\colon\cc\to\dd$ induces a monoidal po-functor $\mob{F}\colon\mob{\cc}\to\mob{\dd}$.
+\end{definition}
+
+Suppose $\cat{C}$ is a symmetric monoidal category, $m\in\nn$ is a natural number, and $c\colon\ord{m}\to\cat{C}$ is a family of objects in $\cat{C}$. We denote
+\[
+  \bigotimes c\coloneqq\bigotimes_{i\in\ord{m}}c(i)\coloneqq
+  \big((c(1)\otimes c(2))\cdots\big)\otimes c(m)
+\]
+with the convention that when $m=0$ and $!\colon\ord{0}\to \cat{C}$ the unique function, we put $\bigotimes != I$. If $c(i)=c(j)$ for all $i,j\in\ord{m}$, we denote this by $c\tpow{m}\coloneqq\bigotimes_{i\in\ord{m}}c$. We take this to be the canonical parenthesation, so $c\otimes d\otimes e$ denotes $(c\otimes d)\otimes e$.
+
+If $m,n\in\nn$ are natural numbers, and $c\colon \ord{m}\times \ord{n}\to\cc$ is a family of objects in $\cc$, we also have a natural isomorphism
+\begin{equation}\label{eqn.symmetry}
+\sigma\colon
+\bigotimes_{i\in\ord{m}}\bigotimes_{j\in\ord{n}}c(i,j)\Too{\cong}
+\bigotimes_{j\in\ord{n}}\bigotimes_{i\in\ord{m}}c(i,j).
+\end{equation}
+We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it involves associators and unitors too, not just the symmetric braiding. We will be interested in two particular cases of the symmetry isomorphism \cref{eqn.symmetry}, namely for $m=2$ and $m=0$ and any $n\in\nn$:
+\[\sigma\colon c_1\tpow{n}\otimes c_2\tpow{n}\Too{\cong}(c_1\otimes c_2)\tpow{n}
+\qqand
+\sigma\colon I\Too{\cong} I\tpow{n}
+\]
+
+%==== Section ====%
+\section{Regular categories}
+
+If $f\colon b\to c$ is a morphism in a category, we say that a monomorphism $i\colon c'\inj c$ is its \emph{image} if $f$ factors through $i$ and it is the smallest such monomorphism: for every other monomorphism $i'\colon c''\inj c$ through which $f$ factors, $i$ factors through $i'$.
+ 
+\begin{definition}[Regular category, functor] \label{def.reg_cat}
+A category $\cat{R}$ is \emph{regular} if
+\begin{enumerate}
+	\item it has all finite limits,
+	\item every morphism in $\cat{R}$ has an image, and
+	\item the pullback of an image is the image of the pullback.
+\end{enumerate}
+We denote the terminal object in $\cat{R}$ by $1$. A functor $F\colon\cat{R}\to\cat{R}'$ is \emph{regular} if it preserves finite limits and image factorizations.
+\end{definition}
+The last condition means that given $f\colon b\to c$ and $g\colon d\to c$, if the bottom row is an image factorization then so is the top row:
+\[
+\begin{tikzcd}
+	b\times_cd\ar[r]\ar[d]\pb&
+	c'\times_cd\ar[r, >->]\ar[d]\pb&
+	d\ar[d, "g"]\\
+	b\ar[r]&
+	c'\ar[r, >->]&
+	c
+\end{tikzcd}
+\]
+
+\begin{definition}\label{def.relations_pocat}
+  Let $\cat{R}$ be a regular category; its \emph{relations po-category}
+  $\rrel{\cat{R}}$ is the po-category with the same objects as
+  $\cat{R}$ but whose morphisms, written $x\colon r\tickar s$, are relations
+  $x\ss r\times s$ in $\cat{R}$ equipped with the subobject
+  ordering $x\leq x'$ iff $x\ss x'$. Given a relation
+$y\colon s\tickar t$, the composite $x\cp y$ is obtained by pulling back over $s$ and image factorizing the
+map to $r\times t$:
+\begin{equation}\label{eqn.rel_composition}
+\begin{tikzcd}[column sep=small, row sep=15pt]
+  &[10pt]&
+  x\times_{s}y\ar[dl]\ar[dr]\ar[d, ->>]&&[10pt]~\\&
+  x\ar[d, >->]&
+  \fbox{$x\cp y$}\ar[d, >->]&
+  y\ar[d, >->]\\&
+	r\times s\ar[dl, bend right=8pt]\ar[dr, bend left=8pt]&
+	r\times t\ar[dll, bend left=12pt, crossing over]&
+	s\times t\ar[dl, bend right=8pt]\ar[dr, bend left=8pt]\\[-5pt]
+	r&&
+	s&&
+	t\ar[from=ull, bend right=12pt, crossing over]
+\end{tikzcd}
+\end{equation}
+$\rrel{R}$ also inherits a symmetric monoidal structure $I\coloneqq 1$ and $r_1\otimes
+  r_2\coloneqq r_1\times r_2$ from the cartesian monoidal structure on $\cat{R}$.
+  
+  Given a regular functor $\funr{F}\colon\cat{R}\to\cat{R'}$, mapping a relation $x \ss
+  r \times s$ to its factorization $\funr{F}(x) \surj \rrel{\funr{F}}(x) \inj \funr{F}(r\times s)
+  \cong \funr{F}(r) \times \funr{F}(s)$ induces a (strong) symmetric monoidal po-functor
+  $\rrel{\funr{F}}\colon\rrel{\cat{R}} \to \rrel{\cat{R'}}$. We refer to this po-functor
+  as the \emph{relations po-functor} of $\funr{F}$.
+\end{definition}
+
+
+\begin{proposition}\label{prop.reg_sub}
+For any regular category $\cat{R}$, there is a lax monoidal functor $\sub_{\cat{R}}\coloneqq\rrel{\cat{R}}(1,-)\colon\rrel{\cat{R}}\to\pposet$.\end{proposition}
+\begin{proof}
+Given an object $r\in\cat{R}$, its subobjects are the same as the subobjects of $1\times r$, which justifies the notation $\sub_{\cat{R}}(r)\coloneqq\rrel{\cat{R}}(1,r)$. The mapping $\sub_{\cat{R}}$ is a representable functor, represented by the monoidal unit $1$, hence one sees it is lax monoidal. That is, we have monotone maps
+\[
+	\id_1\colon 1\to\rrel{\cat{R}}(1,1)
+	\qqand
+	\times\colon\rrel{\cat{R}}(1,r)\times\rrel{\cat{R}}(1,r')\to\rrel{\cat{R}}(1,r\times r').
+\]
+\end{proof}
+
+\begin{proposition}\label{prop.reg_functor_sub}
+For any regular functor $F\colon\cat{R}\to\cat{R}'$, there is a monoidal natural transformation as shown:
+\[
+\begin{tikzcd}[row sep=5pt, column sep=large]
+	\rrel{\cat{R}}\ar[rd, bend left=15pt, pos=.4, "\sub_{\cat{R}}", ""' name=P]\ar[dd, "\rrel{F}"']\\&
+	\pposet\\
+	\rrel{\cat{R}'}\ar[ru, bend right=15pt, pos=.4, "\sub_{\cat{R}'}"', "" name=P']
+	\ar[from=P, to=P|-P', shorten <=7pt, shorten >=7pt, Rightarrow, "F^\sharp"]
+\end{tikzcd}
+\]
+\end{proposition}
+\begin{proof}
+Given a regular functor $F$, we need to provide a monoidal natural transformation $F^\sharp\colon\sub_{\cat{R}}\to(\rrel{F}\cp\sub_{\cat{R}'})$. Unwinding, we need
+\[F^\sharp\colon\rrel{\cat{R}}(1,-)\too\rrel{\cat{R}'}(1,\rrel{F}(-)),\]
+and we can just use $F^\sharp\coloneqq\rrel{F}$ since it preserves the monoidal structure, e.g.\ $1\mapsto 1$.
+\end{proof}
+
+
+%==== Section ====%
+\section{Abelian categories}
+
+\todo{Keep all of \cref{thm.borceux_facts}, or just the parts we need? So far, I think we're using finite limits and colimits, epi-mono factorizations, $\ab$-enrichment, biproducts, and pushout-pullback.}
+\begin{theorem}\label{thm.borceux_facts}
+Let $\cat{A}$ be abelian. Then
+\begin{enumerate}
+	\item $\cat{A}\op$ is abelian.
+	\item For any small category $I$, the functor category $\cat{A}^I$ is abelian.
+	\item $\cat{A}$ is balanced: if $f$ is both epic and monic, then it is an iso.
+	\item $\cat{A}$ has all finite limits and colimits.
+	\item For all $f$ in $\cat{A}$, we have $f=\coker(\ker(f))\cp\ker(\coker(f))$, and this defines an orthogonal factorization system on $\cat{A}$ (normal-epi then normal-mono).
+	\item $\cat{A}$ is enriched in $\ab$.
+	\item $\cat{A}$ has biproducts; i.e.\ for all $A,B\in\cat{A}$, the natural map $\pair{\copair{A,\zero},\copair{\zero,B}}\colon A\oplus B\to  A\times B$ is an isomorphism.
+	\item For any $A\in\cat{A}$, the poset $\sub(A)$ has finite meets and joins.
+	\item The pushout of a monomorphism along any map is again a monomorphism, and the pullback of an epimorphism is again an epimorphism
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+In \cite{Borceux:1994b}, claim 1 is 1.4.2,\quad claim 2 is 1.4.4,\quad claim 3 is 1.5.1,\quad claim 4 is 1.5.3,\quad claim 5 is 1.5.5,\quad claim 6 is 1.6.4,\quad claim 7 is 1.6.5,\quad claim 8 is 1.7.2,\quad and claim 9 is 1.7.6.
+\end{proof}
+Via the isomorphism in claim 7, we often equate $A\oplus B$ with $A\times B$; for example, we may speak of the projection $A\oplus B\to A$ or the coprojection $A\to A\times B$.
+
+\begin{definition}[Subquotient]
+Let $A\in\cat{A}$ be an object in an abelian category. A \emph{subquotient} of $A$ is a quotient of a subobject $A$.
+\end{definition}
+
+In other words, a subquotient of $A$ is a span $A\leftarrowtail A'\surj B'$ consisting of a monic and an epic; this is of course up to isomorphism. By \cref{thm.borceux_facts} (9) a subquotient is equivalently a subobject of a quotient, i.e.\ a cospan $A\surj B\leftarrowtail B'$
+\[
+\begin{tikzcd}
+	A'\ar[r, ->>]\ar[d, >->]&
+	B'\ar[d, >->]\\
+	A\ar[r, ->>]&
+	B\po
+\end{tikzcd}
+\]
+
+\begin{definition}
+A functor $F\colon\cat{A}\to\cat{A}'$ between abelian categories is called \emph{exact} if it is $\ab$-enriched and preserves finite limits and colimits.
+\end{definition}
+
+
+
+% Subsection %
+\subsection{Abelian categories are regular}
+
+\begin{corollary}\label{cor.abelian_imp_reg}
+Every abelian category is regular.
+\end{corollary}
+\begin{proof}
+If $\cat{A}$ is abelian, then by \cref{thm.borceux_facts} it has all finite limits, every epi-mono factorization is an image factorization, and the pullback of an epi is an epi; hence it is regular.
+\end{proof}
+
+By \cref{cor.abelian_imp_reg}, every abelian category $\cat{A}$ is regular. That means we can define its relations po-category $\ccat{A}\coloneqq$.
+
+\begin{definition}\label{def.regular_pocat}
+  A po-category is called an \emph{abelian po-category} if it is isomorphic to the relations po-category $\rrel{\cat{A}}$ of some abelian category $\cat{A}$.
+  
+  A strong symmetric monoidal po-functor between abelian po-categories is called
+  an \emph{abelian po-functor} if it is isomorphic to the relations po-functor
+  $\rrel{\funr{F}}$ associated to an exact functor $\funr{F}$.
+\end{definition}
+
+
+% Subsection %
+\subsection{Negation invariance of subobjects}
+
+Suppose $\cat{C}$ is an $\ab$-enriched category. This means that for all $c,c'\in\cat{C}$ we have an abelian group $\cat{C}(c,c')$ and that composition $\cp\colon\cat{C}(c,c')\otimes\cat{C}(c',c'')\to\cat{C}(c,c'')$ is a group homomorphism. Recall that the tensor product here is bilinear:
+\begin{gather*}
+  (f_1\cp g)+(f_2\cp g)=(f_1+f_2\cp g),\quad
+  (f\cp g_1)+(f\cp g_2)=(f\cp g_1+g_2),\\
+  (0\cp g)=0,\quad
+  (f\cp 0)=0
+\end{gather*}
+
+For any $c\in\cat{C}$, define $\Neg{c}\in\cat{C}(c,c)$ to be $\Neg{c}\coloneqq -\id_c$, so $\Neg{c}+\id_c=0$. We call $\Neg{c}$ the \emph{negation map on $c$}.
+
+\begin{lemma}\label{lemma.neg_iso}
+Let $\cat{C}$ be an $\ab$-enriched category with epi-mono factorizations. Then $\Neg{c}$ is an isomorphism (in fact an involution) for any $c\in\cat{C}$.
+\end{lemma}
+\begin{proof}
+$(\Neg{c}\cp \Neg{c})+(\id_c\cp \Neg{c})=(\Neg{c}+\id_c\cp \Neg{c})=0=(\id_c\cp\id_c)+(\id_c\cp \Neg{c})$, so $\Neg{c}\cp \Neg{c}=\id_c$.
+\end{proof}
+
+\begin{proposition}\label{prop.sub_neg_trivial}
+Let $\cat{C}$ be an $\ab$-enriched category with epi-mono factorizations (in particular, an abelian category). Then $\sub(\Neg{c})=\id_{\sub(c)}$ as a poset map $\sub(c)\to\sub(c)$.
+\end{proposition}
+\begin{proof}
+Take any subobject $i\colon b\inj c$. Note that $\Neg{c}$ is an iso and hence monic by \cref{lemma.neg_iso}, so $\sub(\Neg{c})(i)=i\cp \Neg{c}$. Hence it suffices to show that the following square commutes
+\[
+\begin{tikzcd}
+	b\ar[r, >->, "i"]\ar[d, "\Neg{b}"']&
+	c\ar[d, >->, "\Neg{c}"]\\
+	b\ar[r, >->, "i"']&
+	c
+\end{tikzcd}
+\]
+because it says that $\Neg{b}$ is an isomorphism between the monics $\sub(\Neg{c})(i)$ and $\sub(\id_c)(i)$. We see it commutes by subtracting $i$ from both sides of the following equation:
+\[
+  (\Neg{b}\cp i)+i=(\Neg{b}\cp i)+(\id_b\cp i)=0=(i\cp\id_c)+(i\cp \Neg{c})=(i\cp \Neg{c})+i.
+\qedhere\]
+\end{proof}
+
+\begin{example}\label{ex.negation_lin}
+For an object $n\in\lin$, the identity map is given by a diagonal $n\times n$ matrix of 1's, and the negation map is the diagonal matrix of -1's.
+
+For a set $\types$, and using notation as in \cref{def.typed_lin}, the negation map on an object $(n,\tau)\in\lin_\types$ consists of the negation map $\Neg(n_t)\in\lin(n_t,n_t)$ for each $t\in\types$.
+\end{example}
+
+From now on we denote $\Neg{c}$ simply by $-c$, so with our convention of writing $c$ for the identity, we have $-c+c=0$.
+
+% Subsection %
+\subsection{Remaining lemmas}
+
+\begin{lemma}\label{lemma.pullback}
+For any morphisms $f\colon A'\to A$ and $g\colon B'\to B$ in an abelian category, the following is a pullback:
+\[
+\begin{tikzcd}[column sep=30pt]
+	A'\ar[r, "f"]\ar[d, "\pair{A',\zero}"']\pb&
+	A\ar[d, "\pair{A,\zero}"]\\
+	A'\times B'\ar[r, "f\times g"']&
+	A\times B
+\end{tikzcd}
+\]
+\end{lemma}
+\hide[The proof of \cref{lemma.pullback} is straightforward and is included in the .tex source.]{
+\begin{proof}
+Consider the following diagram
+\[
+\begin{tikzcd}[row sep=small]
+	A'\ar[dd]\ar[rr, equal]\ar[dr]&&
+	A'\ar[dd]\ar[rr, "f"]\ar[dr]&&
+	A\ar[dd]\ar[dr]\\&
+	0\ar[rr, equal, crossing over]&&
+	0\ar[rr, equal, crossing over]&&
+	0\ar[dd]\\
+	A'\times B'\ar[rr, pos=.25, "A'\times g"]\ar[dr]\ar[dd]&&
+	A'\times B\ar[rr, pos=.25, "f\times B"]\ar[dr]\ar[dd]&&
+	A\times B\ar[dr]\ar[dd]\\&
+	B'\ar[from=uu, crossing over]\ar[rr, crossing over]&&
+	B\ar[from=uu, crossing over]\ar[rr, equal, crossing over]&&
+	B\ar[dd]\\
+	A'\ar[rr, equal]\ar[dr]&&
+	A'\ar[rr]\ar[dr]&&
+	A\ar[dr]\\&
+	0\ar[rr, equal]\ar[from=uu, crossing over]&&
+	0\ar[rr, equal]\ar[from=uu, crossing over]&&
+	0
+\end{tikzcd}
+\]
+We want to show that the two upper back squares are pullbacks; we will use the pasting lemma for pullbacks. 
+
+In the bottom left-hand cube: the right, left, and bottom faces are clearly pullbacks because 0 is terminal, so the top face is too. In the top left-hand cube: the front, bottom, and top faces are pullbacks, so the back is too. In the bottom right-hand cube: the right, left, and front faces are pullbacks, so the back is too. In the big right-hand rectangle: the right, left, and front are pullbacks, so the back is too. Thus in the top right-hand cube, the back face is a pullback, completing the proof.
+\end{proof}
+}
+
+\begin{lemma}\label{lemma.product_epimono}
+For any morphisms $f\colon A'\to A$ and $g\colon B'\to B$ in an abelian category, $f\oplus g$ is epic iff both $f$ and $g$ are epic, and $f\oplus g$ is monic iff both $f$ and $g$ are monic.
+\end{lemma}
+\begin{proof}
+If $f$ and $g$ are epic (resp.\ monic) then so is their coproduct (resp.\ product), and $f\oplus g$ is both a coproduct and a product. If $f\oplus g$ is epic then for any pair of maps $h_1,h_2\colon A\to X$ if $f\cp h_1=f\cp h_2$ then $(f\oplus g)\cp(h_1\oplus \zero)=(f\oplus g)\cp(h_2\oplus \zero)$, so $h_1\oplus \zero=h_2\oplus \zero$, and we see that $h_1=h_2$. If $f\oplus g$ is monic, one proceeds similarly.
+\end{proof}
+
+\begin{corollary}\label{cor.epimono}
+For any morphism $f\colon A'\to A$ and monomorphism $g\colon B'\to B$ in an abelian category, the following is a epi-mono factorization:
+\[
+\begin{tikzcd}
+	A'\oplus B'\ar[r]\ar[d]&
+	B'\ar[d]\ar[dl, phantom, near start, "\urcorner"]\\
+	A\oplus B\ar[r]&
+	B
+\end{tikzcd}
+\]
+\end{corollary}
+\begin{proof}
+Considering $\zero\oplus B'\cong B'$ and $\zero\oplus B\cong B$, the result follows from \cref{lemma.product_epimono}.
+\end{proof}
+
+%==== Section ====%
+\section{Po-props and typed po-props}
+
+% Subsection %
+\subsection{Definitions and examples}
+
+\begin{definition}[Props]\label{def.props}
+A \emph{po-prop} is a strict monoidal po-category $\pp$ whose monoid of objects is equal to $(\nn,0,+)$. 
+\end{definition}
+
+\begin{example}\label{ex.nat_prop}
+The initial one-typed po-prop is the discrete symmetric monoidal category $(\nn,0,+)$.
+\end{example}
+
+\begin{example}\label{ex.involutions}
+Consider the prop $\ccat{I}$ whose morphisms are given as follows:
+\[
+  \ccat{I}(m,n)=
+  \begin{cases}
+  	\emptyset&\tn{ if }m\neq n\\
+		\{\id_m, i_m\}&\tn{ if }m=n
+  \end{cases}
+ \]
+ with $i_m\cp i_m=\id_m$ and $i_m+i_n=i_{m+n}$. 
+\end{example}
+
+For any $m,n\in\nn$ and prop $\pp$, \cref{eqn.symmetry} provides an isomorphism
+\[\sigma\colon mn\To{\cong}nm,\]
+where $mn=m+m+\cdots+m$, $n$-many times, and $nm=n+n+\cdots+n$, $m$-many times.
+
+\begin{definition}[Typed props]
+A \emph{(typed) po-prop} consists of a pair $(\types,\pp)$ where $\types$ is a set and $\pp$ is a strict monoidal po-category whose monoid of objects is equal to the free commutative monoid $\nn^{\oplus\types}$ on $\types$. Its elements can be identified with pairs $(n,\tau)$ where $n\in\nn$ and $\tau\colon\ord{n}\to\types$ is a function; we can denote such an element by $\tau_1+\cdots+\tau_n$; we denote the monoidal unit by $0$.
+\end{definition}
+
+\begin{definition}[Prop functors]
+A \emph{(typed) po-prop functor} from $(\types,\pp)$ to $(\types',\pp')$ consists of a function $f^0\colon\types\to\types'$ and a strict monoidal functor $f\colon\pp\to\pp'$ such that $\nn^{\oplus f^0}=\ob(f)$, i.e.\ such that $f$ extends $f^0$.
+\end{definition}
+
+\begin{proposition}[Coproduct of props]\label{prop.prop_coprod}
+Given a set $I$ and a po-prop $\pp_i$ for each $i\in I$, there exists a coproduct po-prop $\bigsqcup_{i\in I}\pp_i$, and it is also the  coproduct monoidal category.
+\end{proposition}
+\begin{proof}
+In the statement we suppressed the set $\types_i$ of types for each prop $\pp_i$. Let $\types\coloneqq\bigsqcup_{i\in I}\types_i$ denote their coproduct and consider the strict monoidal po-category $\ccat{Q}$ whose monoid of objects is $\nn^{\oplus \types}$, the free commutative monoid on $\types$ and such that for any $\tau\colon\ord{n}\to\types$ and $\tau'\colon\ord{n}'\to\types$, the hom-poset $\ccat{Q}((n,\tau),(n',\tau'))$ has the following description. Let $J\coloneqq\im\copair{\tau,\tau'}$ be the joint image of $\tau,\tau'$, and for each $j\in J$, let $n_j\coloneqq\tau\inv(j)$ and $n'_j\coloneqq(\tau')\inv(j)$. Then the hom-poset is the $J$-indexed product of hom-posets
+\begin{equation}\label{eqn.coprod_prop_morphisms}
+\ccat{Q}\big((n,\tau),(n',\tau')\big)\coloneqq\prod_{j\in J}\pp_j(n_j,n'_j).
+\end{equation}
+This has a strict symmetric monoidal structure given by $(n,\tau)+(n',\tau')\coloneqq(n+n',\tau+\tau')$ and similarly for morphisms. Thus $(\types,\qq)$ is the proposed coproduct prop. The required coprojection map $(a_i^0,a_i)\colon (\types_i,\pp_i)\to(\types,\qq)$ consists of the coprojection $\types_i\ss\bigsqcup_{i\in I}\pp_i$ on types, together with the fully faithful, strict monoidal functor $\pp_i\to\qq$ given by the canonical isomorphism $\pp_i(n,n')\cong\qq((n,i!),(n',i!))$.
+
+It remains to show that $(\types,\qq)$ has the required universal property. Given a prop $(\types',\qq')$ and prop functors $(f^0,f)\colon(\types_i,\pp_i)\to(\types',\qq')$, there is a unique function $F^0\colon\types\to\types'$ with $a^0_i\cp F^0=f^0_i$ by the universal property of coproducts. We want to extend it to a strict monoidal functor $F\colon \qq\to\qq'$ with $a_i\cp F=f_i$. Thus for each $i\in I$ we must have $F((n,i!),(n',i'!))=a_i(n,n')$. But every morphism $(n,\tau)\to(n',\tau')$ in $\qq$ can be uniquely written as the monoidal product of morphisms of this form, by definition \eqref{eqn.coprod_prop_morphisms}, so this determines $F$ uniquely on morphisms. The same reasoning holds if $\qq'$ is an arbitrary monoidal category.
+\end{proof}
+
+% Subsection %
+\subsection{Presenting props}
+
+One can present props by generators and relations; see \cref{coya2017corelations}. The same idea works for po-props: one additionally provides a set of generating 2-morphisms, and need not worry about relations. A 2-morphism in the presented prop is a composite of tensors of the generating 2-morphisms.
+
+\begin{definition}[Self-duality] \label{def.prop_duality}
+The \emph{prop for self-duality} has two generators
+\[
+\begin{tikzpicture}[WD, font=\tiny, light gray nodes]
+	\node[bb={2}{0}] (a) {};
+	\node[bb={0}{2}, right= of a] (b) {};
+	\draw (a_in1) -- +(-.5, 0);
+	\draw (a_in2) -- +(-.5, 0);
+	\draw (b_out1) -- +(.5, 0);
+	\draw (b_out2) -- +(.5, 0);
+\end{tikzpicture}
+\]
+and two equations
+\[
+\begin{tikzpicture}
+	\node (P1) {
+  \begin{tikzpicture}[WD, light gray nodes]
+  	\node[bb={0}{2}] (a) {};
+  	\node[bb={2}{0}, above right=-.75 and .5 of a] (b) {};
+  	\draw (a_out1) -- (b_in2);
+  	\draw (a_out2) -- +(2, 0);
+  	\draw (b_in1) -- +(-2, 0);
+  \end{tikzpicture}
+  };
+  \node (P2) [right=.7 of P1] {
+  \begin{tikzpicture}[WD]
+  	\draw (0,0) -- (1.5,0);
+  \end{tikzpicture}
+  };
+  \node at ($(P1.east)!.5!(P2.west)$) {$=$};
+%
+	\node (P3) [right=2.5 of P2]{
+  \begin{tikzpicture}[WD, light gray nodes]
+  	\node[bb={0}{2}] (a) {};
+  	\node[bb={2}{0}, below right=-.75 and .5 of a] (b) {};
+  	\draw (a_out2) -- (b_in1);
+  	\draw (a_out1) -- +(2, 0);
+  	\draw (b_in2) -- +(-2, 0);
+  \end{tikzpicture}
+  };
+  \node (P4) [right=of P3] {
+  \begin{tikzpicture}[WD]
+  	\draw (0,0) -- (1.5,0);
+  \end{tikzpicture}
+  };
+  \node at ($(P3.east)!.5!(P4.west)$) {$=$};
+  \node at ($(P2.east)!.5!(P3.west)$) {and};
+\end{tikzpicture}
+\]
+\end{definition}
+
+
+\begin{definition}[Comonoids]\label{def.prop_comonoids}
+The \emph{prop for comonoids} is given by two generators
+\begin{equation}\label{eqn.gen_comonoid}
+\begin{tikzpicture}[WD]
+	\node[bb={1}{0}, fill=gray] (eta') {};
+	\draw (eta'_in1) to +(-.8,0);
+	\node[bb={1}{2}, fill=gray, right=4 of eta'] (mu') {};
+	\draw (mu'_in1) -- +(-.8,0);
+	\draw (mu'_out1) -- +(.8,0);
+	\draw (mu'_out2) -- +(.8,0);
+\end{tikzpicture}
+\end{equation}
+and three equations:
+\begin{equation}\label{eqn.rel_comonoid}
+\begin{tikzpicture}
+	\node (Q11) {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a) {};
+		\coordinate (a1) at ($(a_out1)+(1,0)$);
+		\coordinate (a2) at ($(a_out2)+(1,0)$);
+		\draw (a_out2) to[out=0, in=180] (a1);
+		\draw (a_out1) to[out=0, in=180] (a2);
+		\draw (a_in1) -- +(-.5,0);
+	\end{tikzpicture}
+	};
+	\node (Q12) [right=.8 of Q11] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a) {};
+		\draw (a_out1) -- +(.5,0);
+		\draw (a_out2) -- +(.5,0);
+		\draw (a_in1) -- +(-.5,0);
+	\end{tikzpicture}
+	};
+	\node[label=above:{\tiny commutative}] at ($(Q11.east)!.5!(Q12.west)$) {$=$};
+%
+	\node (Q21) [right=1 of Q12] {
+  \begin{tikzpicture}[WD]
+  	\node[bb={1}{2}, fill=gray] (a1) {};
+  	\node[bb={1}{0}, fill=gray, right=.5 of a1_out1] (a2) {};
+  	\draw (a2_in1) -- (a1_out1);
+  	\draw (a1_out2) -- +(2,0);
+  	\draw (a1_in1) -- +(-.5,0);
+	\end{tikzpicture}
+	};
+	\node (Q22) [right=.8 of Q21] {
+	\begin{tikzpicture}[WD]
+		\draw (0,0) -- (2,0);
+	\end{tikzpicture}
+	};	
+	\node[label=above:{\tiny unital}] at ($(Q21.east)!.5!(Q22.west)$) {$=$};
+%
+	\node (Q31) [right=1 of Q21] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a1) {};
+		\node[bb={1}{2}, fill=gray, minimum height=1ex, right=.5 of a1_out1] (a2) {};
+		\draw (a2_in1) -- (a1_out1);
+		\draw (a1_out2) -- +(2,0);
+		\draw (a2_out1) -- +(.5,0);
+		\draw (a2_out2) -- +(.5,0);
+		\draw (a1_in1) -- +(-.5,0);
+	\end{tikzpicture}
+	};
+	\node (Q32) [right=.8 of Q31] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a1) {};
+		\node[bb={1}{2}, fill=gray, minimum height=1ex, right=.5 of a1_out2] (a2) {};
+		\draw (a2_in1) -- (a1_out2);
+		\draw (a1_out1) -- +(2,0);
+		\draw (a2_out1) -- +(.5,0);
+		\draw (a2_out2) -- +(.5,0);
+		\draw (a1_in1) -- +(-.5,0);
+	\end{tikzpicture}
+	};
+	\node[label=above:{\tiny associative}] at ($(Q31.east)!.5!(Q32.west)$) {$=$};
+\end{tikzpicture}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Monoids]\label{def.prop_monoids}
+The \emph{prop for monoids} is given by two generators
+\begin{equation}\label{eqn.gen_monoid}
+\begin{tikzpicture}[WD]
+	\node[bb={0}{1}, fill=white] (eta) {};
+	\draw (eta_out1) -- +(.8,0);
+	\node[bb={2}{1}, fill=white, right=4 of eta] (mu) {};
+	\draw (mu_out1) -- +(.8,0);
+	\draw (mu_in1) -- +(-.8,0);
+	\draw (mu_in2) -- +(-.8,0);
+\end{tikzpicture}
+\end{equation}
+and three equations:
+\begin{equation}\label{eqn.rel_monoid}
+\begin{tikzpicture}
+	\node (P11) {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\coordinate (a1) at ($(a_in1)-(1,0)$);
+		\coordinate (a2) at ($(a_in2)-(1,0)$);
+		\draw (a1) to[in=180, out=0] (a_in2);
+		\draw (a2) to[in=180, out=0] (a_in1);
+		\draw (a_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P12) [right=.8 of P11] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\draw (a_in1) -- +(-.5,0);
+		\draw (a_in2) -- +(-.5,0);
+		\draw (a_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node at ($(P11.east)!.5!(P12.west)$) {$=$};
+%
+	\node (P21) [right=1 of P12] {
+  \begin{tikzpicture}[WD]
+  	\node[bb={2}{1}, fill=white] (a1) {};
+  	\node[bb={0}{1}, fill=white, left=.5 of a1_in1] (a2) {};
+  	\draw (a2_out1) -- (a1_in1);
+  	\draw (a1_in2) -- +(-2,0);
+  	\draw (a1_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P22) [right=.8 of P21] {
+	\begin{tikzpicture}[WD]
+		\draw (0,0) -- (2,0);
+	\end{tikzpicture}
+	};	
+	\node at ($(P21.east)!.5!(P22.west)$) {$=$};
+%
+	\node (P31) [right=1 of P22] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a1) {};
+		\node[bb={2}{1}, fill=white, minimum height=1ex, left=.5 of a1_in1] (a2) {};
+		\draw (a2_out1) -- (a1_in1);
+		\draw (a1_in2) -- +(-2,0);
+		\draw (a2_in1) -- +(-.5,0);
+		\draw (a2_in2) -- +(-.5,0);
+		\draw (a1_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P32) [right=.8 of P31] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a1) {};
+		\node[bb={2}{1}, fill=white, minimum height=1ex, left=.5 of a1_in2] (a2) {};
+		\draw (a2_out1) -- (a1_in2);
+		\draw (a1_in1) -- +(-2,0);
+		\draw (a2_in1) -- +(-.5,0);
+		\draw (a2_in2) -- +(-.5,0);
+		\draw (a1_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node at ($(P31.east)!.5!(P32.west)$) {$=$};
+\end{tikzpicture}
+\end{equation}
+\end{definition}
+
+
+\begin{remark}\label{rem.prop_monoids_finset}
+It is well-known that the prop for monoids is the skeleton of $\finset$, i.e. that the morphisms $m\to n$ are in one-to-one correspondence with the functions $\ord{m}\to\ord{n}$. Similarly, the prop for comonoids is the skeleton of $\finset\op$.
+\end{remark}
+
+\begin{definition}[Bimonoids]\label{def.prop_bimonoids}
+The \emph{prop for bimonoids} is given by the four generators from \cref{eqn.gen_monoid,eqn.gen_comonoid}, and ten relations: the six from \cref{eqn.rel_monoid,eqn.rel_comonoid} and the following four:
+\begin{equation}\label{eqn.rel_bimonoid}
+\begin{tikzpicture}[x=.75cm]
+	\node (P11) {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (a_in2) -- +(-.5, 0);
+	\end{tikzpicture}
+	};
+	\node (P12) [right=.5 of P11] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{0}, fill=gray] (a1) {};
+		\node[bb={1}{0}, fill=gray, below=.5 of a1] (a2) {};
+		\draw (a1_in1) -- +(-.5, 0);
+		\draw (a2_in1) -- +(-.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P11.east)!.6!(P12.west)$) {$=$};
+%
+	\node (P21) [right=1 of P12] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=white] (a) {};
+		\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+	\end{tikzpicture}
+	};
+	\node (P22) [right=.8 of P21] {
+	\begin{tikzpicture}[WD]
+		\node {0};
+	\end{tikzpicture}
+	};
+	\node at ($(P21.east)!.5!(P22.west)$) {$=$};
+%
+	\node (P31) [right=1 of P22] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=white] (a) {};
+		\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+		\draw (b_out1) -- +(.5, 0);
+		\draw (b_out2) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node (P32) [right=.8 of P31] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=white] (a1) {};
+		\node[bb={0}{1}, fill=white, below=.5 of a1] (a2) {};
+		\draw (a1_out1) -- +(.5, 0);
+		\draw (a2_out1) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P31.east)!.5!(P32.west)$) {$=$};
+%
+	\node (P41) [right=1 of P32] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (a_in2) -- +(-.5, 0);
+		\draw (b_out1) -- +(.5, 0);
+		\draw (b_out2) -- +(.5, 0);		
+	\end{tikzpicture}
+	};
+	\node (P42) [right=.8 of P41] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a1) {};
+		\node[bb={1}{2}, fill=gray, below=.5 of a1] (a2) {};
+		\node[bb={2}{1}, fill=white, right=of a1] (b1) {};
+		\node[bb={2}{1}, fill=white, right=of a2] (b2) {};
+		\draw (a1_out1) -- (b1_in1);
+		\draw (a1_out2) to[out=0, in=180] (b2_in1);
+		\draw (a2_out1) to[out=0, in=180] (b1_in2);
+		\draw (a2_out2) -- (b2_in2);
+		\draw (a1_in1) -- +(-.5, 0);
+		\draw (a2_in1) -- +(-.5, 0);
+		\draw (b1_out1) -- +(.5, 0);
+		\draw (b2_out1) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P41.east)!.5!(P42.west)$) {$=$};
+\end{tikzpicture}
+\end{equation}
+\end{definition}
+
+Up to this point, all of our po-props have actually just been props: all 2-morphisms are identities in \cref{def.prop_monoids,def.prop_comonoids,def.prop_bimonoids}. Next we
+discuss some po-props. 
+
+\begin{definition}[Right adjoint monoids]\label{def.prop_radj_mon}
+The \emph{prop for right adjoint monoids} is given by
+\begin{itemize}
+  \item four generating 1-morphisms,
+    \begin{equation}\label{eqn.gen_adjmonoid}
+    \begin{tikzpicture}[WD]
+    	\node[bb={1}{0}, fill=gray] (eta') {};
+    	\draw (eta'_in1) to +(-.8,0);
+    	\node[bb={1}{2}, fill=gray, right=4 of eta'] (mu') {};
+    	\draw (mu'_in1) -- +(-.8,0);
+    	\draw (mu'_out1) -- +(.8,0);
+    	\draw (mu'_out2) -- +(.8,0);
+    	\node[bb={0}{1}, fill=gray, right=4 of mu'] (eta) {};
+    	\draw (eta_out1) -- +(.8,0);
+    	\node[bb={2}{1}, fill=gray, right=4 of eta] (mu) {};
+    	\draw (mu_out1) -- +(.8,0);
+    	\draw (mu_in1) -- +(-.8,0);
+    	\draw (mu_in2) -- +(-.8,0);
+    	\node[above=.5 of eta] (label) {$\ust{\epsilon}$};
+    	\node at (label-|mu) {$\ust{\delta}$};
+    	\node at (label-|eta') {$\lsh{\epsilon}$};
+    	\node at (label-|mu') {$\lsh{\delta}$};
+    \end{tikzpicture}
+    \end{equation}
+	\item three equations: $\ust{\epsilon}$ and $\ust{\delta}$ satisfy the three commutative monoid equations from \cref{eqn.rel_monoid}, and
+	\item four 2-morphisms saying that $\lsh{\epsilon}$ is left adjoint to $\ust{\epsilon}$ and $\lsh{\delta}$ is left adjoint to $\ust{\delta}$:
+  	\begin{equation}
+		\begin{tikzpicture}[x=.75cm]
+			\node (P11) {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (1.5,0);
+			\end{tikzpicture}			
+			};
+			\node (P12) [right=.7 of P11] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{0}, fill=gray] (a) {};
+				\node[bb={0}{1}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+	\node at ($(P11.east)!.5!(P12.west)$) {$\leq$};
+%
+			\node (P21) [right=1 of P12] {
+			\begin{tikzpicture}[WD]
+				\node[bb={0}{1}, fill=gray] (a) {};
+				\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+			\end{tikzpicture}
+			};
+			\node (P22) [right=.5 of P21] {
+			\begin{tikzpicture}[WD]
+				\node {0};
+			\end{tikzpicture}			
+			};
+	\node at ($(P21.east)!.6!(P22.west)$) {$\leq$};
+%
+			\node (P31) [right=1 of P22] {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (1.5,0);	
+			\end{tikzpicture}
+			};
+			\node (P32) [right=.7 of P31] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{2}, fill=gray] (a) {};
+				\node[bb={2}{1}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_out2) -- (b_in2);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+	\node at ($(P31.east)!.5!(P32.west)$) {$\leq$};
+%
+			\node (P41) [right=1 of P32] {
+			\begin{tikzpicture}[WD]
+				\node[bb={2}{1}, fill=gray] (a) {};
+				\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+				\draw (a_in2) -- +(-.5, 0);
+				\draw (b_out2) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+			\node (P42) [right=.7 of P41] {
+			\begin{tikzpicture}[WD]
+   			\draw (0, 0) -- (1.5, 0);	
+   			\draw (0, .75) -- (1.5, .75);		
+			\end{tikzpicture}
+			};
+	\node at ($(P41.east)!.5!(P42.west)$) {$\leq$};
+%
+		\end{tikzpicture}
+		\end{equation}
+\end{itemize}
+\end{definition}
+
+We could have called the prop for right adjoint monoids in \cref{def.prop_radj_mon} \emph{the prop for left adjoint comonoids.} Indeed, we show in \cref{prop.left_right_adj_laws} that if $\ust{\epsilon}$ and $\ust{\delta}$ satisfy the monoid equations then their left adjoints satisfy the comonoid equations.
+
+\begin{proposition}\label{prop.left_right_adj_laws}
+In the prop for left adjoint comonoids \cref{def.prop_radj_mon}, the morphisms $\ust{\epsilon}$ and $\ust{\delta}$ also satisfy the three monoid equations from \cref{eqn.rel_comonoid}.
+\end{proposition}
+\begin{proof}
+In any po-category $\pp$, there is an isomorphism of categories $\ladj(\pp)\cong\radj(\pp)\op$, i.e. the category of left adjoints is the opposite of the category of right adjoints.
+\end{proof}
+
+\begin{definition}[Right adjoint frobenius monoids]\label{def.prop_radj_frob_mon}
+The \emph{prop for right adjoint frobenius monoids} is given by taking the prop for right adjoint monoids (\cref{def.prop_radj_mon}) and adding three more equations (two of which were already inequalities):
+  	\begin{equation} \label{eqn.frobenius}
+		\begin{tikzpicture}
+			\node (P11) {
+			\begin{tikzpicture}[WD]
+				\node {0};
+			\end{tikzpicture}			
+			};
+			\node (P12) [right=.5 of P11] {
+			\begin{tikzpicture}[WD]
+				\node[bb={0}{1}, fill=gray] (a) {};
+				\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+			\end{tikzpicture}
+			};
+  		\node at ($(P11.east)!.5!(P12.west)$) {$=$};
+%
+			\node (P21) [right=1 of P12] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{2}, fill=gray] (a) {};
+				\node[bb={2}{1}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_out2) -- (b_in2);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+			\node (P22) [right=.7 of P21] {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (1.5,0);	
+			\end{tikzpicture}
+			};
+			\node at ($(P21.east)!.5!(P22.west)$) {$=$};
+%
+    	\node (P31) [right=1 of P22] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={2}{1}, fill=gray, above right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out1) -- (a2_in2);
+    		\draw (a1_out2) -- +(2,0);
+    		\draw (a2_in1) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+    	};
+    	\node (P32) [right=1 of P31] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={2}{1}, fill=gray, below right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out2) -- (a2_in1);
+    		\draw (a1_out1) -- +(2,0);
+    		\draw (a2_in2) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+    	};	
+    	\node[label=above:{\tiny frobenius}] at ($(P31.east)!.5!(P32.west)$) {$=$};
+		\end{tikzpicture}
+		\end{equation}
+\end{definition}
+
+\begin{proposition}\label{prop.adj_frob_monoids_extra}
+The prop for right adjoint frobenius monoids also satisfies the following equation:
+\[
+\begin{tikzpicture}
+	\node (P31) {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a1) {};
+		\node[bb={2}{1}, fill=gray, above right=-.75 and .5 of a1] (a2) {};
+		\draw (a1_out1) -- (a2_in2);
+		\draw (a1_out2) -- +(2,0);
+		\draw (a2_in1) -- +(-2,0);
+		\draw (a1_in1) -- +(-.5,0);
+		\draw (a2_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P32) [right=1 of P31] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=gray] (a1) {};
+		\node[bb={1}{2}, fill=gray, right=.5 of a1] (a2) {};
+		\draw (a1_out1) -- (a2_in1);
+		\draw (a1_in1) -- +(-.5,0);
+		\draw (a1_in2) -- +(-.5,0);
+		\draw (a2_out1) -- +(.5,0);
+		\draw (a2_out2) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P33) [right=1 of P32] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a1) {};
+		\node[bb={2}{1}, fill=gray, below right=-.75 and .5 of a1] (a2) {};
+		\draw (a1_out2) -- (a2_in1);
+		\draw (a1_out1) -- +(2,0);
+		\draw (a2_in2) -- +(-2,0);
+		\draw (a1_in1) -- +(-.5,0);
+		\draw (a2_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};	
+	\node at ($(P31.east)!.5!(P32.west)$) {$=$};
+	\node at ($(P32.east)!.5!(P33.west)$) {$=$};
+\end{tikzpicture}
+\]
+\end{proposition}
+\begin{proof}
+\todo{\url{https://graphicallinearalgebra.net/2015/10/01/22-the-frobenius-equation/}}
+\end{proof}
+
+The prop for left adjoint monoids is the 2-dual ($\co$) of the prop for right adjoint monoids (see \cref{def.prop_radj_mon}), and the prop for left adjoint frobenius monoids is the 2-dual of the prop for right adjoint frobenius monoids (see \cref{def.prop_radj_frob_mon}).
+
+\begin{proposition} \label{prop.lafms_are_relfinsetop}
+	The po-prop for right adjoint frobenius monoids is equivalent to $\rrel{\finset\op}$.
+\end{proposition}
+\begin{proof}
+The underlying 1-category for frobenius monoids is $\rel{\finset\op}$ by \cite[Proposition 4.6]{coya2017corelations}. We will show that every 2-morphism in $\rrel{\finset\op}$ is a composite of tensors of the single 2-morphism $(\lsh{\delta}\cp\ust{\delta})\leq \id_2$.
+
+Every 2-morphism in $\rrel{\finset\op}$ is monic in $\finset\op$, i.e.\ epic in $\finset$. Thus it can be factored as follows:
+\[
+\begin{tikzcd}[row sep=10pt]
+  &
+  p\\&
+  p+1\ar[u, ->>]\\
+  m\ar[uur]\ar[ur]\ar[dr]\ar[ddr]&
+  \vdots&
+  n\ar[uul]\ar[ul]\ar[dl]\ar[ddl]\\&
+  q-1\ar[u, ->>]\\&
+  q\ar[u, ->>]
+\end{tikzcd}
+\]
+where we are using arrows to represent functions (morphisms in $\finset$). Thus it suffices to assume $q=p+1$. Moreover, this map is the tensor product of $p-1$ identity 2-morphisms and one 2-morphism of the form shown left
+\[
+\begin{tikzcd}[row sep=0pt]
+	&
+	1\\
+	m'\ar[ur]\ar[dr]&&
+	n'\ar[ul]\ar[dl]\\&
+	2\ar[uu]
+\end{tikzcd}
+\quad=\quad
+\begin{tikzcd}[row sep=0pt]
+	&
+	2&&
+	1&&
+	2\\
+	m'\ar[ur]\ar[dr]&&
+	2\ar[ul, equal]\ar[dl, equal]\ar[dr, equal]\ar[ur]&&
+	2\ar[ul]\ar[dl, equal]\ar[ur, equal]\ar[dr, equal]&&
+	n'\ar[ul]\ar[dl]\\&
+	2\ar[uu, equal]&&
+	2\ar[uu]&&
+	2\ar[uu, equal]
+\end{tikzcd}
+\]
+but this can be factored as shown right. The middle map is the 2-morphism $(\lsh{\delta}\cp\ust{\delta})\leq\id_2$, as desired.
+\end{proof}
+
+\begin{remark}
+The 2-structure of the prop for left adjoint frobenius monoids is generated by two 2-morphisms, $1\leq(\ust{\epsilon}\cp\lsh{\epsilon})$ and $(\lsh{\delta}\cp\ust{\delta})\leq 2$, but we only used one of them in the proof of \cref{prop.lafms_are_relfinsetop}. The other can be derived, in the presence of the 1-structure of $\rel{\finset\op}$, i.e.\
+\[
+\begin{tikzpicture}[x=.75cm]
+	\node (P1) {
+	\begin{tikzpicture}[WD]
+ 		\draw (0,0) -- (1.5,0);
+	\end{tikzpicture}			
+	};
+	\node (P2) [right=1 of P1] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=gray] (sum) {};
+		\node[bb={0}{1}, fill=gray, left=.5 of sum_in2] (zero) {};
+		\node[bb={1}{2}, fill=gray, right=.5 of sum_out1] (cosum) {};
+		\node[bb={1}{0}, fill=gray, right=.5 of cosum_out1] (cozero) {};
+		\draw (zero_out1) -- (sum_in2);
+		\draw (sum_out1) -- (cosum_in1);
+		\draw (cosum_out1) -- (cozero_in1);
+		\draw (sum_in1) -- +(-2, 0);
+		\draw (cosum_out2) -- +(2, 0);		
+	\end{tikzpicture}
+	};
+	\node (P3) [right=1 of P2] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=gray] (a) {};
+		\node[bb={1}{0}, fill=gray, above right=0 and .5 of a] (b) {};
+		\draw (a_out1) -- +(2,0);
+		\draw (b_in1) -- +(-2,0);
+	\end{tikzpicture}
+	};
+	\node (P4) [right=1 of P3] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{0}, fill=gray] (a) {};
+		\node[bb={0}{1}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (b_out1) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P1.east)!.5!(P2.west)$) {$=$};
+	\node at ($(P2.east)!.5!(P3.west)$) {$\leq$};
+	\node at ($(P3.east)!.5!(P4.west)$) {$=$};
+\end{tikzpicture}
+\]
+\end{remark}
+
+\begin{proposition}\label{prop.ladj_frob_comon_compact_closed}
+The prop for right adjoint frobenius monoids is self-dual compact closed. Dually, the prop for left adjoint frobenius monoids is self-dual compact closed.
+\end{proposition}
+\begin{proof}
+We consider only the prop for right adjoint frobenius monoids, the other being dual. The proposed cup is
+$x\coloneqq
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={0}{1}, fill=gray, minimum width=0] (a) {};
+	\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+	\draw (a_out1) -- (b_in1);
+	\draw (b_out1) -- +(.5, 0);
+	\draw (b_out2) -- +(.5, 0);
+\end{tikzpicture}
+$
+and the proposed cap is
+$x'\coloneqq
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={1}{0}, fill=gray, minimum width=0] (a) {};
+	\node[bb={2}{1}, fill=gray, left=.5 of a] (b) {};
+	\draw (b_out1) -- (a_in1);
+	\draw (b_in1) -- +(-.5, 0);
+	\draw (b_in2) -- +(-.5, 0);
+\end{tikzpicture}
+$
+and one proves that these obey the snake equations $(c\otimes x)\cp(x'\cp c)=c=(x\otimes c)\cp(c\otimes x')$ using the frobenius and monoid equations, \cref{eqn.frobenius,eqn.rel_comonoid}.
+\end{proof}
+
+We denote the cup and cap more simply as follows
+\begin{equation}\label{eqn.white_black_cup_cap}
+\begin{tikzpicture}
+	\node (P1) {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+		\node[bb={0}{2}, fill=gray] (a) {};
+		\draw (a_out1) -- +(.5, 0);
+		\draw (a_out2) -- +(.5, 0);		
+	\end{tikzpicture}
+	};
+	\node (P2) [right=.5 of P1] {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+  	\node[bb={0}{1}, fill=gray, minimum width=0] (a) {};
+  	\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+  	\draw (a_out1) -- (b_in1);
+  	\draw (b_out1) -- +(.5, 0);
+  	\draw (b_out2) -- +(.5, 0);
+  \end{tikzpicture}
+	};
+	\node at ($(P1.east)!.5!(P2.west)$) {$\coloneqq$};
+%
+	\node (P3) [right=1 of P2] {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+		\node[bb={2}{0}, fill=gray] (a) {};
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (a_in2) -- +(-.5, 0);		
+	\end{tikzpicture}
+	};
+	\node (P4) [right=.5 of P3] {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+  	\node[bb={2}{1}, fill=gray, ] (b) {};
+  	\node[bb={1}{0}, fill=gray, right=.5 of b, minimum width=0] (a) {};
+  	\draw (b_out1) -- (a_in1);
+  	\draw (b_in1) -- +(-.5, 0);
+  	\draw (b_in2) -- +(-.5, 0);
+  \end{tikzpicture}
+	};
+	\node at ($(P3.east)!.5!(P4.west)$) {$\coloneqq$};
+%
+	\node [right=1 of P4] (P5) {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+		\node[bb={0}{2}, fill=white] (a) {};
+		\draw (a_out1) -- +(.5, 0);
+		\draw (a_out2) -- +(.5, 0);		
+	\end{tikzpicture}
+	};
+	\node (P6) [right=.5 of P5] {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+  	\node[bb={0}{1}, fill=white, minimum width=0] (a) {};
+  	\node[bb={1}{2}, fill=white, right=.5 of a] (b) {};
+  	\draw (a_out1) -- (b_in1);
+  	\draw (b_out1) -- +(.5, 0);
+  	\draw (b_out2) -- +(.5, 0);
+  \end{tikzpicture}
+	};
+	\node at ($(P5.east)!.5!(P6.west)$) {$\coloneqq$};
+%
+	\node (P7) [right=1 of P6] {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+		\node[bb={2}{0}, fill=white] (a) {};
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (a_in2) -- +(-.5, 0);		
+	\end{tikzpicture}
+	};
+	\node (P8) [right=.5 of P7] {
+	\begin{tikzpicture}[WD, bb port sep=.3]
+  	\node[bb={2}{1}, fill=white, ] (b) {};
+  	\node[bb={1}{0}, fill=white, right=.5 of b, minimum width=0] (a) {};
+  	\draw (b_out1) -- (a_in1);
+  	\draw (b_in1) -- +(-.5, 0);
+  	\draw (b_in2) -- +(-.5, 0);
+  \end{tikzpicture}
+	};
+	\node at ($(P7.east)!.5!(P8.west)$) {$\coloneqq$};
+\end{tikzpicture}
+\end{equation}
+
+In \cref{def.abelian_relations} we will discuss the prop for abelian relations, which includes both the prop for left adjoint frobenius monoids and the prop for right adjoint frobenius monoids; thus it has two self-dual compact closed structures, 
+$\big(
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={0}{2}, fill=gray] (b) {};
+	\draw (b_out1) -- +(.5, 0);
+	\draw (b_out2) -- +(.5, 0);
+\end{tikzpicture}
+$
+,\;
+$
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={2}{0}, fill=gray] (b) {};
+	\draw (b_in1) -- +(-.5, 0);
+	\draw (b_in2) -- +(-.5, 0);
+\end{tikzpicture}
+\big)$
+and
+$\big(
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={0}{2}, fill=white] (b) {};
+	\draw (b_out1) -- +(.5, 0);
+	\draw (b_out2) -- +(.5, 0);
+\end{tikzpicture}
+$
+,\;
+$
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={2}{0}, fill=white] (b) {};
+	\draw (b_in1) -- +(-.5, 0);
+	\draw (b_in2) -- +(-.5, 0);
+\end{tikzpicture}
+\big)$
+.
+
+\begin{proposition}\label{prop.mediating_map}
+Let $(\cat{C},\otimes,I)$ be a symmetric monoidal category with two compact closed structures $(x_c\colon I\to c^*\otimes c,\; x'_c\colon c\times c^*\to I)$ and $(y_c\colon I\to c^*\otimes c,\; y'_c\colon c\times c^*\to I)$. Then for each $c$, the map $(c\otimes x)\cp(y'\otimes c)$ is an automorphism $c\to c$, with inverse $(c\otimes y)\cp(x'\otimes c)$.
+\end{proposition}
+\begin{proof}
+Clearly $(c\otimes x)\cp(y'\otimes c)\cp(c\otimes y)\cp(x'\otimes c)$ is the identity, and similarly for composing in the other order.
+\end{proof}
+
+We refer to the isomorphism from \cref{prop.mediating_map} as the \emph{mediating isomorphism}. If the two compact closed structures are drawn as in \cref{eqn.white_black_cup_cap}, the resulting mediating isomorphism and its inverse are drawn as follows:
+\[
+\begin{tikzpicture}
+	\node (P1) {
+  \begin{tikzpicture}[WD]
+  	\node[bb={0}{2}, fill=white] (a) {};
+  	\node[bb={2}{0}, fill=gray, above right=-.75 and .5 of a] (b) {};
+  	\draw (a_out1) -- (b_in2);
+  	\draw (a_out2) -- +(2, 0);
+  	\draw (b_in1) -- +(-2, 0);
+  \end{tikzpicture}
+  };
+	\node (P2) [right=1.5 of P1] {
+  \begin{tikzpicture}[WD]
+  	\node[bb={0}{2}, fill=gray] (a) {};
+  	\node[bb={2}{0}, fill=white, above right=-.75 and .5 of a] (b) {};
+  	\draw (a_out1) -- (b_in2);
+  	\draw (a_out2) -- +(2, 0);
+  	\draw (b_in1) -- +(-2, 0);
+  \end{tikzpicture}
+  };
+  \node at ($(P1.east)!.5!(P2.west)$) {and};
+\end{tikzpicture}
+\]
+
+\begin{definition}[Abelian relations]\label{def.abelian_relations}
+The \emph{prop $\aa$ for abelian relations} is given by an adjoint frobenius monoid $(\lsh{\eta},\lsh{\mu},\ust{\eta},\ust{\mu})$ and an adjoint frobenius comonoid $(\lsh{\epsilon},\lsh{\delta},\ust{\epsilon},\ust{\delta})$, such that the collection of left adjoints $(\lsh{\eta},\lsh{\mu},\lsh{\epsilon},\lsh{\delta})$, and hence also of right adjoints $(\ust{\eta},\ust{\mu},\ust{\epsilon},\ust{\delta})$, forms a bimonoid, and such that the mediating isomorphism is an involution:
+\begin{equation}\label{eqn.mediating_involution}
+\begin{tikzpicture}[baseline=(P1.center)]
+	\node (P1) {
+  \begin{tikzpicture}[WD]
+  	\node[bb={0}{2}, fill=white] (a) {};
+  	\node[bb={2}{0}, fill=gray, above right=-.75 and .5 of a] (b) {};
+  	\draw (a_out1) -- (b_in2);
+  	\draw (a_out2) -- +(2, 0);
+  	\draw (b_in1) -- +(-2, 0);
+  \end{tikzpicture}
+  };
+	\node (P2) [right=1 of P1] {
+  \begin{tikzpicture}[WD]
+  	\node[bb={0}{2}, fill=gray] (a) {};
+  	\node[bb={2}{0}, fill=white, above right=-.75 and .5 of a] (b) {};
+  	\draw (a_out1) -- (b_in2);
+  	\draw (a_out2) -- +(2, 0);
+  	\draw (b_in1) -- +(-2, 0);
+  \end{tikzpicture}
+  };
+  \node at ($(P1.east)!.5!(P2.west)$) {$=$};
+\end{tikzpicture}
+\end{equation}
+\end{definition}
+We write out the generators and relations from \cref{def.abelian_relations} explicitly in table \cref{table.abelian_relations}, page~\pageref{table.abelian_relations}.
+
+%============= ABELIAN RELATIONS =============%
+\begin{table}
+\begin{center}
+\large\textbf{The prop $\aa$ of abelian relations}\normalsize
+\end{center}
+\medskip
+The prop $\aa$ of abelian relations is presented as follows:
+\begin{itemize}
+  \item eight generating 1-morphisms,
+    \[
+    \begin{tikzpicture}[WD]
+    	\node[bb={1}{0}, fill=white] (eta') {};
+    	\draw (eta'_in1) to +(-.8,0);
+    	\node[bb={1}{2}, fill=white, right=4 of eta'] (mu') {};
+    	\draw (mu'_in1) -- +(-.8,0);
+    	\draw (mu'_out1) -- +(.8,0);
+    	\draw (mu'_out2) -- +(.8,0);
+%
+    	\node[bb={0}{1}, fill=gray, right=4 of mu'] (epsilon) {};
+    	\draw (epsilon_out1) -- +(.8,0);
+    	\node[bb={2}{1}, fill=gray, right=4 of epsilon] (delta) {};
+    	\draw (delta_out1) -- +(.8,0);
+    	\draw (delta_in1) -- +(-.8,0);
+    	\draw (delta_in2) -- +(-.8,0);
+%
+    	\node[bb={0}{1}, fill=white, above=2 of eta'] (eta) {};
+    	\draw (eta_out1) -- +(.8,0);
+    	\node[bb={2}{1}, fill=white, right=4 of eta] (mu) {};
+    	\draw (mu_out1) -- +(.8,0);
+    	\draw (mu_in1) -- +(-.8,0);
+    	\draw (mu_in2) -- +(-.8,0);
+%
+    	\node[bb={1}{0}, fill=gray, right=4 of mu] (epsilon') {};
+    	\draw (epsilon'_in1) to +(-.8,0);
+    	\node[bb={1}{2}, fill=gray, right=4 of epsilon'] (delta') {};
+    	\draw (delta'_in1) -- +(-.8,0);
+    	\draw (delta'_out1) -- +(.8,0);
+    	\draw (delta'_out2) -- +(.8,0);
+%
+	   	\node[below=.5 of epsilon] (label) {$\ust{\epsilon}$};
+    	\node at (label-|delta) {$\ust{\delta}$};
+			\node at (label-|eta') {$\ust{\eta}$};
+			\node at (label-|mu') {$\ust{\mu}$};
+%
+			\node[above=.5 of epsilon'] (label') {$\lsh{\epsilon}$};
+    	\node at (label'-|delta') {$\lsh{\delta}$};
+			\node at (label'-|eta) {$\lsh{\eta}$};
+			\node at (label'-|mu) {$\lsh{\mu}$};
+    \end{tikzpicture}
+		\]
+	\item seventeen equations:
+\[
+\begin{tikzpicture}
+	\node (P11) {
+  \begin{tikzpicture}[WD]
+  	\node[bb={2}{1}, fill=white] (a1) {};
+  	\node[bb={0}{1}, fill=white, left=.5 of a1_in1] (a2) {};
+  	\draw (a2_out1) -- (a1_in1);
+  	\draw (a1_in2) -- +(-2,0);
+  	\draw (a1_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P12) [right=1 of P11] {
+	\begin{tikzpicture}[WD]
+		\draw (0,0) -- (2,0);
+	\end{tikzpicture}
+	};
+	\node at ($(P11.east)!.5!(P12.west)$) {$=$};
+%
+	\node (P21) [right=.7 of P12] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\coordinate (a1) at ($(a_in1)-(1,0)$);
+		\coordinate (a2) at ($(a_in2)-(1,0)$);
+		\draw (a1) to[in=180, out=0] (a_in2);
+		\draw (a2) to[in=180, out=0] (a_in1);
+		\draw (a_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P22) [right=1 of P21] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\draw (a_in1) -- +(-.5,0);
+		\draw (a_in2) -- +(-.5,0);
+		\draw (a_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};	
+	\node at ($(P21.east)!.5!(P22.west)$) {$=$};
+%
+	\node (P31) [right=1.3 of P22] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a1) {};
+		\node[bb={2}{1}, fill=white, minimum height=1ex, left=.5 of a1_in1] (a2) {};
+		\draw (a2_out1) -- (a1_in1);
+		\draw (a1_in2) -- +(-2,0);
+		\draw (a2_in1) -- +(-.5,0);
+		\draw (a2_in2) -- +(-.5,0);
+		\draw (a1_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node (P32) [right=1 of P31] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a1) {};
+		\node[bb={2}{1}, fill=white, minimum height=1ex, left=.5 of a1_in2] (a2) {};
+		\draw (a2_out1) -- (a1_in2);
+		\draw (a1_in1) -- +(-2,0);
+		\draw (a2_in1) -- +(-.5,0);
+		\draw (a2_in2) -- +(-.5,0);
+		\draw (a1_out1) -- +(.5,0);
+	\end{tikzpicture}
+	};
+	\node at ($(P31.east)!.5!(P32.west)$) {$=$};
+%
+%
+	\node (Q11) [below=.2 of P11] {
+			\begin{tikzpicture}[WD]
+				\node[bb={0}{1}, fill=white] (a) {};
+				\node[bb={1}{0}, fill=white, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+			\end{tikzpicture}
+	};
+	\node (Q12) [right=1 of Q11] {
+			\begin{tikzpicture}[WD]
+				\node {0};
+			\end{tikzpicture}			
+	};
+	\node at ($(Q11.east)!.5!(Q12.west)$) {$=$};
+%
+	\node (Q21) at (P21|-Q12) {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (2.5,0);	
+			\end{tikzpicture}
+	};
+	\node (Q22) [right=1 of Q21] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{2}, fill=white] (a) {};
+				\node[bb={2}{1}, fill=white, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_out2) -- (b_in2);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+	};	
+	\node at ($(Q21.east)!.5!(Q22.west)$) {$=$};
+%
+	\node (Q31) at (P31|-Q12) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=white] (a1) {};
+    		\node[bb={2}{1}, fill=white, above right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out1) -- (a2_in2);
+    		\draw (a1_out2) -- +(2,0);
+    		\draw (a2_in1) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node (Q32) [right=1 of Q31] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=white] (a1) {};
+    		\node[bb={2}{1}, fill=white, below right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out2) -- (a2_in1);
+    		\draw (a1_out1) -- +(2,0);
+    		\draw (a2_in2) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node at ($(Q31.east)!.5!(Q32.west)$) {$=$};
+%
+			\node (R11) [below=.1 of Q11] {
+      \begin{tikzpicture}[WD]
+      	\node[bb={1}{2}, fill=gray] (a1) {};
+      	\node[bb={1}{0}, fill=gray, right=.5 of a1_out1] (a2) {};
+      	\draw (a2_in1) -- (a1_out1);
+      	\draw (a1_out2) -- +(2,0);
+      	\draw (a1_in1) -- +(-.5,0);
+    	\end{tikzpicture}
+			};
+			\node (R12) at (R11-|Q12) {
+    	\begin{tikzpicture}[WD]
+    		\draw (0,0) -- (2,0);
+    	\end{tikzpicture}
+			};
+  		\node at ($(R11.east)!.5!(R12.west)$) {$=$};
+%
+			\node (R21) at (R11-|Q21) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a) {};
+    		\coordinate (a1) at ($(a_out1)+(1,0)$);
+    		\coordinate (a2) at ($(a_out2)+(1,0)$);
+    		\draw (a_out2) to[out=0, in=180] (a1);
+    		\draw (a_out1) to[out=0, in=180] (a2);
+    		\draw (a_in1) -- +(-.5,0);
+    	\end{tikzpicture}
+			};
+			\node (R22) at (R11-|Q22) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a) {};
+    		\draw (a_out1) -- +(.5,0);
+    		\draw (a_out2) -- +(.5,0);
+    		\draw (a_in1) -- +(-.5,0);
+    	\end{tikzpicture}
+			};
+			\node at ($(R21.east)!.5!(R22.west)$) {$=$};
+%
+    	\node (R31) at (R11-|Q31) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={1}{2}, fill=gray, minimum height=1ex, right=.5 of a1_out1] (a2) {};
+    		\draw (a2_in1) -- (a1_out1);
+    		\draw (a1_out2) -- +(2, 0);
+    		\draw (a2_out1) -- +(.5, 0);
+    		\draw (a2_out2) -- +(.5, 0);
+    		\draw (a1_in1) -- +(-.5, 0);
+    	\end{tikzpicture}
+    	};
+    	\node (R32) at (R11-|Q32) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={1}{2}, fill=gray, minimum height=1ex, right=.5 of a1_out2] (a2) {};
+    		\draw (a2_in1) -- (a1_out2);
+    		\draw (a1_out1) -- +(2, 0);
+    		\draw (a2_out1) -- +(.5, 0);
+    		\draw (a2_out2) -- +(.5, 0);
+    		\draw (a1_in1) -- +(-.5, 0);
+    	\end{tikzpicture}
+    	};	
+    	\node at ($(R31.east)!.5!(R32.west)$) {$=$};
+%
+	\node (S11) [below=.2 of R11] {
+			\begin{tikzpicture}[WD]
+				\node[bb={0}{1}, fill=gray] (a) {};
+				\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+			\end{tikzpicture}
+	};
+	\node (S12) [right=1 of S11] {
+			\begin{tikzpicture}[WD]
+				\node {0};
+			\end{tikzpicture}			
+	};
+	\node at ($(S11.east)!.5!(S12.west)$) {$=$};
+%
+	\node (S21) at (P21|-S12) {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (2.5,0);	
+			\end{tikzpicture}
+	};
+	\node (S22) [right=1 of S21] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{2}, fill=gray] (a) {};
+				\node[bb={2}{1}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_out2) -- (b_in2);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+	};	
+	\node at ($(S21.east)!.5!(S22.west)$) {$=$};
+%
+	\node (S31) at (P31|-S12) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={2}{1}, fill=gray, above right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out1) -- (a2_in2);
+    		\draw (a1_out2) -- +(2,0);
+    		\draw (a2_in1) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node (S32) [right=1 of S31] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={2}{1}, fill=gray, below right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out2) -- (a2_in1);
+    		\draw (a1_out1) -- +(2,0);
+    		\draw (a2_in2) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node at ($(S31.east)!.5!(S32.west)$) {$=$};
+\end{tikzpicture}
+\]
+\mbox{}\vspace{-.5in}\mbox{}
+\[
+\begin{tikzpicture}[x=.57cm]
+	\node (P11) {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (a_in2) -- +(-.5, 0);
+	\end{tikzpicture}
+	};
+	\node (P12) [right=.5 of P11] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{0}, fill=gray] (a1) {};
+		\node[bb={1}{0}, fill=gray, below=.5 of a1] (a2) {};
+		\draw (a1_in1) -- +(-.5, 0);
+		\draw (a2_in1) -- +(-.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P11.east)!.6!(P12.west)$) {$=$};
+%
+	\node (P21) [right=1 of P12] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=white] (a) {};
+		\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+	\end{tikzpicture}
+	};
+	\node (P22) [right=.8 of P21] {
+	\begin{tikzpicture}[WD]
+		\node {0};
+	\end{tikzpicture}
+	};
+	\node at ($(P21.east)!.5!(P22.west)$) {$=$};
+%
+	\node (P31) [right=1 of P22] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=white] (a) {};
+		\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+		\draw (b_out1) -- +(.5, 0);
+		\draw (b_out2) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node (P32) [right=.8 of P31] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{1}, fill=white] (a1) {};
+		\node[bb={0}{1}, fill=white, below=.5 of a1] (a2) {};
+		\draw (a1_out1) -- +(.5, 0);
+		\draw (a2_out1) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P31.east)!.5!(P32.west)$) {$=$};
+%
+	\node (P41) [right=1 of P32] {
+	\begin{tikzpicture}[WD]
+		\node[bb={2}{1}, fill=white] (a) {};
+		\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+		\draw (a_out1) -- (b_in1);
+		\draw (a_in1) -- +(-.5, 0);
+		\draw (a_in2) -- +(-.5, 0);
+		\draw (b_out1) -- +(.5, 0);
+		\draw (b_out2) -- +(.5, 0);		
+	\end{tikzpicture}
+	};
+	\node (P42) [right=.8 of P41] {
+	\begin{tikzpicture}[WD]
+		\node[bb={1}{2}, fill=gray] (a1) {};
+		\node[bb={1}{2}, fill=gray, below=.5 of a1] (a2) {};
+		\node[bb={2}{1}, fill=white, right=of a1] (b1) {};
+		\node[bb={2}{1}, fill=white, right=of a2] (b2) {};
+		\draw (a1_out1) -- (b1_in1);
+		\draw (a1_out2) to[out=0, in=180] (b2_in1);
+		\draw (a2_out1) to[out=0, in=180] (b1_in2);
+		\draw (a2_out2) -- (b2_in2);
+		\draw (a1_in1) -- +(-.5, 0);
+		\draw (a2_in1) -- +(-.5, 0);
+		\draw (b1_out1) -- +(.5, 0);
+		\draw (b2_out1) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(P41.east)!.5!(P42.west)$) {$=$};
+\end{tikzpicture}
+\]
+\mbox{}\vspace{-.25in}\mbox{}
+\[
+\begin{tikzpicture}
+	\node (P1) {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{2}, fill=white] (a) {};
+		\node[bb={2}{0}, fill=gray, above right=-.75 and .5 of a] (b) {};
+		\draw (a_out1) -- (b_in2);
+		\draw (a_out2) -- +(2,0);
+		\draw (b_in1) -- +(-2,0);
+	\end{tikzpicture}
+	};
+	\node (P2) [right=1 of P1] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{2}, fill=gray] (a) {};
+		\node[bb={2}{0}, fill=white, above right=-.75 and .5 of a] (b) {};
+		\draw (a_out1) -- (b_in2);
+		\draw (a_out2) -- +(2,0);
+		\draw (b_in1) -- +(-2,0);
+	\end{tikzpicture}	
+	};
+	\node at ($(P1)!.5!(P2)$) {$=$};
+\end{tikzpicture}
+\]
+	\item four inequalities:
+\[		
+	\begin{tikzpicture}[x=.57cm]
+			\node (P11) {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{0}, fill=white] (a) {};
+				\node[bb={0}{1}, fill=white, right=.5 of a] (b) {};
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+			\node (P12) [right=.7 of P11] {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (1.5,0);
+			\end{tikzpicture}			
+			};
+	\node at ($(P11.east)!.5!(P12.west)$) {$\leq$};
+%
+			\node (P21) [right=1 of P12] {
+			\begin{tikzpicture}[WD]
+ 			\draw (0, 0) -- (1.5, 0);	
+ 			\draw (0, .75) -- (1.5, .75);		
+			\end{tikzpicture}
+			};
+			\node (P22) [right=.7 of P21] {
+			\begin{tikzpicture}[WD]
+				\node[bb={2}{1}, fill=white] (a) {};
+				\node[bb={1}{2}, fill=white, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+				\draw (a_in2) -- +(-.5, 0);
+				\draw (b_out2) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+	\node at ($(P21.east)!.5!(P22.west)$) {$\leq$};
+%
+			\node (P31) [right=1 of P22] {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (1.5,0);
+			\end{tikzpicture}			
+			};
+			\node (P32) [right=.7 of P31] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{0}, fill=gray] (a) {};
+				\node[bb={0}{1}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+	\node at ($(P31.east)!.5!(P32.west)$) {$\leq$};
+%
+			\node (P41) [right=1 of P32] {
+			\begin{tikzpicture}[WD]
+				\node[bb={2}{1}, fill=gray] (a) {};
+				\node[bb={1}{2}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+				\draw (a_in2) -- +(-.5, 0);
+				\draw (b_out2) -- +(.5, 0);
+			\end{tikzpicture}
+			};
+			\node (P42) [right=.7 of P41] {
+			\begin{tikzpicture}[WD]
+ 			\draw (0, 0) -- (1.5, 0);	
+ 			\draw (0, .75) -- (1.5, .75);		
+			\end{tikzpicture}
+			};
+	\node at ($(P41.east)!.5!(P42.west)$) {$\leq$};
+		\end{tikzpicture}
+\]
+\end{itemize}
+\caption{The prop $\aa$ of abelian relations consists of two adjoint frobenius monoids that interact as bimonoids; see \cref{def.abelian_relations}, page \pageref{def.abelian_relations}. Note that the inequalities (and equations) saying that $\lsh{\eta}$ is left adjoint to $\ust{\eta}$, etc.\ imply that the mirror-image of each of the sixteen equations also holds; see \cref{prop.left_right_adj_laws}. For example, the first equation says that $\lsh{\eta}$ is a unit for the multiplication $\lsh{\mu}$, and its mirror-image says that $\ust{\eta}$ is a counit for the comultiplication $\ust{\mu}$. We will see in \cref{thm.ab_pocats_supply_ab_rels} that these relations hold of every object in every abelian category.}
+\label{table.abelian_relations}
+\end{table}
+
+%============= ABELIAN RELATIONS =============%
+
+\begin{proposition}\label{prop.aa_two_ccc_structures}
+The prop $\aa$ has two self-dual compact closed structures, and the resulting mediating isomorphism is an involution.
+\end{proposition}
+\begin{proof}
+The two self-dual compact closed structures arise from the right adjoint frobenius monoids and monoids $(\lsh{\epsilon},\lsh{\delta},\ust{\epsilon},\ust{\delta})$ and $(\lsh{\eta},\lsh{\mu},\lsh{\epsilon},\lsh{\delta})$; see \cref{prop.ladj_frob_comon_compact_closed}. The mediating isomorphism is an involution by \cref{eqn.mediating_involution}.
+\end{proof}
+
+\begin{corollary}\label{cor.aa_supplies_involutions}
+Let $\ccat{I}$ denote the prop for involutions from \cref{ex.involutions}. There is a prop functor $\ccat{I}\to\aa$ sending the involution to the mediating isomorphism.
+\end{corollary}
+
+%======== Chapter ========%
+\chapter{Supply: equipping each object with algebraic structure}
+
+%==== Section ====%
+\section{Supply and homomorphic supply}
+
+It is often the case that each object of a monoidal category $\cc$ is equipped with a certain structure, compatible with the monoidal product. For example, perhaps every object is equipped with a monoid structure. Some authors say that $\cc$ ``has'' the structure, e.g.\ ``has monoids''. In this section we define this notion more formally, give some examples, and prove some properties of it.
+
+Recall from \cref{def.mob} the strict monoidal functor $\mob{\cc}\to\cc$ including the monoidal category of $\cc$ objects into $\cc$. It gives rise to a strict monoidal functor $\ssmf(\cc,\cc)\to\ssmf(\mob{\cc},\cc)$, where $\ssmf(-,-)$ is the po-category of strong monoidal functors and monoidal natural transformations from \cref{def.smf}. We will be interested in the strict monoidal functor $^{\otimes-}\colon\nn\to\ssmf(\mob{\cc},\cc)$.
+
+The results of this section will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{maclane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$, and composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms. Finally, nothing changes if we replace $\cat{C}$ by a symmetric monoidal po-category $\cc$, because by definition all diagrams of 2-cells commute in $\cc$.
+
+\begin{proposition}\label{prop.homomorphically_supply_objects}
+Let $(\cc,\otimes,I)$ be a symmetric monoidal po-category and let $\cc_0\ss\cc$ be its monoidal category of $\cc$-objects. There is a unique strict monoidal functor $\tpow{-}\colon\nn\to\ssmf(\cc_0,\cc)$ sending $1\mapsto\id$. Moreover, it factors through a strict functor $\nn\to\ssmf(\cc,\cc)$.
+\end{proposition}
+\begin{proof}
+By \cref{def.smf}, any strict monoidal functor $\nn\to\ssmf(\cc_0,\cc)$ sending $1\mapsto\id$ must send objects $n\in\nn$ to the $n$-fold tensor power functor, $c\mapsto c\tpow{n}$  and $f\mapsto f\tpow{n}$ for $f\colon c\to d$ in $\cc_0$. The laxator isomorphisms are given by symmetry isomorphisms $\sigma$:
+\begin{equation}\label{eqn.symmetry_c1c2}
+  \sigma\colon 
+  c_1\tpow{n}\otimes c_2\tpow{n}
+  \Too{\cong}
+  (c_1\otimes c_2)\tpow{n}
+  \qqand
+  \sigma\colon I\Too{\cong}I\tpow{n}
+\end{equation}
+This assignment is functorial in $\nn$ because $\nn$ is discrete. Finally, it factors through a strict functor $\nn\to\ssmf(\cc,\cc)$ because the mapping $f\mapsto f\tpow{n}$ is functorial for any $f$ in $\cc$.
+\end{proof}
+
+\begin{remark}
+Every symmetric monoidal category (or prop) is a locally-discrete symmetric monoidal po-category (or po-prop), i.e.\ we can see it as having 2-morphisms, all of which are identities. Thus we may apply \cref{def.supply} in the non-po case. On a first pass, a reader may drop the ``po'' throughout the following definition.
+\end{remark}
+
+\begin{definition}\label{def.supply}
+Let $\pp$ be a po-prop and $\cc$ a symmetric monoidal po-category. A \emph{supply of $\pp$ in $\cc$} is a strict monoidal functor
+\[
+  s\colon\pp\to\ssmf(\mob{\cc},\cc).
+\]
+If $s$ factors as $\pp\to\ssmf(\cc',\cc)\ss\ssmf(\cc_0,\cc)$ for a monoidal subcategory $\cc_0\ss\cc'\ss\cc$ then we say that \emph{morphisms in $\cc'$ are homomorphisms for $s$}.
+\end{definition}
+
+Let's unpack the notion of supply $s\colon\pp\to\ssmf(\cc_0,\cc)$ from \cref{def.supply}; we deal with homomorphisms afterwards. It follows from \cref{prop.homomorphically_supply_objects,ex.nat_prop} that for every object $n\in\pp$, the strong monoidal functor $s(n)$ sends $c\mapsto c\tpow{n}$ and gives rise to the isomorphisms in \cref{eqn.symmetry_c1c2}. It remains to understand the action of $s$ on the 1-morphisms and 2-morphisms in $\pp$.
+
+Given a 1-morphism $\mu\colon m\to n$ in $\pp$, we obtain a monoidal natural transformation $s(\mu)\colon s(m)\to s(n)$, the \emph{$\mu$-maps supplied by $s$}. This means that for each object $c\in\cc$, we have a morphism $s(\mu)_c\colon c\tpow{m}\to c\tpow{n}$, commuting with composition, monoidal product, and order in $\pp$: given $\nu\colon n\to p$ and $\mu'\colon m'\to n'$, the following equations hold
+\begin{equation}\label{eqn.supply_composition}
+  s(\mu\cp\nu)_c=s(\mu)_c\cp s(\nu)_c
+  \qqand
+	s(\mu+\mu')_c=s(\mu)_c\otimes s(\mu')_c,
+\end{equation}
+and given a 2-morphism $\mu_1\leq\mu_2$ in $\pp$ there must be a 2-morphism in $\cc$:
+\begin{equation}\label{eqn.supply_2morphism}
+\begin{tikzcd}
+	c\tpow{m}\ar[r, bend left, "s(\mu_1)_c"]\ar[r, bend right, "s(\mu_2)_c"']\ar[r, phantom, "\Downarrow"]&
+	c\tpow{n}.
+\end{tikzcd}
+\end{equation}
+
+A priori, we must also check that the naturality condition holds for $s(\mu)$, which says that each morphism in $\cc_0$, i.e.\ each associator $\alpha\colon (a\otimes b)\otimes c\to a\otimes b\otimes c$ and unitor $\rho\colon a\otimes I\to a$ and $\lambda\colon I\otimes a\to a$, is a homomorphism for $s(\mu)$. But these conditions in fact follow from \cref{eqn.supply_commute_tensors}, as we will see in \cref{thm.coherence_are_homos}. Thus the only remaining requirement on $s(\mu)$ is that it be monoidal, i.e.\ that the diagrams
+\begin{equation}\label{eqn.supply_commute_tensors}
+\begin{tikzcd}[column sep=55pt]
+	c\tpow{m}\otimes d\tpow{m}\ar[r, "s(\mu)_c\otimes s(\mu)_d"]\ar[d, "\sigma"']&
+	c\tpow{n}\otimes d\tpow{n}\ar[d, "\sigma"]\\
+	(c\otimes d)\tpow{m}\ar[r, "s(\mu)_{c\otimes d}"']&
+	(c\otimes d)\tpow{n}
+\end{tikzcd}
+\hspace{.7in}
+\begin{tikzcd}
+	I\ar[r, equal]\ar[d, "\sigma"']&
+	I\ar[d, "\sigma"]\\
+	I\tpow{m}\ar[r, "s(\mu)_I"']&
+	I\tpow{n}
+\end{tikzcd}
+\end{equation}
+ commute for every $c,d\in\cc$. The first diagram says that the supplied morphisms commute with the monoidal product in $\cc$ and the second diagram says that the morphisms supplied on $I$ are all identities, up to the canonical morphisms $I\to I\tpow{m}$. 
+
+If the supply $s$ factors through some $\ssmf(\cc',\cc)$, we say that morphisms $f\colon c\to d$ in $\cc'$ are homomorphisms for $s$ because the added requirement is that the following square commutes for each $\mu\colon m\to n$ in $\pp$:
+\begin{equation}\label{eqn.nat_means_homo}
+\begin{tikzcd}
+	c\tpow{m}\ar[r, "s(\mu)_c"]\ar[d, "f\tpow{m}"']&
+	c\tpow{n}\ar[d, "f\tpow{n}"]\\
+	d\tpow{m}\ar[r, "s(\mu)_d"']&
+	d\tpow{n}
+\end{tikzcd}
+\end{equation}
+
+\begin{remark}\label{rem.notation_supply}
+The notation for supplies should be as lightweight as possible. Given a supply $s$ of $\pp$, we often denote the component $s(\mu)_c$ simply by $\mu_c$, for a morphism $\mu\in\pp$ and an object $c\in\cc$.
+\end{remark}
+
+\begin{theorem}\label{thm.coherence_are_homos}
+If $s$ satisfies \cref{eqn.supply_composition,eqn.supply_2morphism,eqn.supply_commute_tensors} then it is a supply.
+\end{theorem}
+We begin by clarifying the theorem statement. Define a \emph{pre-natural transformation} between functors $\ccat{C}\to\dd$ to be the \emph{data} of a natural transformation---a component map in $\dd$ for each object in $\ccat{C}$---\emph{without the naturality condition}. Say that a pre-natural transformation is \emph{strong monoidal} if it satisfies the usual additional strong monoidality axiom, and let $\ssmf'(\cc,\dd)$ denote the category of functors $\cc\to\dd$ and strong monoidal pre-natural transformations. Clearly, there is an inclusion $\ssmf(\cc,\dd)\to\ssmf'(\cc,\dd)$. Define a \emph{pre-supply} to be a strict monoidal functor $s'\colon\pp\to\ssmf'(\mob{\cc},\cc)$, i.e.\ $s'$ is an assignment $(\mu,c)\mapsto s'(\mu)_c\colon c\tpow{m}\to c\tpow{n}$ satisfying \cref{eqn.supply_composition,eqn.supply_2morphism,eqn.supply_commute_tensors}. The statement of \cref{thm.coherence_are_homos} says that every pre-supply is a supply, i.e.\ that every pre-supply $s'$ factors through the inclusion $\ssmf(\mob{\cc},\cc)\to\ssmf'(\mob{\cc},\cc)$ and thus induces a supply $s\colon\pp\to\ssmf(\mob{\cc},\cc)$. We are now ready to give the proof. 
+\begin{proof}
+Choose any $\mu\colon m\to n$ in $\pp$ and assume \cref{eqn.supply_composition,eqn.supply_2morphism,eqn.supply_commute_tensors}. The only thing that remains to check in order for $s$ to constitute a supply is that the associators and unitors are homomorphisms for $s(\mu)$, because these morphisms generate $\mob{\cc}$ by \cref{def.mob}. For the associators we consider the following diagram:
+\[
+\begin{tikzcd}[row sep=30pt]
+  \big((a\otimes b)\otimes c\big)\tpow{m}\ar[d, "s(\mu)_{(a\otimes b)\otimes c}"']&
+  a\tpow{m}\otimes b\tpow{m}\otimes c\tpow{m}\ar[l, "\sigma"']\ar[r, "\sigma"]\ar[d, "s(\mu)_a\otimes s(\mu)_b\otimes s(\mu)_c" description]&
+  \big(a\otimes (b\otimes c)\big)\tpow{m}\ar[d, "s(\mu)_{a\otimes (b\otimes c)}"]\\
+  \big((a\otimes b)\otimes c\big)\tpow{n}&
+  a\tpow{n}\otimes b\tpow{n}\otimes c\tpow{n}\ar[l, "\sigma"]\ar[r, "\sigma"']&
+  \big(a\otimes (b\otimes c)\big)\tpow{n}
+\end{tikzcd}
+\]
+Both the left-hand and right-hand squares commute by the left-hand diagram in \cref{eqn.supply_commute_tensors}. Replacing the leftward vertical maps by their inverses, the diagram still commutes. By Mac Lane's coherence theorem, the composite horizontal maps are the associator isomorphisms, and the fact that it commutes establishes that the associator is a homomorphism for $s(\mu)$.
+
+The same sort of argument holds for the unitors, with one additional element: the fact that $s(\mu)_I$ is the identity. Indeed, consider the following diagram:
+\[
+\begin{tikzcd}[row sep=30pt]
+	(a\otimes I)\tpow{m}\ar[d, "s(\mu)_{a\otimes I}"']&
+	a\tpow{m}\otimes I\tpow{m}\ar[d, "s(\mu)_a\otimes s(\mu)_I" description]\ar[l, "\sigma"']&[10pt]
+	a\tpow{m}\otimes I\ar[d, "s(\mu)_a\otimes I" description]\ar[r, "\rho"]\ar[l, "a\tpow{m}\otimes\sigma"']&
+	a\tpow{m}\ar[d, "s(\mu)_a"]\\
+	(a\otimes I)\tpow{n}&
+	a\tpow{n}\otimes I\tpow{n}\ar[l, "\sigma"]&
+	a\tpow{n}\otimes I\ar[l, "a\tpow{n}\otimes\sigma"]\ar[r, "\rho"']&
+	a\tpow{n}
+\end{tikzcd}
+\]
+The left-hand and middle diagrams commute by \cref{eqn.supply_commute_tensors} and the right-hand diagram commutes by the unitor axiom.
+\end{proof}
+
+% Subsection %
+\subsection{Examples of supply}
+
+
+
+\begin{example}
+Taking $\pp=\nn$, we see that there is a unique supply of $\nn$ in any symmetric monoidal po-category $\cc$. One might say that every $\cc$ supplies identities, and every morphism in $\cc$ is a homomorphism for identities.
+\end{example}
+
+
+\begin{example}\label{ex.terminal_supply}
+Let $1$ denote the terminal monoidal category. For any $\pp$ there is a unique supply of $\pp$ in $1$.
+\end{example}
+
+\begin{example}\label{ex.supply_involutions}
+Recall the prop $\ccat{I}$ from \cref{ex.involutions}. If $\cc$ supplies $\ccat{I}$, we will say it \emph{supplies involutions}. That means that every object $c\in\cc$ is equipped with an involution $i_c\colon c\to c$, compatible with tensor products in the sense that $i_{c\otimes d}=i_c\otimes i_d$.
+ 
+If morphisms $f\colon c\to d$ in some $\cc'\ss\cc$ are homomorphisms for the supply, it means they commute with the chosen involutions, i.e.\ $f\cp i_d=i_c\cp f$.
+\end{example}
+
+\begin{example}[Supply of monoids and comonoids]
+Consider the prop given by the skeleton of $\finset$, i.e. with $\Hom(m,n)\coloneqq\smset(\ord{m},\ord{n})$. Calling this prop ``the prop for monoids'' is reasonable in the sense that a supply of this prop in $\cc$ gives a map $\mu_c\colon c\otimes c\to c$ and $\eta\colon I\to c$ for every object $c$, compatible with tensor product in $\cc$ and satisfying the usual monoid laws. A morphism $f\colon c\to d$ is a homomorphism for monoids if $\mu_c\cp f=(f\otimes f)\cp \mu_d$ and $\eta_c\cp f=\eta_d$.
+
+Similarly, by a supply of comonoids, we mean a supply of the prop given by the skeleton of $\finset\op$.
+\end{example}
+
+\begin{example}[Cartesian categories]\label{ex.cart_grant_comonoids}
+A symmetric monoidal category $\cat{C}$ has finite products iff it supplies comonoids such that every morphism in $\cat{C}$ is a comonoid homomorphism. In this case, the categorical product coincides with the monoidal product. This was shown in \cite{fox1976coalgebras}.
+\end{example}
+
+\begin{example}[Compact closed categories]
+  A category $\cat{C}$ is called a \emph{self-dual compact closed category} if it supplies dualities (\cref{def.prop_duality}).
+\end{example}
+
+\begin{remark} \label{rem.name}
+  In any self-dual compact closed category $(\cat{C},\otimes,I)$, we obtain a bijection
+ \[\classify{-}\colon\cat{C}(X,Y)\To{\cong}\cat{C}(I,X\otimes Y).\]
+ Given $f \colon X \to Y$, we refer to $\classify{f}\colon I \to X \otimes Y$ as the \emph{name} of $f$. In pictures the construction $\classify{-}$ and its inverse are shown as follows:
+\[
+\begin{tikzpicture}
+ 	\node (p1) {
+	\begin{tikzpicture}[WD, light gray nodes]
+		\node[bb={1}{1}] (f) {$f$};
+		\draw (f_in1) -- +(-.5, 0);
+		\draw (f_out1) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node (p2) [right=1 of p1] {
+	\begin{tikzpicture}[WD, light gray nodes, font=\tiny]
+		\node[bb port sep=.75, bb={0}{2}] (cup) {};
+		\node[bb={1}{1}, right=.5 of cup_out2] (f) {$f$};
+		\draw (f_in1) -- (cup_out2);
+		\draw (f_out1) -- +(.5, 0);
+		\draw (cup_out1) -- +(2, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(p1.east)!.5!(p2.west)$) {$\mapsto$};
+%
+	\node (p3) [right=2 of p2] {
+	\begin{tikzpicture}[WD, light gray nodes]
+		\node[bb={0}{2}] (g) {$g$};
+		\draw (g_out1) -- +(.5, 0);
+		\draw (g_out2) -- +(.5, 0);
+	\end{tikzpicture}
+	};
+	\node (p4) [right=1 of p3] {
+	\begin{tikzpicture}[WD, light gray nodes, font=\tiny]
+		\node[bb={0}{2}] (g) {$g$};
+		\node[bb={2}{0}, above right=-.75 and .5 of g] (cap) {};
+		\draw (g_out1) -- (cap_in2);
+		\draw (g_out2) -- +(2, 0);
+		\draw (cap_in1) -- +(-2, 0);
+	\end{tikzpicture}
+	};
+	\node at ($(p3.east)!.5!(p4.west)$) {$\mapsto$};
+\end{tikzpicture}
+\]
+\end{remark}
+
+\begin{example}[Hypergraph categories]
+A category $\cat{C}$ is called a \emph{hypergraph category} if it supplies ``extra special commutative frobenius monoids,'' which we just call frobenius monoids; see \cite{kissinger2015finite,fong2019hypergraph}. The prop for frobenius monoids is $\cospan$, the 1-prop whose morphisms are cospans (up to isomorphism). Every hypergraph category is self-dual compact closed by \cite[Proposition 3.1]{fong2019hypergraph}.
+\end{example}
+
+\begin{example}
+If $\cat{C}$ is a regular category, it is equivalent to the category of left-adjoints in its relations po-category $\rrel{\ccat{C}}$. Since $\cat{C}$ is cartesian, it supplies comonoids by \cref{ex.cart_grant_comonoids}, and since the inclusion $\cat{C}\ss\rrel{\cat{C}}$ is identity on objects and strong, $\rrel{\cat{C}}$ also supplies comonoids (as we will eventually see in \cref{prop.strong_bo}). Not every map in $\rrel{\cat{C}}$ is a comonoid homomorphism, but every left adjoint is.
+\end{example}
+
+% Subsection %
+\subsection{First facts about supply}
+
+We record a few more facts about supplies.
+
+\begin{proposition}\label{prop.p_supplies_itself}
+Let $\pp$ be a po-prop. Then there is a supply of $\pp$ in $\pp$.
+\end{proposition}
+\begin{proof}
+The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product by $\cdot n$.
+
+Given $\mu\colon m\to n$ in $\pp$, we need to define a monoidal natural transformation
+\[
+\begin{tikzcd}[column sep=60pt]
+	\pp\ar[r, bend left, "-\cdot m" name=m]\ar[r, bend right, "-\cdot m"' name=n]&
+	\pp
+	\ar[from=m, to=n, Rightarrow, shorten <=4pt, shorten >=4pt, "s(\mu)"]
+\end{tikzcd}
+\]
+We define the component $s(\mu)_k\colon k\cdot m\to k\cdot n$ for an object $k\in\pp$ by conjugating by the symmetries and applying $\mu$, on each of the $k$ pieces:
+\begin{equation}\label{eqn.conjugation}
+	k\cdot m\To{\sigma_{k,m}}
+	m\cdot k\To{\mu\cdot k}
+	n\cdot k\To{\sigma_{n,k}}
+	k\cdot n.
+\end{equation}
+It is an easy exercise to show that the two maps $k_1\cdot m+k_2\cdot m\to (k_1+k_2)\cdot n$ from \cref{eqn.supply_commute_tensors} agree for any $k_1,k_2\in\pp$. If $\mu\leq\mu'$ then $s(\mu)_k\leq s(\mu')_k$ by whiskering \cref{eqn.conjugation}.
+\end{proof}
+
+\begin{remark}
+One might imagine that all morphisms in $\pp$ should be homomorphisms for the supply of $\pp$ in $\pp$ but this does not generally hold; roughly speaking, it requires too much commutativity. Explicitly, there is no reason to expect the following diagram (from \cref{eqn.nat_means_homo}) to commute for $\mu\colon m\to n$ and $\delta\colon k_1\to k_2$:
+\[
+\begin{tikzcd}
+  k_1\cdot m\ar[r, "\sigma"]\ar[d, "\delta\cdot m"']&
+  m\cdot k_1\ar[r, "\mu\cdot k_1"]\ar[dr, phantom, "?"]&
+  n\cdot k_1\ar[r, "\sigma"]&
+  k_1\cdot n\ar[d, "\delta\cdot n"]\\
+  k_2\cdot m\ar[r, "\sigma"']&
+  m\cdot k_2\ar[r, "\mu\cdot k_1"']&
+  n\cdot k_2\ar[r, "\sigma"']&
+  k_2\cdot n
+\end{tikzcd}
+\]
+\end{remark}
+
+
+The following is straightforward.
+\begin{proposition}\label{prop.change_of_supply}
+Let $F\colon\ccat{P}\to\ccat{Q}$ be a prop functor. For any supply $s$ of $\ccat{Q}$ in $\cc$, we have a supply $(F\cp s)$ of $\pp$ in $\cc$.
+\end{proposition}
+
+\begin{example}
+  Since there is a prop functor from the prop for dualities to the prop for frobenius monoids, every hypergraph category is a self-dual compact closed category.
+\end{example}
+
+\begin{proposition}\label{prop.supply_each_object}
+A supply $s$ of $\pp$ in $\cc$ induces a strong monoidal po-functor $s_c\colon\pp\to\cc$ with $s_c(1)=c$ for every object $c\in\cc$. 
+
+Conversely, an $\ob(\cc)$-indexed collection of strong monoidal po-functors $s_c\colon\pp\to\cc$ constitutes a supply if it satisfies \cref{eqn.supply_commute_tensors}.
+\end{proposition}
+\begin{proof}
+Suppose given a supply $s$; we construct $s_c$ for $c\in\cc$ as follows. On objects we put $s_c(n)\coloneqq c\tpow{n}$ for each $n\in\nn$. On morphisms we put $s_c(\mu)\coloneqq s(\mu)_c$, for each $\mu\in\pp(m,n)$. This is functorial and monoidal by \cref{eqn.supply_composition}.
+
+Suppose given a collection of such functors $s_c$, one for each $c\in\cc$, satisfying \cref{eqn.supply_commute_tensors}. By \cref{thm.coherence_are_homos}, these constitute a supply $s\colon\pp\to\ssmf(\cc_0,\cc)$ by defining $s(m)_c\coloneqq s_c(m)$ and $s(\mu)_c\coloneqq s_c(\mu)$.
+\end{proof}
+
+\begin{corollary} \label{cor.supply_each_object}
+A supply $s$ of $\pp$ in $\cc$ induces a strong monoidal functor $\bigsqcup_{c\in\ob(\cc)}\pp\too\cc$.
+\end{corollary}
+\begin{proof}
+This follows from \cref{prop.prop_coprod,prop.supply_each_object}.
+\end{proof}
+
+% Subsection %
+\subsection{Preservation of supply}
+
+\begin{proposition}\label{prop.nat_strong_isos}
+Let $(F,\varphi)\colon\cc\to\dd$ be a strong monoidal functor. The following commutes up to natural isomorphism:
+\[
+\begin{tikzcd}[column sep=50pt]
+	\nn\ar[r, "\otimes^-"]\ar[d, "\otimes^-"']&
+	\ssmf(\cc,\cc)\ar[d, "{\ssmf(\cc,F)}"]\\
+	\ssmf(\dd,\dd)\ar[r, "{\ssmf(F,\dd)}"']&
+	\ssmf(\cc,\dd)\ar[ul, phantom, "\overset{\varphi}{\cong}"]
+\end{tikzcd}
+\]
+\end{proposition}
+\begin{proof}
+Since $\nn$ is discrete, we simply need to provide an isomorphism of functors $\cc_0\to\dd$ for each object $n\in\nn$. Along the top-right, $n$ is sent to the functor $c\mapsto F(c\tpow{n})$, and along the left-bottom, $n$ is sent to the functor $c\mapsto F(c)\tpow{n}$, and the natural isomorphisms $\varphi$ that make $F$ strong are precisely the required isomorphisms.
+\end{proof}
+
+\begin{definition}\label{def.preserve_supply}
+Let $\pp$ be a prop, $\cc$ and $\dd$ symmetric monoidal categories, and suppose $s$ is a supply of $\pp$ in $\cc$ and $t$ is a supply of $\pp$ on $\dd$. We say that a strong monoidal functor $(F,\varphi)\colon\cc\to\dd$ \emph{preserves the supply} if there exists a natural isomorphism:
+\begin{equation}\label{eqn.pres_supply}
+\begin{tikzcd}[column sep=50pt]
+	\pp\ar[r, "s"]\ar[d, "t"']&
+	\ssmf(\mob{\cc},\cc)\ar[d, "{\ssmf(\mob{\cc},F)}"]\\
+	\ssmf(\mob{\dd},\dd)\ar[r, "{\ssmf(\mob{F},\dd)}"']&
+	\ssmf(\mob{\cc},\dd)\ar[ul, phantom, "\overset{\varphi}{\cong}"]
+\end{tikzcd}
+\end{equation}
+\end{definition}
+
+
+\begin{proposition}\label{prop.easy_pres_supply}
+$F\colon\ccat{C}\to\dd$ preserves the supply as in \cref{def.preserve_supply} iff the following diagram commutes for each morphism $\mu\colon m\to n$ in $\pp$ and object $c\in\ccat{C}$:
+\begin{equation}\label{eqn.unpack_preserve_supply}
+\begin{tikzcd}[column sep=large]
+	F(c)\tpow{m}\ar[r, "t(\mu)_{F(c)}"]\ar[d, "\cong"']&
+	F(c)\tpow{n}\ar[d, "\cong"]\\
+	F(c\tpow{m})\ar[r, "F(s(\mu)_c)"']&
+	F(c\tpow{n})
+\end{tikzcd}
+\end{equation}
+\end{proposition}
+\begin{proof}
+For each object $m\in\pp$, there is a component isomorphism $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ natural in $c\in\cc_0$; this is the content of \cref{prop.nat_strong_isos}.%
+\footnote{In fact, \cref{prop.nat_strong_isos} says more: that these isomorphisms $\varphi$ are natural in $\cc$.\label{foot.natural}}
+  For these $\varphi$ to be natural in $\pp$ means that for any morphism $\mu\colon m\to n$ in $\pp$ we have $s(\mu)\cp F=F_0\cp t(\mu)$. This is the content of \cref{eqn.unpack_preserve_supply}.
+\end{proof}
+
+\begin{proposition}
+Suppose that $s\colon\pp\to\ssmf(\cc',\cc)$ and $t\colon\pp\to\ssmf(\dd',\dd)$ are supplies with homomorphisms in $\cc'$ and $\dd'$, and suppose $F\colon\cc\to\dd$ preserves supply as in \cref{def.preserve_supply} and furthermore restricts to a functor $F'\colon\cc'\to\dd'$. Then the following diagram also commutes:
+\[
+\begin{tikzcd}[column sep=large]
+	\pp\ar[r, "s"]\ar[d, "t"']&
+	\ssmf(\cc',\cc)\ar[d, "{\ssmf(\cc,F)}"]\\
+	\ssmf(\dd',\dd)\ar[r, "{\ssmf(F',\dd)}"']&
+	\ssmf(\cc',\dd)\ar[ul, phantom, "\overset{\varphi}{\cong}"]
+\end{tikzcd}
+\]
+\end{proposition}
+\begin{proof}
+This follows from \cref{foot.natural} and the proof of \cref{prop.easy_pres_supply}.
+\end{proof}
+
+\begin{example}
+Let $s$ be a supply of $\pp$ in $\cc$. Recall that there is a unique supply of $\pp$ on $1$ by \cref{ex.terminal_supply}. It follows from the second diagram in \cref{eqn.supply_commute_tensors} that the unique monoidal functor $1\to\cc$ preserves the unique supply of $\pp$ on $1$.
+\end{example}
+
+\begin{example}\label{ex.preserve_involutions}
+Suppose we have a supply $s$ of involutions in $\cc$ and a supply $t$ of involutions in $\dd$. As we saw in \cref{ex.supply_involutions} this just means that every object $x$ is equipped with an involution $i_x\colon x\cong x$. A symmetric monoidal functor $F\colon\cc\to\dd$ preserves the supply if $F(i_x)=i_{F(x)}$.
+\end{example}
+
+\begin{proposition}
+  The strong monoidal functor of \cref{cor.supply_each_object} preserves the supply.
+\end{proposition}
+\begin{proof}
+  \todo{Prove.}
+\end{proof} 
+
+\begin{proposition}\label{prop.strong_bo}
+Suppose $F\colon\cc\to\dd$ is a strong monoidal functor that is bijective on objects. Then if $\cc$ supplies $\ccat{P}$ then so does $\dd$ in such a way that $F$ preserves the supply.
+\end{proposition}
+\begin{proof}
+Given $s$ as in the following diagram, one simply defines $t$ using the inverse of the isomorphism $\ssmf(\mob{F},\dd)$:
+\[
+\begin{tikzcd}[column sep=50pt]
+	\pp\ar[r, "s"]\ar[d, dashed, "t"']&
+	\ssmf(\mob{\cc},\cc)\ar[d, "{\ssmf(\mob{\cc},F)}"]\\
+	\ssmf(\mob{\dd},\dd)\ar[r, "\cong"']&
+	\ssmf(\mob{\cc},\dd)
+\end{tikzcd}
+\qedhere
+\]
+\end{proof}
+
+%==== Section ====%
+\section{Abelian po-categories supply abelian relations}
+
+Recall the po-prop $\aa$ of abelian relations from \cref{def.abelian_relations}; see also \cref{table.abelian_relations}. Every object in every abelian category satisfies these relations.
+
+\begin{lemma}\label{lemma.abelian_supplies_bimonoids}
+If $\cat{A}$ is an abelian category then $\cat{A}$ supplies bimonoids.
+\end{lemma}
+\begin{proof}
+We will give a supply of the prop from \cref{def.prop_bimonoids} in $\cat{A}$. In fact, this is standard; for every object $a\in\cat{A}$ we supply the following morphisms, which come from the universal properties of 0-ary and 2-ary products and coproducts.
+\begin{equation}\label{eqn.matrix_forms}
+\begin{tikzpicture}[WD, baseline=(eta.south)]
+	\node[bb={0}{1}, fill=white] (eta) {};
+	\draw (eta_out1) -- +(.8,0);
+	\node[bb={2}{1}, fill=white, right=7 of eta] (mu) {};
+	\draw (mu_out1) -- +(.8,0);
+	\draw (mu_in1) -- +(-.8,0);
+	\draw (mu_in2) -- +(-.8,0);
+	\node[bb={1}{0}, fill=gray, right=7 of mu] (eta') {};
+	\draw (eta'_in1) to +(-.8,0);
+	\node[bb={1}{2}, fill=gray, right=7 of eta'] (mu') {};
+	\draw (mu'_in1) -- +(-.8,0);
+	\draw (mu'_out1) -- +(.8,0);
+	\draw (mu'_out2) -- +(.8,0);
+	\node[below=.5 of eta] (label) {$!\colon 0\to a$};
+  \node at (label-|mu) {${1\choose 1}\colon a\oplus a\to a$};
+	\node at (label-|eta') {$!\colon a\to 0$};
+	\node at (label-|mu') {$(1\; 1)\colon a\to a\oplus a$};
+\end{tikzpicture}
+\end{equation}
+see \cite[Proposition 1.2.8 and below]{Borceux:1994b}.%
+\footnote{See also \cref{sec.notation} for our convention the orientation of these matrices.}
+These satisfy the equations in \cref{eqn.rel_monoid,eqn.rel_comonoid,eqn.rel_bimonoid}. For example, the right-most equations in \cref{eqn.rel_monoid,eqn.rel_comonoid,eqn.rel_bimonoid} say the following in matrix form:
+\begin{gather*}
+\begin{psmallmatrix}
+  1&0\\
+  1&0\\
+  0&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1\\
+  1
+\end{psmallmatrix}
+=
+\begin{psmallmatrix}
+  1&0\\
+  0&1\\
+  0&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1\\
+  1
+\end{psmallmatrix}
+\hspace{.5in}
+\begin{psmallmatrix}
+  1&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1&1&0\\
+  0&0&1
+\end{psmallmatrix}
+=
+\begin{psmallmatrix}
+  1&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1&0&0\\
+  0&1&1
+\end{psmallmatrix}
+\\
+\begin{psmallmatrix}
+  1\\
+  1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1&1
+\end{psmallmatrix}
+=
+\begin{psmallmatrix}
+  1&1&0&0\\
+  0&0&1&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1&0&0&0\\
+  0&0&1&0\\
+  0&1&0&0\\
+  0&0&0&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1&0\\
+  1&0\\
+  0&1\\
+  0&1
+\end{psmallmatrix}
+\end{gather*}
+It remains to check that these maps are compatible with $\oplus$ in the sense of \cref{eqn.supply_commute_tensors}. These facts are proved directly from the universal properties of products and coproducts. For example, in any category with finite products and diagonal maps denoted $\Delta$, the following diagram commutes:
+\[
+\begin{tikzcd}[column sep=large]
+	a\times b\ar[r, "\Delta_a\times\Delta_b"]\ar[d, equal]&
+	a\times a\times b\times b\ar[d, "\sigma"]\\
+	a\times b\ar[r, "\Delta_{(a\times b)}"']&
+	a\times b\times a\times b
+\end{tikzcd}
+\qedhere
+\]
+\end{proof}
+
+\begin{lemma}\label{lemma.exact_pres_supply_bimonoid}
+If $F\colon\cat{A}\to\cat{B}$ is exact then it is strong monoidal and preserves the supply of bimonoids.
+\end{lemma}
+\begin{proof}
+If $F$ is exact then it preserves finite products and coproducts; in particular it is strong monoidal. By \cref{prop.easy_pres_supply} we just need to show that the diagram \cref{eqn.unpack_preserve_supply} commutes for the four morphisms in \cref{eqn.matrix_forms}. But these again follow from exactness, e.g. the following diagram commutes because $F$ preserves the universal map out of a coproduct:
+\[
+\begin{tikzcd}
+	F(a\oplus a)\ar[r, "F{1\choose 1}"]\ar[d, "\cong"]&
+	F(a)\ar[d, equal]\\
+	F(a)\oplus F(a)\ar[r, "1\choose 1"']&
+	F(a)
+\end{tikzcd}
+\qedhere
+\]
+\end{proof}
+
+\begin{theorem}\label{thm.ab_pocats_supply_ab_rels}
+Let $\cat{A}$ be an abelian category and let $\rrel{\cat{A}}$ denote its relations po-category. Then $\rrel{\cat{A}}$ supplies $\aa$. Moreover, any exact functor $F\colon\cat{A}\to\cat{B}$ preserves the supply.
+\end{theorem}
+\begin{proof}
+We have functors $L\colon\cat{A}\to\rrel{\cat{A}}$ and $R\colon\cat{A}\to\rrel{\cat{A}}\op$, including $\cat{A}$ as the left and right adjoints respectively. By \cref{lemma.abelian_supplies_bimonoids}, $\cat{A}$ supplies bimonoids. This means that we have a bimonoid $\lsh{\eta},\lsh{\mu},\lsh{\epsilon},\lsh{\delta}$ and a bimonoid $\ust{\eta},\ust{\mu},\ust{\epsilon},\ust{\delta}$ of their right adjoints in $\rrel{\cat{A}}$, and all of these maps are compatible with $\oplus$. Moreover these structures are preserved under exact functors by \cref{lemma.exact_pres_supply_bimonoid}. 
+
+We must show that these morphisms satisfy the remaining equations and inequalities from \cref{table.abelian_relations}. The four adjunction inequalities hold because $\lsh{\eta}$ is left adjoint to $\ust{\eta}$, etc., by construction. It remains to show that the frobenius laws and the negation involution law hold$\rrel{\cat{A}}$. The adjunction . We begin with the frobenius laws:
+\[
+\begin{tikzpicture}
+	\node (Q11) {
+			\begin{tikzpicture}[WD]
+				\node[bb={0}{1}, fill=white] (a) {};
+				\node[bb={1}{0}, fill=white, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+			\end{tikzpicture}
+	};
+	\node (Q12) [right=1 of Q11] {
+			\begin{tikzpicture}[WD]
+				\node {0};
+			\end{tikzpicture}			
+	};
+	\node at ($(Q11.east)!.5!(Q12.west)$) {$=$};
+%
+	\node (Q21) [right=1 of Q12] {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (2.5,0);	
+			\end{tikzpicture}
+	};
+	\node (Q22) [right=1 of Q21] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{2}, fill=white] (a) {};
+				\node[bb={2}{1}, fill=white, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_out2) -- (b_in2);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+	};	
+	\node at ($(Q21.east)!.5!(Q22.west)$) {$=$};
+%
+	\node (Q31) [right=1 of Q22] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=white] (a1) {};
+    		\node[bb={2}{1}, fill=white, above right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out1) -- (a2_in2);
+    		\draw (a1_out2) -- +(2,0);
+    		\draw (a2_in1) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node (Q32) [right=1 of Q31] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=white] (a1) {};
+    		\node[bb={2}{1}, fill=white, below right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out2) -- (a2_in1);
+    		\draw (a1_out1) -- +(2,0);
+    		\draw (a2_in2) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node at ($(Q31.east)!.5!(Q32.west)$) {$=$};
+%
+	\node (S11) [above=.2 of Q11] {
+			\begin{tikzpicture}[WD]
+				\node[bb={0}{1}, fill=gray] (a) {};
+				\node[bb={1}{0}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+			\end{tikzpicture}
+	};
+	\node (S12) [right=1 of S11] {
+			\begin{tikzpicture}[WD]
+				\node {0};
+			\end{tikzpicture}			
+	};
+	\node at ($(S11.east)!.5!(S12.west)$) {$=$};
+%
+	\node (S21) at (Q21|-S12) {
+			\begin{tikzpicture}[WD]
+  			\draw (0,0) -- (2.5,0);	
+			\end{tikzpicture}
+	};
+	\node (S22) [right=1 of S21] {
+			\begin{tikzpicture}[WD]
+				\node[bb={1}{2}, fill=gray] (a) {};
+				\node[bb={2}{1}, fill=gray, right=.5 of a] (b) {};
+				\draw (a_out1) -- (b_in1);
+				\draw (a_out2) -- (b_in2);
+				\draw (a_in1) -- +(-.5, 0);
+				\draw (b_out1) -- +(.5, 0);
+			\end{tikzpicture}
+	};	
+	\node at ($(S21.east)!.5!(S22.west)$) {$=$};
+%
+	\node (S31) at (Q31|-S12) {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={2}{1}, fill=gray, above right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out1) -- (a2_in2);
+    		\draw (a1_out2) -- +(2,0);
+    		\draw (a2_in1) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node (S32) [right=1 of S31] {
+    	\begin{tikzpicture}[WD]
+    		\node[bb={1}{2}, fill=gray] (a1) {};
+    		\node[bb={2}{1}, fill=gray, below right=-.75 and .5 of a1] (a2) {};
+    		\draw (a1_out2) -- (a2_in1);
+    		\draw (a1_out1) -- +(2,0);
+    		\draw (a2_in2) -- +(-2,0);
+    		\draw (a1_in1) -- +(-.5,0);
+    		\draw (a2_out1) -- +(.5,0);
+    	\end{tikzpicture}
+	};
+	\node at ($(S31.east)!.5!(S32.west)$) {$=$};
+\end{tikzpicture}
+\]
+The equations in the left-hand column are obvious since there is only one relation $0\to 0$. The middle top equation amounts to the statement that the square below is a pullback
+\[
+\begin{tikzcd}[sep=small]
+	&&
+	A\ar[dl, equal]\ar[dr, equal]\\&
+	A\ar[dl, equal]\ar[dr, "\lsh{\delta}"]&&
+	A\ar[dr, equal]\ar[dl, "\lsh{\delta}"']\\
+	A&&A^2&&A
+\end{tikzcd}
+\]
+which is says that the diagonal is monic, as it is in any category with products. The top right equation amounts to saying that the top map and the left-hand map agree in the following pullback
+\[
+\begin{tikzcd}[column sep=35pt]
+  \bullet\ar[r]\ar[d]\pb&
+  A\times A\ar[d, "\lsh{\delta}\times A"]\\
+  A\times A\ar[r, "A\times\lsh{\delta}"']&
+  A\times A\times A
+\end{tikzcd}
+\]
+One can prove that in any category with products, the pullback of this diagram is $A$ and the top and right maps are both the diagonals $\lsh{\delta}$.
+
+The middle bottom equation amounts to the statement that the diagonal $A\ss A\times A$ is the image of $\tiny\begin{psmallmatrix}1&1\\1&1\end{psmallmatrix}\colon A\oplus A\to A\times A$. Since this map factors through the diagonal, it suffices to check that $\lsh{\mu}\colon A\oplus A\to A$ is epic, which follows from the fact that it is a retraction, with section $\copair{A,0}\colon A\to A\oplus A$.
+
+Finally, the bottom right equation amounts to the statement that the map $\pair{A\oplus\lsh{\mu},\lsh{\mu}\oplus A}\colon A\oplus A\oplus A\to (A\oplus A)\times(A\oplus A)$ is monic. This map is shown as the matrix to the left below, where we see that it is the section of a retraction, which is sufficient for the claim:
+\[
+\begin{psmallmatrix}
+  1&1&0&0\\
+  0&1&1&0\\
+  0&0&1&1
+\end{psmallmatrix}
+\begin{psmallmatrix}
+  1&-1&0\\
+  0&1&0\\
+  0&0&0\\
+  0&0&1
+\end{psmallmatrix}
+=
+\begin{psmallmatrix}
+  1&0&0\\
+  0&1&0\\
+  0&0&1
+\end{psmallmatrix}
+\]
+
+Finally we prove that the negation involution law
+\[
+\begin{tikzpicture}
+	\node (P1) {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{2}, fill=white] (a) {};
+		\node[bb={2}{0}, fill=gray, above right=-.75 and .5 of a] (b) {};
+		\draw (a_out1) -- (b_in2);
+		\draw (a_out2) -- +(2,0);
+		\draw (b_in1) -- +(-2,0);
+	\end{tikzpicture}
+	};
+	\node (P2) [right=1 of P1] {
+	\begin{tikzpicture}[WD]
+		\node[bb={0}{2}, fill=gray] (a) {};
+		\node[bb={2}{0}, fill=white, above right=-.75 and .5 of a] (b) {};
+		\draw (a_out1) -- (b_in2);
+		\draw (a_out2) -- +(2,0);
+		\draw (b_in1) -- +(-2,0);
+	\end{tikzpicture}	
+	};
+	\node at ($(P1)!.5!(P2)$) {$=$};
+\end{tikzpicture}
+\]
+holds in $\rrel{\cat{A}}$. The left-hand and right-hand diagrams above correspond to the left-hand and right-hand composites of relations below:
+\[
+\begin{tikzcd}[row sep=25pt, ampersand replacement=\&]
+	\&\&
+	A\\
+	A\oplus A\&
+	A\oplus A\oplus A
+		\ar[l, "{\begin{psmallmatrix}1&0\\0&1\\0&1\end{psmallmatrix}}"']\&
+	A\oplus A
+  	\ar[u, "\begin{psmallmatrix}0\\1\end{psmallmatrix}"']
+  	\ar[l, "{\begin{psmallmatrix}1&1&0\\0&0&1\end{psmallmatrix}}"']\\
+	A\ar[u, "{\begin{psmallmatrix}1&0\end{psmallmatrix}}"']\&
+\end{tikzcd}
+\hspace{.5in}
+\begin{tikzcd}[row sep=25pt, ampersand replacement=\&]
+	\&\&
+	A
+		\ar[d, "{\begin{psmallmatrix}0&1\end{psmallmatrix}}"]\\
+	A\oplus A
+		\ar[r, "{\begin{psmallmatrix}1&0&0\\0&1&1\end{psmallmatrix}}"]
+		\ar[d, "{\begin{psmallmatrix}1\\0\end{psmallmatrix}}"]\&
+	A\oplus A\oplus A
+		\ar[r, "{\begin{psmallmatrix}1&0\\1&0\\0&1\end{psmallmatrix}}"]\&
+	A\oplus A\\
+	A
+\end{tikzcd}
+\]
+The right-hand relation is the transpose of the left-hand relation, so to see that they are equal, it suffices to show that either of them is the negation isomorphism $\Neg{A}\colon A\to A$. Consider the right-hand relation; composing the horizontal maps, it suffices to show that the following is a pullback in $\cat{A}$:
+\begin{equation}\label{eqn.pullback_for_neg}
+\begin{tikzcd}[ampersand replacement=\&]
+	A\ar[r, equal]
+		\ar[d, "{\begin{psmallmatrix}-1&1\end{psmallmatrix}}"']\pb\&
+	A
+		\ar[d, "{\begin{psmallmatrix}0&1\end{psmallmatrix}}"]\\
+	A\oplus A
+		\ar[r, "{\begin{psmallmatrix}1&0\\1&1\end{psmallmatrix}}"']\&
+	A\oplus A
+\end{tikzcd}
+\end{equation}
+Indeed, then the right-hand relation would be the product $\begin{psmallmatrix}-1&1\end{psmallmatrix}\begin{psmallmatrix}1\\0\end{psmallmatrix}=-1$, as desired.
+
+To show that \cref{eqn.pullback_for_neg} is a pullback, suppose given $B\in\cat{A}$ be any object and suppose given $(f_1,f_2)\colon B\to A\oplus A$ and $g\colon B\to A$ such that the diagram commutes, i.e.\ $(f_1+f_2,f_2)=(0, g)$. Then $f_1+f_2=0$ and $g=f_2$, so there is a unique map $B\to A$ making the required triangles commute, namely $g$. 
+\end{proof}
+
+
+%======== Chapter ========%
+\chapter{Abelian calculi}
+
+%==== Section ====%
+\section{Biajax functors}
+
+\begin{definition}
+A lax monoidal po-functor $F\colon\cc\to\dd$ is called \emph{right adjoint lax} or \emph{left ajax} if its laxators are right adjoints
+\[
+	\adjr{I'}{\varphi}{}{F(I)}
+  \qqand
+  \adjr[40pt]{F(c_1)\otimes' F(c_2)}{\varphi_{c_1,c_2}}{}{F(c_1\otimes c_2)}.
+\]
+It is called \emph{left ajax} if its laxators are left adjoints. It is called \emph{bi-ajax} if it is both left and right ajax.
+\end{definition}
+Since we will be especially interested in functors $F$ that are bi-ajax, we write out their adjunctions explicitly:
+\begin{equation}\label{eqn.bi-ajax}
+\begin{tikzcd}[column sep=60pt, ampersand replacement=\&]
+	I'
+		\ar[r, "\varphi" description]
+		\ar[r, shift left=9pt, phantom, "\Leftarrow" yshift=-.6pt]
+		\ar[r, shift right=9pt, phantom, "\Rightarrow" yshift=-.6pt]
+	\&
+	F(I)
+		\ar[l, shift left=17pt, "\rho"]
+		\ar[l, shift right=17pt, "\lambda"']
+\end{tikzcd}
+\hspace{.7in}
+\begin{tikzcd}[column sep=60pt, ampersand replacement=\&]
+	F(c_1)\otimes' F(c_2)
+		\ar[r, "\varphi_{c_1,c_2}" description]
+		\ar[r, shift left=9pt, phantom, "\Leftarrow" yshift=-.6pt]
+		\ar[r, shift right=9pt, phantom, "\Rightarrow" yshift=-.6pt]
+	\&
+	F(c_1\otimes c_2).
+		\ar[l, shift left=17pt, "\rho_{c_1,c_2}"]
+		\ar[l, shift right=17pt, "\lambda_{c_1,c_2}"']
+\end{tikzcd}
+\end{equation}
+
+\begin{proposition}\label{prop.adjoint_monoids}
+Let $(\cc,I,\otimes)$ be a monoidal po-category. There is a bijection between:
+\begin{enumerate}
+	\item The set of right ajax functors $1\to\cc$,
+	\item The set of commutative monoid objects $(c,\ust{d},\ust{e})$ such that $\ust{d}\colon c\otimes c\to c$ and $\ust{e}\colon I\to c$ are right adjoints, and
+	\item The set of commutative comonoid objects $(c,\lsh{d},\lsh{e})$ such that $\lsh{d}$ and $\lsh{e}$ are left adjoints.
+\end{enumerate}
+The statement also holds when we replace right ajax with left ajax, monoid with comonoid, and comonoid with monoid.
+\end{proposition}
+\begin{proof}
+The first statement is \cite[Proposition 3.4]{fong2018graphical}; the second is just its 2-dual (its $\co$).
+\end{proof}
+
+\begin{definition}
+Let $(\cc,I,\otimes)$ be a monoidal po-category. An \emph{right adjoint commutative monoid} (or simply \emph{right adjoint monoid}) in $\cc$ is a commutative monoid object $(c,\ust{d},\ust{e})$ in $\cc$ such that $\ust{d}$ and $\ust{e}$ are right adjoints. We define \emph{left adjoint commutative monoids} similarly.
+\end{definition}
+
+\begin{proposition}\label{prop.ajax_pres_adjmon}
+Right ajax functors $\CCat{P}\to\CCat{Q}$ preserve right adjoint monoids, and left ajax functors preserve left adjoint monoids.
+\end{proposition}
+\begin{proof}
+The composite of left ajax functors is left ajax and similarly for right ajax, so the result follows from \cref{prop.adjoint_monoids}.
+\end{proof}
+
+\begin{lemma}\label{lemma.comonoids_unique}
+Let $\cc$ be a monoidal po-category. If the monoidal structure is cartesian (given by finite products in the underlying 1-category) then every object has a unique comonoid structure, and it is commutative.
+\end{lemma}
+\begin{proof}
+Since the unit object is terminal, the maps $c\times\lsh{e}$ and $\lsh{e}\times c$ are forced to be the projections $c\times c\to c$, so $\lsh{d}$ is forced to be the diagonal. 
+\end{proof}
+
+\begin{proposition}\label{prop.adjmon_msl}
+A poset $P\in\pposet$ is a right adjoint monoid iff it is a meet-semilattice, in which case $\ust{e}=\true$ and $\ust{d}=\wedge$. Similarly $P$ is a left adjoint monoid iff it is a join semi-lattice in which case $\lsh{n}=\false$ and $\lsh{m}=\vee$.
+\end{proposition}
+\begin{proof}
+By \cref{lemma.comonoids_unique}, $P$ has a unique comonoid structure given by the terminal and diagonal maps $P\to 1$ and $P\to P\times P$. Thus $P$ is a right adjoint monoid iff these maps have right adjoints $1\to P$ and $P\times P\to P$, giving the top element and the meet, respectively. Similarly, $P$ is a left adjoint monoid iff the terminal and diagonal maps have left adjoints, giving the bottom element and join.
+\end{proof}
+
+%\begin{proposition}\label{prop.supply_linrel_adjmon_adjcomon}
+%Suppose given a supply of $\llinrel$ in a symmetric monoidal po-category $\xx$. Then each object $a\in\xx$ has both the structure of an adjoint monoid and the structure of an adjoint comonoid.
+%\end{proposition}
+%\begin{proof}
+%The proposed adjoint monoid structure on $a$ is given by $(a,\ust{\delta_a},\ust{\epsilon_a})$ and the proposed adjoint comonoid structure is given by $(a,\ust{\mu_a},\ust{\eta_a})$. Here $(\ust{\eta},\ust{\mu},\ust{\epsilon},\ust{\delta})$ are as in \cref{eqn.generating_morphisms}; see also \cref{rem.notation_supply}. These satisfy the properties of adjoint monoids and comonoids by \cref{prop.linrel_eqs1,prop.linrel_eqs2,prop.linrel_adjoints}.
+%\end{proof}
+%
+
+%==== Section ====%
+\section{Abelian calculi and their morphisms}
+
+
+In an abelian category $\cat{A}$, each object $a$ has a subobject poset $\sub(a)$, and for any map $f\colon a\to b$, there are functors $\sub(a)\to\sub(b)$ and $\sub(b)\to\sub(a)$ given by taking images and preimages. Thus for any linear relation $R\ss a\times b$, there is a functor $\sub(a)\to\sub(b)$. There is a sense in which these lattices and functors completely characterize $\cat{A}$. 
+
+We say that $\xx$ \emph{supplies abelian relations} if it supplies the prop $\aa$ from \cref{def.abelian_relations}; see \cref{def.supply}. Roughly speaking, each object in $\xx$ is equipped with two adjoint (special commutative) frobenius monoids, corresponding to sum $(\lsh{\eta},\lsh{\mu},\ust{\eta},\ust{\mu})$ and copy $(\lsh{\epsilon},\lsh{\delta},\ust{\epsilon},\ust{\delta})$, whose left adjoint parts $(\lsh{\eta},\lsh{\mu},\lsh{\epsilon},\lsh{\delta})$ form a bimonoid, whose right adjoints parts $(\ust{\eta},\ust{\mu},\ust{\epsilon},\ust{\delta})$ also form a bimonoid, and whose mediating isomorphism is an involution; see \cref{table.abelian_relations}.
+
+\begin{center}\fbox{\parbox{.9\textwidth}{
+  For the remainder of the section, we take $\xx$ to be a symmetric monoidal po-category with a supply $(\lsh{\eta},\ust{\eta},\lsh{\mu},\ust{\mu},\lsh{\epsilon},\ust{\epsilon},\lsh{\delta},\ust{\delta})$ of abelian relations.
+}}\end{center}
+
+By \cref{cor.aa_supplies_involutions,prop.change_of_supply}, given a supply of abelian relations in $\xx$, we obtain a supply of involutions, which we call the \emph{negation involutions}. We denoted them by $\Neg{a}\colon a\to a$ in \cref{ex.negation_lin}. Every symmetric monoidal po-category has a \emph{trivial} homomorphic supply of involutions, where each $i_m$ is sent to the identity natural transformation. 
+
+We will be interested in functors $\abc\colon\xx\to\pposet$ that send the negation involutions to the trivial involutions; see \cref{ex.preserve_involutions}. The intuition is that $\abc(x)$ represents the subobjects of $x$ in an abelian category, and by \cref{prop.sub_neg_trivial}, the negation map $\Neg{x}\colon x\to x$ induces the identity map on $\sub(x)$: every subspace of $x$ is closed under negation.
+
+\begin{definition}\label{def.ab_precalc_calc}
+An \emph{abelian precalculus} is pair $(\xx,\abc)$ where $(\xx,\oplus,0)$ is a symmetric monoidal po-category that supplies abelian relations, and $\abc\colon\xx\to\pposet$ is a bi-ajax functor. An abelian precalculus is an \emph{abelian calculus} if $\abc$ sends the negation involutions in $\xx$ to the trivial involutions in $\pposet$, i.e.\
+\[\abc(\Neg{x})=\id_{\abc(a)}\]
+for each $x\in\xx$.
+\end{definition}
+We denote the laxators of $\abc$ by $\zero$ and $\boxplus$ and their left and right adjoints by $\sss$ and $\ppp$:
+\[
+\begin{tikzcd}[column sep=large]
+	\ord{1}\ar[r, "\zero" description]\adjphantom[-8pt]{r}{\Rightarrow}\adjphantom[8pt]{r}{\Leftarrow}&
+	\abc(0)\ar[l, shift left=14pt, "\sss"]\ar[l, shift right=14pt, "\ppp"']
+\end{tikzcd}
+\hspace{1in}
+\begin{tikzcd}[column sep=large]
+	\abc(x)\times \abc(x')\ar[r, "\boxplus" description]\adjphantom[-8pt]{r}{\Rightarrow}\adjphantom[8pt]{r}{\Leftarrow}&
+	\abc(a\oplus b)\ar[l, shift left=14pt, "\sss_{x,x'}"]\ar[l, shift right=14pt, "\ppp_{x,x'}"']
+\end{tikzcd}
+\]
+for any $x,x'\in\xx$.
+
+\begin{proposition} \label{prop.zero_iso}
+If $\abc\colon\xx\to\pposet$ is an abelian precalculus, then the laxator $\zero\colon\ord{1}\to \abc(0)$ is an isomorphism.
+\end{proposition}
+\begin{proof}
+Since $\ord{1}$ is terminal, $\zero(1)$ must be both a top element and a bottom element, so $\abc(0)$ collapses.
+\end{proof}
+
+\begin{proposition}\label{prop.true_meet_false_join}
+Let $\abc\colon\xx\to\pposet$ be an abelian precalculus. For every $x\in\xx$, the poset $\abc(x)$ is a lattice. Its bottom element and join operation are given by the maps
+\[
+	1\To{\zero}\abc(0)\To{\lsh{\eta^x}}\abc(x)
+	\qqand
+	\abc(x)\times \abc(x)\To{\boxplus}\abc(x\oplus x)\To{\lsh{\mu^x}}\abc(x).
+\]
+Its top element and meet operation are given by the maps
+\[
+	1\To{\zero}\abc(0)\To{\ust{\epsilon_x}}\abc(x)
+	\qqand
+	\abc(x)\times \abc(x)\To{\boxplus}\abc(x\oplus x)\To{\ust{\delta_x}}\abc(x).
+\]
+\end{proposition}
+\begin{proof}
+By \cref{prop.aa_two_ccc_structures}, each object $x\in\xx$ has the structure of an adjoint monoid and the structure of an adjoint comonoid. The bi-ajax functor $\abc$ preserves these structures by \cref{prop.ajax_pres_adjmon}. Thus $\abc(x)$ is both a meet-semilattice and a join semi-lattice by \cref{prop.adjmon_msl}, the proof of which provides the formulas shown above.
+\end{proof}
+
+\begin{proposition} \label{prop.boxzero_iso}
+  Let $\abc\colon \xx \to \pposet$ be an abelian precalculus. Then for all objects $x\in\xx$ we have $\sss_{x,0} = \boxplus_{x,0}^{-1} = \ppp_{x,0}$.
+\end{proposition}
+\begin{proof}
+  Using the fact that $\zero$ is an iso (\cref{prop.zero_iso}), the unit coherence square shows that $\boxplus$ is an isomorphism:
+  \[
+    \begin{tikzcd}
+      \abc(x) \times \abc(0) \ar[r,"\boxplus"] & \abc(x \oplus 0) \ar[d,"\cong"'] \\
+      \abc(x) \times \ul{1} \ar[u,"\id \times \zero","\cong"'] \ar[r, "\cong"] & \abc(x)
+    \end{tikzcd}
+  \]
+  As $\sss$ and $\ppp$ are both adjoint to $\boxplus$, they must be inverses, and hence equal.
+\end{proof}
+
+\begin{proposition} \label{prop.boxunbox_is_identity}
+  Let $\abc\colon \xx \to \pposet$ be an abelian precalculus. Then we have 
+\[(\boxplus \cp \lambda_{x,x'}) = \id_{\abc(x) \times \abc(x')} = (\boxplus \cp \rho_{x,x'}).
+\]
+\end{proposition}
+\begin{proof}
+  We prove that for all $s \in \abc(x)$ and $s' \in \abc(x')$ we have $\rho(s\boxplus s') = (s,s')$; the statement for $\lambda$ follows in an analogous fashion.
+
+  Note first that the fact that $\rho$ is right adjoint to $\boxplus$ immediately gives that $(s,s') \le \rho(s \boxplus s')$. We must prove that $\rho(s \boxplus s')\leq (s,s')$. For this, consider the following diagram:
+  \[
+    \begin{tikzcd}
+      \abc(x) \times \abc(x') \ar[r, "\boxplus"] \ar[d,"\pi_1=\abc(\id)\times \abc(\lsh\epsilon)"'] 
+      & \abc(x\oplus x') \ar[r,"\rho"] \ar[d, "\abc(\id \oplus \lsh\epsilon)"'] 
+      & \abc(x) \times \abc(x') \ar[d, "\abc(\id) \times \abc(\lsh\epsilon) = \pi_1"] \\
+      \abc(x) \cong \abc(x) \times \abc(0) \ar[r, "\boxplus"'] 
+      & \abc(x\oplus 0) \ar[r, "\rho"'] 
+      & \abc(x) \oplus \abc(0) \cong \abc(x)\ar[ul, phantom, "\geq"]
+    \end{tikzcd}
+  \]
+  The lower line is the identity by \cref{prop.boxzero_iso}. The left hand square commutes by the naturality of $\boxplus$, while the right hand square is a 2-cell by the naturality of $\boxplus$ and the fact that $\rho$ is right adjoint to $\boxplus$. Thus we have $\pi_1\rho(s \boxplus s') \leq s$. Similarly we have $\pi_2\rho(s\boxplus s')\leq s'$, and hence the proposition follows.
+\end{proof}
+
+\begin{definition}
+A \emph{morphism} $(\xx,P)\to(\xx',P')$ of abelian precalculi consists of a pair $(F,F^\sharp)$, where $F\colon\xx\to\xx'$ is a strong monoidal po-functor preserving the supply of abelian relations, and $F^\sharp$ is a monoidal natural transformation:
+\[
+\begin{tikzcd}[row sep=5pt, column sep=large]
+	\xx\ar[rd, bend left=15pt, pos=.4, "P", ""' name=P]\ar[dd, "F"']\\&
+	\pposet\\
+	\xx'\ar[ru, bend right=15pt, pos=.4, "P'"', "" name=P']
+	\ar[from=P, to=P|-P', shorten <=7pt, shorten >=7pt, Rightarrow, "F^\sharp"]
+\end{tikzcd}
+\]
+A morphism of abelian calculi is just a morphism of the underlying precalculi. We denote by $\abcalc$ the category of abelian calculi and morphisms between them.
+\end{definition}
+
+%==== Section ====%
+\section{The functor $\sub\colon \abcat \to \abcalc$}
+
+Let $\cat{A}$ be an abelian category, and let $\rrel{\cat{A}}$ denote its relations po-category (see \cref{def.relations_pocat}). Given an object $a\in\cat{A}$, its subobject poset is given by the formula $\sub(a)\cong\rrel{\cat{A}}(0,a)$. This extends to a lax monoidal po-functor, that we again call $\sub$.
+
+\begin{proposition}\label{prop.sub_precalculus}
+For any abelian category $\cat{A}$, the representable po-functor
+\[\sub_{\cat{A}}(-)\coloneqq\rrel{\cat{A}}(0,-)\colon\rrel{\cat{A}}\too\pposet\]
+constitutes an abelian pre-calculus. 
+\end{proposition}
+\begin{proof}
+We saw in \cref{thm.ab_pocats_supply_ab_rels} that $\rrel{\cat{A}}$ supplies abelian relations, so it remains to show that the po-functor $\sub_{\cat{A}}$ is bi-ajax. It is clearly lax monoidal because it is represented by the monoidal unit $0$, i.e.\ we have
+\[
+	\zero\colon 1\To{\cong}\rrel{\cat{A}}(0,0)
+	\qqand
+	\oplus\colon\rrel{\cat{A}}(0,a)\times\rrel{\cat{A}}(0,b)\to\rrel{\cat{A}}(0,a\oplus b).
+\]
+The first of these maps is an isomorphism, so in particular it has a left and a right adjoint (and they are the same). We need to show that $\oplus$ has both a left adjoint $\lambda$ and a right adjoint $\rho$. So take a subobject $r\ss a\oplus b$ and define $\lambda(r)\coloneqq (r_a, r_b)$ and $\rho(r)\coloneqq(r^a,r^b)$ to be the following epi-mono factorizations and pullbacks
+\[
+\begin{tikzcd}[column sep=small]
+	r\ar[r]\ar[d]&
+	r_a\ar[d, >->]\ar[dl, phantom, near start, "\urcorner"]\\
+	a\oplus b\ar[r]&a
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=small]
+	r\ar[r]\ar[d]&
+	r_b\ar[d, >->]\ar[dl, phantom, near start, "\urcorner"]\\
+	a\oplus b\ar[r]&b
+\end{tikzcd}
+\qquad\qquad
+\begin{tikzcd}[column sep=small]
+	r^a\ar[r, >->]\ar[d]\pb&
+	a\ar[d]\\
+	r\ar[r, >->]&a\oplus b
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=small]
+	r^b\ar[r, >->]\ar[d]\pb&
+	b\ar[d]\\
+	r\ar[r, >->]&a\oplus b
+\end{tikzcd}
+\]
+The maps $r\to r_a$ and $r\to r_b$ induce a map $r\to r_a\oplus r_b$ to their product, and similarly the maps $r^a\to r$ and $r^b\to r$ induce a map $r^a\oplus r^b\to r$ from their coproduct.
+
+In the other direction, suppose given $a'\ss a$ and $b'\ss b$. We have $\rho(a'\oplus b')=(a',b')$ by \cref{lemma.pullback} and $\lambda(a'\oplus b')=(a',b')$ by \cref{cor.epimono}. Because all the categories involved are posets, we have established that $\lambda$ is left adjoint and $\rho$ is right adjoint to $\oplus$. This completes the proof.
+\end{proof}
+
+\begin{proposition}\label{prop.sq_abelian_calculus}
+The po-functor $\sub_{\cat{A}}\colon\rrel{\cat{A}}\to\pposet$ is an abelian calculus.
+\end{proposition}
+\begin{proof}
+The po-functor $\sub$ is an abelian pre-calculus by \cref{prop.sub_precalculus}, so by \cref{def.ab_precalc_calc} it remains to check that $\sub$ sends the negation involution to the identity $\sub(\Neg{a})=\id_{\sub(a)}$ for all $a\in\cat{A}$. This follows directly from \cref{prop.sub_neg_trivial}.
+\end{proof}
+
+\begin{theorem}
+The mapping $\cat{A}\mapsto\sub_{\cat{A}}$ extends to a functor $\sub\colon\abcat\to\abcalc$.
+\end{theorem}
+\begin{proof}
+Given an exact functor $F\colon\cat{A}\to\cat{B}$, we need to give a morphism of abelian calculi $\sub_F\colon\sub_{\cat{A}}\to\sub_{\cat{B}}$. Since abelian categories are regular \cref{cor.abelian_imp_reg}, the result follows from \cref{prop.reg_functor_sub}.
+\end{proof}
+
+%======== Chapter ========%
+\chapter{The syntactic category}
+
+In this section we show that from every abelian calculus we can construct an abelian category. To do this, we will mostly concern ourselves not directly with the abelian category we wish to construct, but with its po-category of relations. We call this the syntactic po-category of the abelian calculus.
+
+%==== Section ====%
+\section{The syntactic po-category construction}
+
+Let $\abc\colon\xx\to\pposet$ be an abelian calculus. How do we construct an abelian category from this data? The functor $\sub$ suggests that for each object $x$ in $\xx$, we might view $\abc(x)$ as the poset of subobjects of some putative object $x$. From this, we want to extract the subquotients of $x$; these are the intervals in the poset $\abc(x)$. We shall make each of these intervals an object in the syntactic po-category.
+
+Recall that in a po-category $\xx$ supplying abelian relations, every object is equipped with a right adjoint frobenius monoid, and hence a resulting self-duality 
+$\big(
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={0}{2}, fill=gray] (b) {};
+	\draw (b_out1) -- +(.5, 0);
+	\draw (b_out2) -- +(.5, 0);
+\end{tikzpicture}
+$
+,\;
+$
+\begin{tikzpicture}[WD, bb port sep=.3]
+	\node[bb={2}{0}, fill=gray] (b) {};
+	\draw (b_in1) -- +(-.5, 0);
+	\draw (b_in2) -- +(-.5, 0);
+\end{tikzpicture}
+\big)$
+. 
+Following \cite{fong2019hypergraph,fong2018graphical}, for objects $x_1,x_2,x_3$ in $\xx$, we define
+\[
+  \comp_{x_1,x_2,x_3} \coloneqq \;
+\begin{tikzpicture}[WD, bb port sep=.3,baseline=(in3)]
+	\node[bb={2}{0}, fill=gray] (b) {};
+	\coordinate (in2) at ($(b_in1)+(-.5, 0)$);
+	\coordinate (in3) at ($(b_in2)+(-.5, 0)$);
+	\coordinate (in1) at ($(in2)+(0,.5)$);
+	\coordinate (in4) at ($(in3)-(0,.5)$);
+	\draw (in1) -- +(2.5,0);
+	\draw (in2) -- (b_in1);
+	\draw (in3) -- (b_in2);
+	\draw (in4) -- +(2.5,0);
+\end{tikzpicture}
+\colon x_1 \oplus x_2 \oplus x_2 \oplus x_3 \longrightarrow x_1 \oplus x_3.
+\]
+
+\begin{definition}[Syntactic abelian po-category]\label{def.syntactic_abelian}
+	Given an abelian calculus $\abc\colon \xx \to \pposet$, let $\syn(\abc)$ be the po-category with
+	\[
+		\begin{tabular}{>{\bfseries}r >{$\bgroup}l<{\egroup$}}
+			objects:          &
+			\ob \syn(\abc) \coloneqq \{(x,q,s) \mid x \in \xx,\, q \le s \in \abc(x)\}                                                   \\
+			hom-posets:       &
+      \syn(\abc)\big((x_1,q_1,s_1),(x_2,q_2,s_2)\big) \\
+      & \qquad \coloneqq \{\theta \in \abc(x_1\lint x_2) \mid q_1 \boxplus q_2 \leq \theta \leq s_1 \boxplus s_2\} \subseteq P(x_1\lint x_2)\\
+			composition:      &  
+\textrm{Composition of }\theta\colon (x_1,q_1,s_1) \to (x_2,q_2,s_2)\textrm{ and }\theta'\colon (x_2,q_2,s_2) \to (x_3,q_3,s_3) \\
+& \textrm{is given by the restriction of the function} \\ 
+& \abc(x_1\lint x_2)\times \abc(x_2\lint
+x_3)\xrightarrow{\boxplus} \abc(x_1 \lint x_2 \lint x_2 \lint
+x_3) \xrightarrow{\abc(\comp)} \abc(x_1\lint x_3)\\
+& \textrm{to the relevant subposets.} \\
+%			monoidal product: &                                                                                                                              \\
+		\end{tabular}
+	\]
+\end{definition}
+
+\begin{remark}
+	Note that using the gray self-duality in the definition of $\comp$ is not a privileged choice. In \cref{sec.abelian_proof} we shall see that we could have also used the white self-duality
+	$
+	\begin{tikzpicture}[WD, bb port sep=.3]
+  	\node[bb={2}{0}] (b) {};
+  	\draw (b_in1) -- +(-.5, 0);
+  	\draw (b_in2) -- +(-.5, 0);
+	\end{tikzpicture}
+	$
+	to define a composition rule, and the result would be an isomorphic category.
+\end{remark}
+
+The rest of this section is dedicate to proving that this data $\syn(\abc)$ does indeed specify a well-defined po-category, and in fact an abelian po-category. That is, we will prove the following theorem.
+
+\begin{theorem} \label{thm.main}
+  Let $\abc\colon \xx \to \pposet$ be an abelian calculus. Then $\syn(\abc)$ is an abelian po-category.
+\end{theorem}
+
+Our approach shall be use to the following theorem of Carboni and Walters.
+
+\begin{theorem}[Carboni--Walters]
+	Let $\cc$ be a po-category. Then $\cc$ is an abelian po-category if and only if $\cc$ and $\cc\co$ are regular po-categories.
+\end{theorem}
+\begin{proof}
+	This is \cite[Theorem~5.2]{Carboni:1987a}.
+\end{proof}
+
+This theorem reduces our task to proving certain po-categories are regular. To do this, we recall some tools from regular calculi and graphical regular logic. 
+
+%==== Section ====%
+\section{Regular calculi and regular po-categories}
+
+Recall from \cref{def.reg_cat} that a regular category is a category with finite limits and pullback-stable image factorisations, and from \cref{def.regular_pocat} that a regular po-category is a po-category which is equivalent to the relations po-category $\rrel{\cat{R}}$ of some regular category $\cat{R}$. The reader unfamiliar with the nuances of regular categories need not be too concerned as far as this proof is concerned; in this section we explain that regular po-categories can be presented using certain right ajax functors, and this is all that is crucial for the narrative here. 
+
+The notion of regular calculus originates in \cite{fong2018graphical}, but we shall use a more general definition here. More precisely, previously a regular calculus was defined to be a right ajax functor from the free regular po-category $\ffrg$ on a set of generators $\types$ to $\pposet$. In line with our definition of abelian calculus, however, here we generalize this to allow the domain to be any category supplying right adjoint frobenius monoids.
+
+\begin{definition}
+  A \emph{regular calculus} $(\xx,\abc)$ consists of a symmetric monoidal po-category $\xx$ that supplies right adjoint frobenius monoids, together with a right ajax functor $\abc\colon \xx \to \pposet$.
+\end{definition}
+
+JFor each regular calculus we can construct a regular po-category, known as the syntactic regular po-category. This construction is similar to the abelian syntactic po-category proposed in \cref{def.syntactic_abelian}, with the exception that we consider poset elements rather than intervals. So an object is just a pair $(x,s)$, where $s \in \abc(x)$, instead of a triple $(x,q,s)$, where $q \le s \in \abc(x)$. Note that we still have the canonical self-duality given by the supply of right adjoint frobenius monoids, and hence can still define the composition morphism $\comp$.
+
+\begin{definition} \label{def.gen_reg_syn_cat}
+Let $(\xx,\abc)$ be a regular calculus. Its \emph{regular syntactic po-category} $\rsyn(\abc)$ is defined as follows:
+\[
+\begin{tabular}{>{\bfseries}r >{$\bgroup}l<{\egroup$}}
+	objects:&
+		\ob(\rsyn(\abc))\coloneqq\{(x,s)\mid x\in\xx,s\in\abc(x)\}\\
+	hom-posets:& \rsyn(\abc)\big((x_1,s_1),(x_2,s_2)\big)\coloneqq\{\theta\in\abc(x_1\lint x_2)\mid\theta\vdash s_1\boxplus s_2\} \subseteq P(x_1\lint x_2)\\
+	composition:&
+\textrm{Given by the restriction of the function} \\ 
+& \abc(x_1\lint x_2)\times \abc(x_2\lint
+x_3)\xrightarrow{\boxplus} \abc(x_1 \lint x_2 \lint x_2 \lint
+x_3) \xrightarrow{\abc(\comp)} \abc(x_1\lint x_3)\\
+& \textrm{to the relevant subposets.} \\
+%	monoidal product:& \\
+\end{tabular}
+\]
+\end{definition}
+
+The goal of this subsection is to prove that this syntactic po-category is indeed a regular po-category, and record a few useful facts.
+
+\subsection{Regular po-categories supply right adjoint frobenius monoids}
+
+\begin{proposition} \label{prop.regpocats_supply_rafms}
+  Let $\cc$ be a regular po-category. Then $\cc$ supplies right adjoint frobenius monoids.
+\end{proposition}
+\begin{proof}
+  Write $\cat{C}$ for the category of left adjoints in $\cc$. Since $\cat{C}$ is regular, it has finite products, and so supplies comonoids. Moreover, as $\cat{C}$ is the category of left adjoints in $\cc$, $\cc$ thus supplies left adjoint comonoids, or equivalently, right adjoint monoids. It remains to check the frobenius laws (\cref{def.prop_adj_frob_comon}) hold.
+
+  Let $c \in \cc$, and write $1$ for the terminal object, $\eta\colon c \to 1$ for the unique map, and $\delta\colon c \to c\times c$ for the diagonal. The three additional laws of \cref{def.prop_adj_frob_comon} come down to checking $c \surj 1 \inj 1 \times 1$ is an epi-mono factorization, and that
+  \[
+    \begin{tikzcd}
+      c \ar[r,"c"] \ar[d,"c"'] \pb & c \ar[d,"\delta"] \\
+      c \ar[r,"\delta"] & c \times c
+    \end{tikzcd}
+    \hspace{2.5cm}
+    \begin{tikzcd}
+      c \ar[r,"\delta"] \ar[d,"\delta"'] \pb & c\times c \ar[d,"{(c,\delta)}"] \\
+      c\times c \ar[r,"{(\delta,c)}"] & c \times c \times c
+    \end{tikzcd}
+  \]
+  are pullback squares. This is straightforward.
+\end{proof}
+
+\begin{corollary}
+  The free regular category $\ffrg$ on a set $\types$ supplies right adjoint frobenius monoids.
+\end{corollary}
+
+This shows that our definition of regular calculus is indeed a generalization of the definition in \cite{fong2018graphical}: every right ajax functor $\ffrg \to \pposet$ is a regular calculus. 
+
+%\subsection{$\ffrg$ supplies right adjoint frobenius monoids}
+%
+%As we have said, $\ffrg$ is the free regular po-category on a set $\types$. Above we claimed that our new definition of regular calculus generalizes the notion of a right ajax functor $\ffrg \to \pposet$. In this section we clarify this claim by proving that $\ffrg$ does indeed supply right adjoint frobenius monoids.
+%
+%We begin by giving an explicit description of $\ffrg$.
+%
+%\begin{proposition}
+%  The free regular category $\frg[blank]$ on a single object is the category with 
+%	\[
+%		\begin{tabular}{>{\bfseries}r >{$\bgroup}l<{\egroup$}}
+%      objects:          &
+%      \ob\frg[blank] = \nn \sqcup\{s\}
+%      \\
+%      homsets:       &
+%      \frg[blank](m,n) = 
+%        \begin{cases} 
+%          \finset\op(m,n) &  m, n \in \nn \\
+%          \{\ast\},  & m \ne 0, n=s \\
+%          \varnothing & m=0, n=s\\
+%          \varnothing & m=s, n \ne 0 \\
+%          \{\ast\} & m=s, n=0
+%        \end{cases}
+%      \\
+%			composition:   &  \textrm{As in } \finset\op \textrm{ where all objects lie in }\nn,\textrm{ uniquely determined otherwise.}
+%      \\
+%		\end{tabular}
+%	\]
+%
+%\end{proposition}
+%\begin{proof}
+%  see \cite[Section~4.1]{fong2018graphical}. 
+%\end{proof}
+%
+%Loosely speaking, $\ffrg[blank]$ is much like the po-category $\rrel{\finset\op}$ of relations in $\finset\op$, the opposite of the category of finite sets and functions. Indeed, the $\rrel{\finset\op}$ is the free \emph{fully inhabited} regular po-category. Since $\ffrg$ is the \emph{free} regula po-category, the regularity of $\rrel{\finset\op}$ implies there exists a canonical po-functor $\ffrg[blank] \to \rrel{\finset\op}$. 
+%
+%\begin{corollary}\label{prop.ffrg_to_relfinsetop}
+%  There exists a strong monoidal functor $\frg[blank] \to \finset\op$.
+%\end{corollary}
+%\begin{proof}
+%For more details sees \cite[Remark~4.12]{fong2018graphical}.
+%\end{proof}
+%
+%\begin{proposition}
+%  The category $\frg$ is the coproduct of $\types$ copies of $\frg[blank]$.
+%\end{proposition}
+%\begin{proof}
+%\end{proof}
+%
+%\begin{corollary} \label{cor.ffrgt_is_coproduct}
+%  The po-category $\ffrg$ is the coproduct of $\types$ copies of $\ffrg[blank]$.
+%\end{corollary}
+%\begin{proof}
+%  Note that taking the po-category of relations is a strong monoidal functor.
+%\end{proof}
+%
+%
+%
+
+\subsection{Regular calculi on free categories}
+A key result of \cite{fong2018graphical} is the following.
+
+\begin{proposition}
+Let $\abc\colon\ffrg\to\pposet$ be a right ajax functor. Then the category $\ladj(\rsyn(\abc))$ of left adjoints inside $\rsyn(\abc)$ is regular. 
+\end{proposition}
+\begin{proof}
+	The fact $\rsyn(\abc)$ is a well-defined po-category whose category of left adjoints is regular is Theorems 6.3 and 7.3 of \cite{fong2018graphical}.
+\end{proof}
+
+\todo{Move this to reglog?? If we do, we'll need to update all references to theorems in reglog. If not, change notation to be more consistent with this paper (eg. $\Gamma$ becomes $x$, and diagrams may change?)}
+
+Moreover, $\rsyn(\abc)$ is isomorphic to the po-category of relations of the regular category $\ladj(\rsyn(\abc))$, and hence is itself a regular po-category. To prove this, we first observe that the subobjects of an object $(\Gamma,s)$ in $\ladj(\rsyn(\abc))$ are indexed by the slice of the poset $\abc(\Gamma)$ below $s$.
+
+Our proofs will use a notation for depicting elements of the posets $\abc(\Gamma)$ known as graphical regular logic. Details for this notation can be found in \cite{fong2018graphical}.
+
+\begin{proposition} \label{prop.subobjects_in_ladjsyn}
+	Let $\abc\colon \ffrg \to \pposet$ be right ajax, and let $(\Gamma,s)$ be an object of $\ladj(\rsyn(\abc))$. The lattice of subobjects of $(\Gamma,s)$ is precisely the poset $P(\Gamma)_{-\leq s}\coloneqq \{t \in P(\Gamma) \mid t \leq s\}$, with each element $t \leq s$ corresponding to the subobject $(\Gamma,t)$ with inclusion map $\abc(\lsh\delta)(t) =
+		    \begin{tikzpicture}[inner WD]
+	      \node[pack, inner sep=0pt] (phi) {$t$};
+	      \node[link, below=2pt of phi] (dot) {};
+	      \draw (phi) -- (dot);
+	      \draw (dot) -- +(-8pt, 0);
+	      \draw (dot) -- +(8pt, 0);
+		\end{tikzpicture}	
+		\colon (\Gamma,t) \to (\Gamma,s)
+		$.
+\end{proposition}
+\begin{proof}
+	To prove this, we use the proof of Lemma 7.18 of \cite{fong2018graphical}, which describes image factorisations in $\ladj(\rsyn(\abc))$. In particular, given a monomorphism $\theta\colon (\Gamma',s') \to (\Gamma,s)$ in $\ladj(\rsyn(\abc))$, Lemma 7.18 shows that it is isomorphic to the monomorphism
+	\[
+		\begin{tikzpicture}[inner WD,baseline=(current  bounding  box.center)]
+			\node[link] (dot) {};
+			\node[funcd, above=2pt of dot] (theta) {$\theta$};
+			\node[link, above=2pt of theta] (dot2) {};
+			\node[outer pack, surround sep = 3pt, fit=(theta) (dot) (dot2)] (outer) {};
+			\draw (dot-|outer.west) -- (dot);
+			\draw (theta.south) -- (dot);
+			\draw (theta.north) -- (dot2);
+			\draw (dot) to (dot-|outer.east);
+		\end{tikzpicture}
+		\colon
+		\big(\Gamma,
+		    \resizebox{2em}{!}{
+		\begin{tikzpicture}[inner WD]
+			\node[funcr] (theta) {$\theta$};
+			\node[link, left=5pt of theta] (dot) {};
+			\draw (dot) -- (theta);
+			\draw (theta.east) -- +(5pt,0);
+		\end{tikzpicture}}\big)
+		\to (\Gamma,s)
+	\]
+	where $
+		    \resizebox{2em}{!}{
+	\begin{tikzpicture}[inner WD]
+			\node[funcr] (theta) {$\theta$};
+			\node[link, left=5pt of theta] (dot) {};
+			\draw (dot) -- (theta);
+			\draw (theta.east) -- +(5pt,0);
+		\end{tikzpicture}
+			}
+		=
+		P(\lsh\epsilon \oplus \Gamma)(\theta)$.
+		Thus every mono with codomain $(\Gamma,s)$ is isomorphic to one of the stated form.
+
+		Suppose now that we have the commuting triangle of monomorphisms
+		\[
+			\begin{tikzcd}[row sep=2ex]
+        (\Gamma,t') \ar[dd, "\theta"'] \ar[dr, "\abc(\lsh\delta)(t')"] \\
+        & (\Gamma,s) \\
+        (\Gamma,t) \ar[ur, "\abc(\lsh\delta)(t)"']
+			\end{tikzcd}
+    \] 
+    Note that this implies that
+\[
+	\begin{tikzpicture}[unoriented WD, pack size=10pt]
+		\node (P0) {$\im\theta \wedge t$};
+		\node[right=2 of P0] (P1) {
+			\begin{tikzpicture}[inner WD]
+				\coordinate (cent);
+				\node[link, left=2 of theta] (dot) {};
+				\node[funcr, inner sep=2pt, left=1 of cent] (theta) {$\theta$};
+				\node[link, right=1 of cent] (dot2) {};
+				\node[pack, above=2pt of dot2, inner sep=1pt] (phi2) {$t$};
+				\draw (cent) -- (theta);
+				\draw (theta) -- (phi);
+				\draw (cent) -- (dot2);
+				\draw (dot2) -- (phi2);
+				\draw (theta) -- (dot);
+				\draw (dot2) -- +(.5cm, 0);
+			\end{tikzpicture}
+		};
+		\node[right=3 of P1] (P2) {
+			\begin{tikzpicture}[inner WD]
+				\node[pack, inner sep=1pt] (phi) {$t'$};
+				\node[link, below=1pt of phi] (dot) {};
+				\node[link, left=3pt of dot] (dot0) {};
+				\draw (phi) -- (dot);
+				\draw (dot) -- (dot0);
+				\draw (dot) -- +(7pt, 0);
+			\end{tikzpicture}
+		};
+		\node[right=2 of P2] (P3) {$t'$};
+		\node at ($(P0.east)!.5!(P1.west)$) {$=$};
+		\node at ($(P1.east)!.5!(P2.west)$) {$=$};
+		\node at ($(P2.east)!.5!(P3.west)$) {$=$};
+	\end{tikzpicture}
+\]
+and hence that $t' \le t \in \abc(\Gamma)$. This implies that the subobjects $(\Gamma,t)$ and $(\Gamma,t')$ of $(\Gamma,s)$ are isomorphic if and only if $t = t'$, and moreover proves the proposition.
+\end{proof}
+
+\begin{proposition} \label{thm.syn_is_regular}
+ Let $\abc\colon \ffrg \to \pposet$ be right ajax. Then $\rsyn(\abc)$ is isomorphic to the po-category of relations in $\ladj(\rsyn(\abc))$. In particular, $\rsyn(\abc)$ is a regular po-category.
+\end{proposition}
+\begin{proof}
+  Observe that $\rsyn(\abc)$ and $\ladj(\rsyn(\abc))$ have the same set of objects by definition, and that by \cref{prop.subobjects_in_ladjsyn} for any two objects $(\Gamma,s)$, $(\Gamma',s')$ the poset of relations $(\Gamma,s) \tickar (\Gamma',s')$ in $\ladj(\rsyn(\abc))$ is given by $\{\theta \in \abc(\Gamma\lint\Gamma') \mid \theta \le s \boxplus s'\}$. It remains to prove that the composition rule in $\rsyn(\abc)$ agrees with composition of relations in $\ladj(\rsyn(\abc))$. Reasoning using graphical terms, this is a straightforward consequence of \cite[Lemma~7.12]{fong2018graphical}, which describes pullbacks in the category $\ladj(\rsyn(\abc))$. 
+\end{proof}
+
+\subsection{Syntactic po-categories are regular}
+We now use the fact that the syntactic regular po-category of a right ajax functor $\ffrg \to \pposet$ is regular to show that \emph{all} syntactic regular po-categories are regular.
+
+\begin{proposition} \label{prop.supplying_lafcs_gives_ffrg_functor}
+	Let $\xx$ be a symmetric monoidal po-category supplying right adjoint frobenius monoids. Then there exists a strong monoidal functor $A\colon \ffrg[\ob\xx] \to \xx$.
+\end{proposition}
+\begin{proof}
+   Since $\ffrg[\ob\xx]$ is the free regular po-category on $\ob\xx$, and since $\sqcup_{\ob\xx} \rrel{\finset\op}$ is a regular po-category, there exists a strong monoidal functor $\ffrg[\ob\xx] \to \sqcup_{\ob \xx}\rrel{\finset\op}$ sending the generator corresponding to each $x \in \ob\xx$ to the generating object of the corresponding summand of $\sqcup_{\ob \xx}\rrel{\finset\op}$. Since $\xx$ supplies right adjoint frobenius monoids, by \cref{prop.lafms_are_relfinsetop,cor.supply_each_object} we have a strong monoidal functor $\sqcup_{\ob \xx} \rrel{\finset\op} \to \xx$. Composing these gives the desired functor $A$.
+\end{proof}
+
+\begin{theorem}
+Let $\abc$ be a regular calculus. Then the regular syntactic po-category $\rsyn(\abc)$ of \cref{def.gen_reg_syn_cat} is regular.
+\end{theorem}
+\begin{proof}[Proof]
+By \cref{prop.supplying_lafcs_gives_ffrg_functor}, we have a strong monoidal functor $A\colon\ffrg[\ob\cc]\to\cc$. Since strong monoidal functors are in particular right ajax functors, composing with $\abc$ gives a regular calculus $A\cp\abc\colon \ffrg[\ob\cc] \to \pposet$. Recall from \cref{thm.syn_is_regular} that the syntactic po-category of a regular calculus is regular. Thus to prove that $\rsyn(\abc)$ is a regular po-category, it is enough to show that, as a po-category, it is equivalent to $\rsyn(A\cp\abc)$.
+
+Using elementary methods it is possible to show that the composition rule is unital and associative, and indeed that $\rsyn(\abc)$ is a well-defined po-category---see \cite[Theorem~6.3]{fong2018graphical} for an analogous argument in detail. We define a full, faithful, locally fully faithful, essentially surjective functor $\rsyn(s\cp\abc) \to \rsyn(\abc)$ as follows. On objects, send $(\Gamma,s)$ to $(A(\Gamma),s)$, noting that $s \in P(A(\Gamma))$. Recall that $A$ is a strong monoidal functor. This implies that given objects $(\Gamma_1,s_1)$, $(\Gamma_2,s_2)$ in $\rsyn(A\cp\abc)$, we have the isomorphism of posets
+\begin{align*}
+	\rsyn(A\cp\abc)\big((\Gamma_1,s_1),(\Gamma_2,s_2)\big) 
+	&= \{\theta \in (A\cp P)(\Gamma_1\lint \Gamma_2) \mid \theta \leq s_1\boxplus s_2\} \\
+	&\cong \{\theta \in P(A(\Gamma_1)\lint A(\Gamma_2)) \mid \theta \leq s_1\boxplus s_2\} \\
+	&= \rsyn(\abc)\big((A(\Gamma_1),s_1),(A(\Gamma_2),s_2)\big) 
+\end{align*}
+Moreover, the composition operation $\comp$ is sent to the composition operation. This implies functoriality, fully faithfulness, and 2-fully faithfulness. Moreover, given any object $(X,s)$ in $\rsyn(\abc)$, it is the image of $(\Gamma,s)$ in $\rsyn(A\cp\abc)$, where $\Gamma$ is the singleton list $[X]$. Thus we have essential surjectivity too.
+
+\todo{be slightly more careful here, especially regarding composition}
+\end{proof}
+
+Note that as for any regular po-category, the syntactic po-category $\rsyn(\abc)$ has a canonical monoidal structure, inherited from the product in its category of left adjoints. On objects, this monoidal product is given by $(c,s) \otimes (c',s') \coloneqq (cc',s\boxplus s')$.
+
+
+\subsection{Two useful facts}
+
+\begin{proposition}
+  Let $\ccat{R}$ be a regular po-category. Then $\sub\colon \ccat{R} \to \pposet$ is a regular calculus.
+\end{proposition}
+\begin{proof}
+  The category $\ccat{R}$ supplies right adjoint frobenius monoids as it is the category of relations of a category with finite products. The fact that the subobjects functor is right ajax is Theorem~3.16 of \cite{fong2018graphical}.
+\end{proof}
+
+	Note that since $\cc$ supplies right adjoint frobenius monoids, it in particular supplies self-dualities, and so every morphism $f\colon c \to c'$ has a name $\ulcorner f \urcorner \colon \ast \to cc'$ (see \cref{rem.name}). We shall continue to write $\zero$ for the unit laxator $1 \to \abc(0)$, although note that $\abc(0)$ is just some meet-semilattice here, and $\zero$ is not an isomorphism. Instead, it picks out the top element.
+
+\begin{proposition}
+	Let $(\cc,\abc)$ be a regular calculus. Then there is a strong symmetric monoidal po-functor 
+	\begin{align*}
+		\ctosyn\colon \cc &\longrightarrow \rsyn(\abc); \\
+		c \in \ob\cc &\longmapsto (c,\true), \\
+		(f\colon c \to c') &\longmapsto  \abc(\ulcorner f \urcorner)(\zero)\in \abc(cc').
+	\end{align*}
+\end{proposition}
+\begin{proof}
+	Recall that $\abc(cc') = \rsyn(\abc)\big((c,\true),(c',\true)\big)$, so the data on morphisms is well-defined. Note also that taking names and the po-functor $\abc$ are monotonic, so if $f \le f'$ in $\cc(c,c')$ then $\abc(\ulcorner f \urcorner)(\zero) \vdash \abc(\ulcorner f' \urcorner)(\zero)$ in $\abc(cc')$.
+
+	It remains to check that composition is preserved. This is simply the self-duality equations.
+\end{proof}
+
+%==== Section ====%
+\section{Coregular calculi and their syntactic categories}
+A coregular category $\cat{C}$ is a category whose opposite category $\cat{C}\op$ is a regular category. A coregular po-category $\cc$ is a po-category whose co-dual $\cc\co$ is a regular po-category.
+
+A coregular category is a coregular category that supplies left adjoint frobenius monoids.
+
+Just as regular calculi present regular categories, simply dualizing the same story shows that coregular calculi present coregular categories. Let us highlight the most relevant facts.
+
+\begin{definition}
+  A \emph{coregular calculus} $(\cc,\abc)$ is a symmetric monoidal po-category $\cc$ that supplies left adjoint frobenius monoids, together with a left ajax functor $\abc\colon \cc \to \pposet$.
+\end{definition}
+
+Again, we write the laxator for $\abc$ as $\boxplus$.
+
+\todo{Define morphism $\comp'$.}
+
+\begin{definition} \label{def.gen_reg_syn_cat}
+Let $\cc$ be a coregular calculus. Its coregular syntactic po-category $\csyn(\abc)$ is defined as follows:
+\[
+\begin{tabular}{>{\bfseries}r >{$\bgroup}l<{\egroup$}}
+	objects:&
+		\ob(\csyn(\abc))\coloneqq\{(X,q)\mid X\in\cc,q\in\abc(X)\}\\
+	hom-posets:& \csyn(\abc)\big((X,q),(X',q')\big)\coloneqq\{\theta\in\abc(X\lint X')\mid q\boxplus q' \vdash \theta \} \subseteq P(X\lint X')\\
+	composition:&
+\textrm{Given by the restriction of the function} \\ 
+& \abc(X_1\lint X_2)\times \abc(X_2\lint
+X_3)\xrightarrow{\boxplus} \abc(X_1 \lint X_2 \lint X_2 \lint
+X_3) \xrightarrow{\abc(\comp')} \abc(X_1\lint X_3)\\
+& \textrm{to the relevant subposets.} \\
+%	monoidal product:& \\
+\end{tabular}
+\]
+\end{definition}
+
+Given a functor $\abc\colon \cc \to \pposet$, we may define $\newcalc{\abc} \coloneqq (\abc\cp (-)\op)\co \colon \cc\co \to \pposet$. This function maps regular calculi to coregular calculi and vice versa, giving a one-to-one correspondence between the two.
+
+\begin{proposition}
+  Let $\abc\colon \cc \to \pposet$ be a coregular calculus. Then $\csyn(\abc) = \rsyn(\newcalc\abc)\co$. In particular, the po-category $\csyn(\abc)$ is a coregular po-category.
+\end{proposition}
+\begin{proof}
+  Observe that given an object $X$ in $\ob\cc = \ob\cc\co$, we have $\abc(X)= \newcalc{\abc}(X)\op$. It's straightforward to check that the data of the syntactic coregular category is exactly equal to that of the syntactic regular category.
+\end{proof} 
+
+\begin{proposition}
+  Let $\cc$ be a coregular po-category. Then the functor 
+  \[
+    \quo_\cc \coloneqq \cc(0,-)\colon \cc \to \pposet
+  \]
+  is a coregular calculus.
+\end{proposition}
+\begin{proof}
+  Since $\cc$ is a coregular po-category, $\cc\co$ is a regular category. By \cite[Theorem~3.16]{fong2018graphical}, $\sub_{\cc\co}\coloneqq \cc\co(0,-)\colon \cc\co \to \pposet$ is thus a regular calculus. But this means that 
+  \[
+    \widehat{\cc\co(0,-)} = \cc\co(0,-)\cp (-)\op = \cc(0,-) = \quo_\cc
+  \] 
+  is a coregular calculus.
+\end{proof}
+
+
+
+%==== Section ====%
+\section{The syntactic po-category is abelian} \label{sec.abelian_proof}
+
+We now return to discussing abelian calculi. Recall that the Carboni--Walters theorem states that a monoidal po-category is abelian if and only if it is both regular and coregular. We shall use what we know about (co)regular calculi to give two alternate construtions of the abelian syntactic po-category, demonstrating its regularity and coregularity.
+
+Note that an abelian calculus is a regular calculus. This means we may construct its regular syntactic category $\rsyn(\abc)$, and in fact obtain a new regular calculus $\sub_{\rsyn(\abc)}$. Our first goal is to prove that when $\abc$ is abelian, this functor $\sub_{\rsyn(\abc)}$ is also a coregular calculus, and dually. 
+
+\begin{proposition}\label{prop.newcalc}
+  Let $\abc\colon \xx \to \pposet$ be an abelian precalculus. Then
+  \[
+    \sub_{\rsyn(\abc)} \colon \rsyn(\abc) \to \pposet 
+    \qquad \mbox{and} \qquad
+    \quo_{\csyn(\abc)} \colon \csyn(\abc) \to \pposet
+  \]
+  are respectively coregular and regular calculi.
+\end{proposition}
+
+To prove $\sub_{\rsyn(\abc)}$ is a coregular calculus, we must prove two things: that it is left ajax, and that $\rsyn(\abc)$ supplies left adjoint frobenius monoids. Let us first prove that the functor is left ajax.
+
+\begin{proposition}\label{prop.newcalc}
+  Let $\abc\colon \xx \to \pposet$ be an abelian precalculus. Then $\sub_{\rsyn(\abc)}$  is left ajax. Dually, $\quo_{\csyn(\abc)}$ is right ajax. (Hence both are bi-ajax.)
+\end{proposition}
+\begin{proof}
+  Recall that $\rsyn(\abc)$ is a regular po-category. The hom-po-functor from the monoidal unit of a regular po-category $\ccat{R}$ is known as the subobjects functor $\sub_\ccat{R}$, and is known to be a right ajax functor \cite[Theorem~3.16]{fong2018graphical}. It remains to show that it is also left ajax. For this, we simply use the adjunction given by the left ajaxness of $\abc$. 
+
+  Note that $\rsyn(\abc)\big((0,\true),(\Gamma,s)\big)=P(\Gamma)_{- \vdash s}$. The laxators of $\rsyn(\abc)\big((0,\true),-\big)$ are inherited as restrictions of the laxators $\zero$ and $\boxplus$. Since $\rsyn(\abc)\big((0,\true),(0,\true)\big) = P(0)$ the laxator $\zero\colon 1 \to \abc(0)$ remains an isomorphism, and hence a fortiori is a left adjoint.
+
+  Write as usual $\rho$ for the right adjoint to the laxator $\boxplus$. By \cref{prop.boxunbox_is_identity}, for any two objects $(\Gamma_1,s_1),(\Gamma_2,s_2)\in \rsyn(\abc)$, we have $\rho(s_1\boxplus s_2)=(s_1,s_2)$. Thus $\boxplus$ and $\rho$ restrict to an adjunction:
+  \[
+    \adj{\abc(\Gamma_1)_{\_\vdash s_1}\times\abc(\Gamma_2)_{\_\vdash s_2}}{\boxplus}{\rho}{\abc(\Gamma_1\Gamma_2)_{\_\vdash s_1\boxplus s_2}}.
+  \]
+
+  The dual argument proves that $\quo_{\csyn(\abc)}$ is right ajax, yielding the proposition.
+\end{proof}
+
+\begin{proposition} \label{prop.rsyn_supplies_lafms}
+	Let $\abc\colon \xx \to \pposet$ be an abelian precalculus. Then $\rsyn(\abc)$ supplies left adjoint frobenius monoids and $\csyn(\abc)$ supplies right adjoint frobenius monoids.
+\end{proposition}
+\begin{proof}
+	Recall that since $\xx$ supplies abelian relations, each object $\Gamma$ of $\xx$ is in particular equipped with the structure of a left adjoint frobenius monoid, depicted using white boxes:
+	\[
+		    \begin{tikzpicture}[WD]
+    	\node[bb={0}{1}, fill=white] (eta) {};
+    	\draw (eta_out1) -- +(.8,0);
+    	\node[bb={2}{1}, fill=white, right=4 of eta] (mu) {};
+    	\draw (mu_out1) -- +(.8,0);
+    	\draw (mu_in1) -- +(-.8,0);
+    	\draw (mu_in2) -- +(-.8,0);
+    	\node[bb={1}{0}, fill=white, right=4 of mu] (eta') {};
+    	\draw (eta'_in1) to +(-.8,0);
+    	\node[bb={1}{2}, fill=white, right=4 of eta'] (mu') {};
+    	\draw (mu'_in1) -- +(-.8,0);
+    	\draw (mu'_out1) -- +(.8,0);
+    	\draw (mu'_out2) -- +(.8,0);
+    	\node[above=.5 of eta] (label) {$\lsh{\eta}$};
+    	\node at (label-|mu) {$\lsh{\mu}$};
+    	\node at (label-|eta') {$\ust{\eta}$};
+    	\node at (label-|mu') {$\ust{\mu}$};
+    \end{tikzpicture}
+	\]
+  We shall show that these left adjoint frobenius monoids in $\xx$ induce left adjoint frobenius monoids in $\rsyn(\abc)$.
+  
+  
+  The category $\xx$ supplies abelian relations. This means in particular that it supplies self-duality in two ways; the first given by the gray, right adjoint frobenius monoid structures, and the second given by the white, left adjoint frobenius monoid structures. We shall consider the self-dual compact closed structure arising from choosing the gray frobenius monoids. Recall from \cref{rem.name} that each morphism $f\colon \Gamma \to \Gamma'$ has a name $\ulcorner f \urcorner \colon I \to \Gamma\Gamma'$. Applying $P$ and precomposing with $\zero$, this allows us to obtain from any morphism $f$ a poset element $\zero\cp P(\ulcorner f\urcorner) \in P(\Gamma\Gamma')$.
+
+	As $\rsyn(\abc)$ is the syntactic regular po-category of $\abc$, we may draw morphisms in it using graphical terms of $\abc$. Abusing notation, let us represent the cells labelled with these names of the frobenius monoid maps again using white boxes; ie
+	\[
+	\begin{tikzpicture}[unoriented WD, pack size=10pt]
+		\node (P0) {
+		    \begin{tikzpicture}[WD]
+    	\node[bb={0}{1}, fill=white] (eta) {};
+    	\draw (eta_out1) -- +(.8,0);
+    \end{tikzpicture}
+    };
+		\node[right=2 of P0] (P1) {
+			\begin{tikzpicture}[inner WD]
+				\node[pack, inner sep=1pt] (eta) {$\zero\cp P(\ulcorner \lsh\eta \urcorner)$};
+				\draw (eta.east) -- +(.6cm, 0);
+			\end{tikzpicture}
+		};
+		\node[right=5 of P1] (P2) {
+		    \begin{tikzpicture}[WD]
+    	\node[bb={1}{2}, fill=white, right=4 of eta'] (mu') {};
+    	\draw (mu'_in1) -- +(-.8,0);
+    	\draw (mu'_out1) -- +(.8,0);
+    	\draw (mu'_out2) -- +(.8,0);
+    \end{tikzpicture}
+		};
+		\node[right=2 of P2] (P3) {
+			\begin{tikzpicture}[inner WD]
+        \node[pack, inner sep=1pt] (mu) {$\zero\cp P(\ulcorner \ust\mu \urcorner)$};
+				\draw (mu.west) -- +(-.6cm, 0);
+				\draw (mu.30) -- +(.6cm, .25cm);
+				\draw (mu.-30) -- +(.6cm, -.25cm);
+			\end{tikzpicture}
+    };
+		\node at ($(P0.east)!.5!(P1.west)$) {$=$};
+		\node at ($(P2.east)!.5!(P3.west)$) {$=$};
+	\end{tikzpicture}
+	\]
+  and so on.
+  
+  Let $(\Gamma,s)$ be an object of $\rsyn(\abc)$. Define the morphisms 
+  \[
+	\begin{tikzpicture}[unoriented WD, pack size=10pt]
+		\node (P0) {
+		    \begin{tikzpicture}[WD]
+      \node[link] (dot) {};
+      \node[pack,above=1 of dot] (s) {$s$};
+      \node[bb={0}{1}, fill=white, left=1 of dot] (eta) {};
+    	\draw (eta_out1) -- (dot);
+    	\draw (s) -- (dot);
+    	\draw (dot) -- +(.8,0);
+    \end{tikzpicture}
+    };
+  \end{tikzpicture}
+  \]
+	We shall show that these define a left adjoint frobenius monoid on $(\Gamma,s)$ in the category $\rsyn(\abc)$.
+
+  First, we have to show that these are well-defined morphisms between the stated domain and codomain:	
+
+  Second, we show that $\lsh{\mu}$ and $\ust{\eta}$ obey the three monoid laws from \cref{eqn.rel_comonoid}.
+  
+  Third, we show that $\lsh{\mu}$ is left adjoint to $\ust{\mu}$, and that $\lsh{\eta}$ is left adjoint to $\ust{\eta}$.
+  
+  Finally, we show that they obey the additional frobenius monoid laws (\cref{eqn.frobenius}).
+  
+  This establishes that every object of $\rsyn(\abc)$ is equipped with the structure of a left adjoint frobenius monoid. To show that $\rsyn(\abc)$ \emph{supplies} this structure, we must also prove compatibility with $\otimes$.
+\end{proof}
+
+\begin{remark}
+  It should be the case that in fact $\sub$ and $\quo$ are both \emph{abelian} precalculi again.
+\end{remark}
+
+Recall there exists a strict monoidal po-functor $(-)\op\colon \pposet \to \pposet\co$ sending every poset $X$ to its opposite poset $X\op$. Write $\newcalc{\abc}$ for the composite of the hom-po-functor from the monoidal unit with the opposite poset functor:
+  \[
+    \newcalc{\abc}\coloneqq \rsyn(\abc)\big((\zero,\true),-\big)\cp (-)\op\colon \rsyn(\abc) \longrightarrow \pposet\co.
+  \]
+
+  Unpacking the definition, we see that $\newcalc{\abc}$ sends each object $(\Gamma,s)$ to the opposite lower set
+	\[
+		\newcalc{\abc}(\Gamma,s)\coloneqq(\abc(\Gamma)_{\_\vdash s})\op,
+  \]
+  and each morphism $\theta\colon (\Gamma_1,s_1) \to (\Gamma_2,s_2)$ to the monotone map 
+  \begin{align*}
+    \newcalc{\abc}(\theta)\colon (\abc(\Gamma_1)_{\_ \vdash s_1})\op &\longrightarrow (\abc(\Gamma_2)_{\_ \vdash s_2})\op \\ 
+    q &\longmapsto 
+		\begin{tikzpicture}[unoriented WD, pack size=10pt, inner sep=2pt, baseline=(current  bounding  box.center)]
+      \node[pack] (s) {$q$};
+      \node[pack, right=1 of s] (theta) {$\theta$};
+    	\draw (s) -- (theta);
+      \draw (theta.east) -- +(1,0);
+    \end{tikzpicture}.
+  \end{align*}
+By \cref{prop.newcalc}, taking co-duals now gives a right ajax functor $\newcalc{\abc}\co\colon \rsyn(\abc)\co \to \pposet$. Moreover, by \cref{prop.rsyn_supplies_lafms}, $\rsyn(\abc)$ supplies left adjoint frobenius monoids, so $\rsyn(\abc)\co$ supplies right adjoint frobenius monoids. Thus $\newcalc{\abc}\co$ permits the construction of a regular syntactic category. In fact, this defines an alternate construction of the abelian syntactic category.
+
+\begin{proposition}
+	Let $\abc\colon \xx \to \pposet$ be an abelian calculus. We have isomorphisms of po-categories
+	\[
+		\syn(\abc) \cong \rsyn(\quo_{\csyn(\abc)}) \cong \csyn(\sub_{\rsyn(\abc)}).
+  \]
+  In particular, this means that $\syn(\abc)$ is regular and coregular, and hence abelian.
+\end{proposition}
+\begin{proof}
+  This is where the extra condition is necessary.
+  
+  Note that the objects and hom-posets of $\syn(\abc)$ and $\rsyn(\newcalc{\abc}\co)$ agree. Indeed we have
+  \begin{align*}
+    \ob\rsyn(\newcalc{\abc}\co) &= \{((\Gamma,s),q) \mid q \in (P(\Gamma)_{-\vdash s})\op \} \\
+    &= \{(\Gamma,q,s) \mid q \vdash s \in P(\Gamma)\} \\
+    &=\ob\syn(\abc)
+  \end{align*}
+  and
+  \begin{align*}
+    \rsyn(\newcalc{\abc}\co)\big((\Gamma,q,s),(\Gamma',q',s')\big) 
+    &= \{\theta \mid \theta \vdash q\boxplus q' \in (P(\Gamma\Gamma')_{-\vdash s\boxplus s'})\op \} \\
+    &= \{\theta \mid q\boxplus q' \vdash \theta \vdash s\boxplus s' \in P(\Gamma\Gamma')\} \\
+    &=\syn(\abc)\big((\Gamma,q,s),(\Gamma',q',s')\big).
+  \end{align*}
+  The difficulty is in checking that the composition rules agree.
+
+\end{proof}
+
+\begin{proposition}
+If $Q_1\boxplus Q_2\vdash R\vdash S_1\boxplus S_2$ then the identities are given by intersecting with $S_i$ and adding $Q_i$.
+\end{proposition}
+
+%======== Chapter ========%
+\chapter{The functor $\syn\colon \abcalc \to \abcat$}
+
+%======== Chapter ========%
+\chapter{Abelian calculi and abelian categories are equivalent}
+
+\printbibliography
+\end{document}
