@@ -27,10 +27,6 @@
 \usepackage[backend=biber, bibencoding=utf8, maxbibnames = 10, style = alphabetic]{biblatex}
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 \usepackage{xstring}
-\usepackage{ebproof}
-\usepackage[export]{adjustbox} %vertical align includegraphics
-%\usepackage{scalefnt}
-%\usepackage{anyfontsize} %arbitrary font size
 \usepackage{graphicx}
 
 \usepackage[color=white, textsize=footnotesize]{todonotes}
@@ -494,7 +490,7 @@ We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it inv
 %==== Section ====%
 \section{The 2-category $\mathbb{S}\Cat{MC}$}
 
-\begin{theorem}
+\begin{theorem}\label{thm.smc_biprod}
 The 2-category $\ssmc$ of symmetric monoidal categories, strong monoidal functors, and monoidal natural transformations has strong 2-biproducts.
 \end{theorem}
 \begin{proof}
@@ -956,6 +952,13 @@ Choose any $k\in\pp$; we need a functor $s_k\colon\pp\to\pp$ with $s_k(1)=k$. On
 It is an easy exercise to show that the diagrams in \cref{eqn.supply_commute_tensors} commute for any $k_1,k_2\in\pp$.
 \end{proof}
 
+
+\begin{proposition}
+A supply $s$ of $\pp$ in $\cc$ induces a strong monoidal functor $\bigsqcup_{c\in\ob(\cc)}\pp\too\cc$.
+\end{corollary}
+\begin{proof}
+This follows directly from \cref{def.supply}. \todo{No, we haven't proved that infinite coproducts exist.}
+\end{proof}
 
 
 
