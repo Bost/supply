@@ -214,7 +214,7 @@
 \begin{document}   
 
 \title{Supplying bells and whistles in monoidal categories}
-\author{Brendan Fong$^*$ \and David I.\ Spivak\thanks{Spivak and Fong acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.}}
+\author{Brendan Fong \and David I.\ Spivak}
   
 \maketitle
 
@@ -453,6 +453,14 @@ Again, these equations hold in any Cartesian monoidal category, but they \emph{d
 
 We will show that the morphisms in $\cat{C}$ that are homomorphisms for the $\pp$-structure always form a monoidal subcategory. The second goal of the paper is to prove that the coherence isomorphisms---the associator and unitors---are always homomorphisms for the $\pp$-structure.
 
+% Subsection %
+\subsection{Future work}
+
+Many of the ideas in this paper should extend to the enriched setting, e.g.\ replacing props and symmetric monoidal categories with 2-props and symmetric monoidal 2-categories, etc. Indeed, in \cite{ablog}, we work out the theory for the locally posetal case. However, we leave the development of this more general theory open for the time being.
+
+% Subsection %
+\subsection{Acknowledgements}
+We thank Dmitry Vagner for interesting and useful conversations. We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
 
 
 %======== Chapter ========%
@@ -469,7 +477,7 @@ We denote composition of $f\colon a\to b$ and $g\colon b\to c$ by $(f\cp g)\colo
 
 Suppose $(\cat{C}, I, \otimes)$ is a symmetric monoidal category, $m\in\nn$ is a natural number, and $c\colon\ord{m}\to\cat{C}$ is a family of objects in $\cat{C}$. We denote
 \[
-  \bigotimes c\coloneqq\bigotimes_{i\in\ord{m}}c(i)\coloneqq
+	\bigotimes_{i\in\ord{m}}c(i)\coloneqq
   \big((c(1)\otimes c(2))\cdots\big)\otimes c(m)
 \]
 with the convention that when $m=0$ and $!\colon\ord{0}\to \cat{C}$ the unique function, we put $\bigotimes != I$. If $c(i)=c(j)$ for all $i,j\in\ord{m}$, we denote this by $c\tpow{m}\coloneqq\bigotimes_{i\in\ord{m}}c$. We take this to be the canonical parenthesation, so $c\otimes d\otimes e$ denotes $(c\otimes d)\otimes e$. 
@@ -1118,6 +1126,7 @@ Consider an object $m\in\pp$. Along the top-right, it is sent to the functor $c\
 \end{proof}
 
 
+
 %============ Appendix ============%
 \appendix
 
@@ -1220,6 +1229,9 @@ c_j=I_j\text{ for all but finitely-many }j\in J
 \]
 Here $I_j$ is the unit in $\cat{C}_j$. The monoidal product is given pointwise (and then replace $I\otimes I$ by $I$). We leave to the reader to check that this, together with the obvious coprojections $\inc_j\colon\cat{C}_j\to\bigsqcup_{j\in J}\cat{C}_j$, constitutes a (strong) coproduct in $\ssmc$, i.e.\ that for any symmetric monoidal category $\cat{X}$ and strong monoidal functors $F_j\colon\cat{C}_j\to\cat{X}$, there is a functor $F\colon\bigsqcup_{j\in J}\cat{C}_j\to\cat{X}$ and a natural isomorphism $F_j\cong\inc_j\cp F$.
 \end{proof}
+
+
+
 
 \printbibliography
 \end{document}
