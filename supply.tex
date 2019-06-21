@@ -222,9 +222,9 @@
 
 %============ Abstract ============%
 \begin{abstract}
-It is common to encounter symmetric monoidal (SM) categories $C$ for which every object is equipped with an algebraic structure, in a way that is compatible with the monoidal unit and product in $C$. We define this formally and say that $C$ \emph{supplies} the algebraic structure. For example, the category of relations has two SM structures, and with respect to either one it supplies comonoids. A hypergraph category is defined to be a SM category which supplies frobenius monoids. 
+It is common to encounter symmetric monoidal categories $\cat{C}$ for which every object is equipped with an algebraic structure, in a way that is compatible with the monoidal unit and product in $\cat{C}$. We define this formally and say that $\cat{C}$ \emph{supplies} the algebraic structure. For example, the category of sets and relations has two monoidal structures, and with respect to either one it supplies comonoids. A hypergraph category is defined to be a category which supplies frobenius monoids. We prove several facts about the notion of supply, e.g.\ that the coherence isomorphisms---associators, unitors, and braiding---are automatically homomorphisms for any supply, and so are the strong coherence isomorphisms for any strong symmetric monoidal functor preserving supply. 
 
-We prove several facts about the notion of supply, e.g.\ that the coherence isomorphisms---associators, unitors, and braiding---are automatically homomorphisms for any supply, and so are the strong coherence isomorphisms for any strong SM functor preserving supply. Along the way, we also prove that the 2-category of SM categories, strong SM functors, and monoidal natural transformations has biproducts, a fact which does not appear to be well-known and which we had difficulty finding in the literature.
+%Along the way, we also prove that the 2-category of SM categories, strong SM functors, and monoidal natural transformations has biproducts, a fact which does not appear to be well-known and which we had difficulty finding in the literature.
 \end{abstract}
 
 %======== Chapter ========%
@@ -232,7 +232,7 @@ We prove several facts about the notion of supply, e.g.\ that the coherence isom
 
 Many symmetric monoidal categories $\cat{C}$ have the property that each object $c\in\cat{C}$ is equipped with a certain algebraic structure---say that of a monoid or a comonoid---in a way that is compatible with the monoidal structure.
 
-For example, consider the category $\rel$ of relations between sets. It has a symmetric monoidal structure $(1, \otimes, \sigma)$ coming from the Cartesian monoidal structure of $\smset$. This is not a Cartesian monoidal structure on $\rel$, e.g.\ 1 is not terminal. And yet each object $r\in\rel$ is equipped with morphisms $\delta_r\colon r\to r\otimes r$ and $\epsilon_r\colon r\to 1$, which satisfy the same \emph{algebraic} properties that a diagonal and a terminal morphism do. Namely, the diagrams expressing commutativity, unitality, and associativity commute:
+For example, consider the category $\rel$ of relations between sets. It has a symmetric monoidal structure $(1, \otimes, \sigma)$ coming from the cartesian monoidal structure of $\smset$. This is not a cartesian monoidal structure on $\rel$, e.g.\ 1 is not terminal. And yet each object $r\in\rel$ is equipped with morphisms $\delta_r\colon r\to r\otimes r$ and $\epsilon_r\colon r\to 1$, which satisfy the same \emph{algebraic} properties that a diagonal and a terminal morphism do. Namely, the diagrams expressing commutativity, unitality, and associativity commute:
 \[
 \begin{tikzcd}[column sep=small]
 	&r\ar[dl, "\delta"']\ar[dr, "\delta"]\\
@@ -386,15 +386,17 @@ One notices immediately the need for a symmetry isomorphism $\sigma$ in the seco
 	\node at ($(P3.east)!.5!(P4.west)$) {$=$};
 \end{tikzpicture}
 \]
-The point is that every object in $\rel$ has this comonoid structure, and the operations are coherent with $I,\otimes$. In this situation we will say that $\rel$ \emph{supplies comonoids}.
+The point is that every object in $\rel$ has this comonoid structure, and the operations are coherent with $1$ and $\otimes$. In this situation we will say that $\rel$ \emph{supplies comonoids}.
 
-In general, the compatible algebraic structures assigned to each object in $\cat{C}$ can be understood as coming from a prop $\pp$. A prop is a strict symmetric monoidal category whose monoid of objects is $(\nn,0,+)$. In the case of comonoids, the relevant prop is the skeleton of $\finset\op$. Indeed, $\epsilon$ and $\delta$ represent the (opposites of) the unique functions $\varnothing\to\{1\}$ and $\{1,2\}\to\{1\}$, respectively.
+In general, we may talk of algebraic structures on a object being defined by a prop $\pp$. A prop is a strict symmetric monoidal category whose monoid of objects is $(\nn,0,+)$; in other words, a one-sorted symmetric monoidal theory. In the case of comonoids, the relevant prop is the skeleton of $\finset\op$. Indeed, $\epsilon$ and $\delta$ represent the (opposites of) the unique functions $\varnothing\to\{1\}$ and $\{1,2\}\to\{1\}$, respectively.
+
+We say that a symmetirc monoidal category $\cat{C}$ \emph{supplies} $\pp$ if every object of $\cat{C}$ is equipped with the structure of $\pp$ in a way compatible with the monoidal structure. The concept of supply, where every object is equipped with a particular algebraic structure, in a way compatible with the monoidal structure but not necessarily any further laws, appears frequently in recent literature. For example, categories supplying comonoids figure strongly in categorical approaches to probability theory \cite{fong2013causal,fritz2019}, categories supplying frobenius monoids---known as hypergraph categories---are important in networks and wiring-diagram languages \cite{fong2019hypergraph}, and categories supplying so-called adjoint frobenius monoids and abelian relations underlie alternative approaches to regular and abelian categories \cite{fong2019abelian}.
 
 The first goal of this note is to give a general definition of supply. If $\pp$ is a prop and $\cat{C}$ is a symmetric monoidal category, we define what it means for $\cat{C}$ to supply the algebraic structure encoded in $\pp$. We also define what it means for a strong monoidal functor to \emph{preserve supplies}, i.e.\ to send a given supply of $\pp$ in $\cat{C}$ to a given supply of $\pp$ in $\cat{D}$. We give a number of examples both of supply and supply preservation.
 
-We also provide some basic theory of supply. For example, given a supply of $\pp$ in $\cat{C}$ and a prop functor $\pp'\to\pp$, one obtains a supply of $\pp'$ in $\cat{C}$. We show that if $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$, and that the projections and coprojections preserve supplies. It does not appear to be sufficiently well-known that the 2-category of symmetric monoidal categories has (strong) biproducts, so we prove that as well.
+The second goal is to provide some basic theory of supply. For example, given a supply of $\pp$ in $\cat{C}$ and a prop functor $\pp'\to\pp$, one obtains a supply of $\pp'$ in $\cat{C}$. We show that if $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$, and that the projections and coprojections preserve supplies.
 
-We also discuss what it means for various maps in $(\cat{C},I,\otimes)$ to be \emph{homomorphisms} for the supplied structure. For example, it is well-known that if $\cat{C}$ is Cartesian monoidal then it supplies comonoids and every morphism $f\colon c\to d$ is a comonoid homomorphism, in the sense that the following diagrams commute:
+We also discuss what it means for various maps in $(\cat{C},I,\otimes)$ to be \emph{homomorphisms} for the supplied structure. For example, it is well-known that if $\cat{C}$ is cartesian monoidal (i.e.\ if the monoidal product is given by the categorical product) then it supplies comonoids and every morphism $f\colon c\to d$ is a comonoid homomorphism, in the sense that the following diagrams commute:
 \[
 \begin{tikzcd}[column sep=small]
 	c\ar[rr, "f"]\ar[rd, "\epsilon_c"']&&
@@ -453,7 +455,7 @@ Again in pictures:
 	\node at ($(P3.east)!.5!(P4.west)$) {$=$};
 \end{tikzpicture}
 \end{equation}
-These equations hold in any Cartesian monoidal category, e.g.\ $\smset$, but they \emph{do not hold} in $\rel$. (As an example, the first equation in \eqref{eqn.homo} does not hold in $\rel$. Take $c=d=1$, take $f\coloneqq\varnothing\ss 1\times 1$ to be the empty relation, and note that $\epsilon_c \neq (f\cp\epsilon_d)$.) We will show that the morphisms in $\cat{C}$ that are homomorphisms for the $\pp$-structure always form a monoidal subcategory.
+These equations hold in any cartesian monoidal category, e.g.\ $\smset$, but they \emph{do not hold} in $\rel$. (As an example, the first equation in \eqref{eqn.homo} does not hold in $\rel$. Take $c=d=1$, take $f\coloneqq\varnothing\ss 1\times 1$ to be the empty relation, and note that $\epsilon_c \neq (f\cp\epsilon_d)$.) We will show that the morphisms in $\cat{C}$ that are homomorphisms for the $\pp$-structure always form a monoidal subcategory.
 
 The main theorems of this paper are that supply and supply preservation are well-behaved with respect to coherence isomorphisms. In \cref{thm.supply_v2} we show that every associator and unitor in $\cat{C}$ is automatically a homomorphism for any supply. In \cref{thm.pres_supp_strongators_homo} we show that the coherence isomorphisms for strong monoidal functors $F\colon\cat{C}\to\cat{D}$ are automatically homomorphisms whenever $F$ preserves the supply.
  
@@ -515,7 +517,8 @@ The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(
 	\big(F(c)\otimes F(c')\big)\otimes\big(G(c')\otimes G(c')\big).
 \]
 
-\cref{thm.smc_biprod,prop.biprod_smf_strict} are not necessary for the main thrust of this note, so we will save their proofs for later; see \cref{chap.proofs}, pages \pageref{page.smc_biprod} and \pageref{page.biprod_smf_strict}. However, they seem important to us, and not sufficiently well known. 
+\cref{thm.smc_biprod,prop.biprod_smf_strict} are not necessary for the main thrust of this note, so we will save their proofs for later; see \cref{chap.proofs}. %, pages \pageref{page.smc_biprod} and \pageref{page.biprod_smf_strict}. 
+However, they seem important to us, and not sufficiently well known. 
 
 \begin{theorem}\label{thm.smc_biprod}
 The 2-category $\ssmc$ of symmetric monoidal categories, strong monoidal functors, and monoidal natural transformations has strong 2-biproducts.
@@ -537,7 +540,7 @@ is strict monoidal.
 %======== Chapter ========%
 \chapter{Supply and preservation of supply}
 
-In \cref{sec.supply} we formally define what it means for a symmetric monoidal category to supply an algebraic structure coming from a prop, and we give several examples. In \cref{sec.pres_supply} we formally define what it means for a strong symmetric monoidal functor to preserve supply and again give several examples.
+In \cref{sec.supply} we define what it means for a symmetric monoidal category to supply an algebraic structure coming from a prop. In \cref{sec.pres_supply} we define what it means for a strong symmetric monoidal functor to preserve supply. We give examples throughout.
 
 %==== Section ====%
 \section{Supply}\label{sec.supply}
@@ -561,7 +564,10 @@ Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply 
 	I\tpow{n}
 \end{tikzcd}
 \end{equation}
-where the $\sigma$'s are as in \cref{eqn.symmetry}. We say that $f\colon c\to d$ is an \emph{$s$-homomorphism} if the following diagram commutes for all $\mu\colon m\to n$ in $\pp$:
+where the $\sigma$'s are as in \cref{eqn.symmetry}.
+\end{definition}
+
+We further say that $f\colon c\to d$ is an \emph{$s$-homomorphism} if the following diagram commutes for all $\mu\colon m\to n$ in $\pp$:
 \begin{equation}\label{eqn.nat_means_homo}
 \begin{tikzcd}
 	c\tpow{m}\ar[r, "s_c(\mu)"]\ar[d, "f\tpow{m}"']&
@@ -570,7 +576,6 @@ where the $\sigma$'s are as in \cref{eqn.symmetry}. We say that $f\colon c\to d$
 	d\tpow{n}
 \end{tikzcd}
 \end{equation}
-\end{definition}
 
 \begin{example}\label{ex.supply_ids}
 Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strict monoidal functor $s_c\colon\nn\to\cat{C}$ sending $1\mapsto c$. There is nothing more to check for $s$ to be a supply, since $\nn$ is discrete, and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
@@ -687,7 +692,7 @@ Similarly, by a supply of comonoids, we mean a supply of the prop given by the s
 \end{example}
 
 \begin{example}[Cartesian categories]\label{ex.cart_grant_comonoids}
-A symmetric monoidal category $\cat{C}$ has finite products iff 1.\ it supplies comonoids and 2.\ every morphism in $\cat{C}$ is a comonoid homomorphism. In this case, the categorical product coincides with the monoidal product. This was shown in \cite{fox1976coalgebras}.
+A symmetric monoidal category $\cat{C}$ has finite products iff (i) it supplies comonoids and (ii) every morphism in $\cat{C}$ is a comonoid homomorphism. In this case, the categorical product coincides with the monoidal product. This was shown in \cite{fox1976coalgebras}.
 \end{example}
 
 \begin{example}[Compact closed categories]\label{ex.self_duals}
@@ -745,7 +750,7 @@ A category $\cat{C}$ is called \emph{self-dual compact closed} if it supplies se
 \end{example}
 
 \begin{example}\label{ex.frob_mon}
-The prop for frobenius monoids is $\cospan$. A category supplying frobenius monoids is called a \emph{hypergraph category}; see \cite{fong2019hypergraph}.
+The prop for (special, commutative) frobenius monoids is $\cospan$, the category of cospans in $\finset$. A category supplying frobenius monoids is called a \emph{hypergraph category}; see \cite{fong2019hypergraph}.
 \end{example}
 
 %==== Section ====%
