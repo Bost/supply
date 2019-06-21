@@ -1,7 +1,7 @@
 \documentclass[11pt, oneside, article]{memoir}
 
 \settrims{0pt}{0pt} % page and stock same size
-\settypeblocksize{*}{35pc}{*} % {height}{width}{ratio}
+\settypeblocksize{*}{34.5pc}{*} % {height}{width}{ratio}
 \setlrmargins{*}{*}{1} % {spine}{edge}{ratio}
 \setulmarginsandblock{1.1in}{1.4in}{*} % height of typeblock computed
 \setheadfoot{\onelineskip}{2\onelineskip} % {headheight}{footskip}
@@ -104,6 +104,7 @@
 \newtheorem{question}[theorem]{Question}
 
 \crefalias{chapter}{section}
+
 
 %------------------Begin author macros-----------------------
 
@@ -215,6 +216,7 @@
 
 \title{Supplying bells and whistles in monoidal categories}
 \author{Brendan Fong \and David I.\ Spivak}
+\date{\vspace{-.3in}}
   
 \maketitle
 
@@ -409,7 +411,7 @@ We also discuss what it means for various maps in $(\cat{C},I,\otimes)$ to be \e
 \]
 Again in pictures:
 \begin{equation}\label{eqn.homo}
-\begin{tikzpicture}
+\begin{tikzpicture}[baseline=(P1)]
 	\node (P1) {
 	\begin{tikzpicture}[WD]
 		\node[bb={1}{1}] (f) {$f$};
@@ -596,7 +598,7 @@ For a morphism $f\colon c\to d$ to be an involution-homomorphisms just means $f$
 \begin{definition}[Monoids]\label{def.prop_monoids}
 The \emph{prop for monoids} is given by two generators
 \begin{equation}\label{eqn.gen_monoid}
-\begin{tikzpicture}[WD]
+\begin{tikzpicture}[WD, baseline=(eta)]
 	\node[bb={0}{1}, fill=white] (eta) {};
 	\draw (eta_out1) -- +(.8,0);
 	\node[bb={2}{1}, fill=white, right=4 of eta] (mu) {};
@@ -607,7 +609,7 @@ The \emph{prop for monoids} is given by two generators
 \end{equation}
 and three equations:
 \begin{equation}\label{eqn.rel_monoid}
-\begin{tikzpicture}
+\begin{tikzpicture}[baseline=(a)]
 	\node (P11) {
 	\begin{tikzpicture}[WD]
 		\node[bb={2}{1}, fill=white] (a) {};
@@ -1003,7 +1005,7 @@ Let $s$ be a supply of $\pp$ in $\cat{C}$ and $t$ a supply of $\pp$ in $\cat{D}$
 \begin{proof}
 Both are proved by a diagram chase. Indeed, consider the diagram:
 \[
-\begin{tikzcd}[column sep=10pt]
+\begin{tikzcd}[column sep=9pt]
 	(Fc\otimes Fc')\tpow{m}
 		\ar[rrrr, "t_{Fc\otimes Fc'}(\mu)"]
 		\ar[ddddd, "\varphi\tpow{m}"']
@@ -1056,7 +1058,7 @@ Let $s$ be a supply of $\pp$ in $\cat{C}$. Then the collection of $s$-homomorphi
 \begin{proof}
 We need to show that the collection of $s$-homomorphisms $f\colon c\to d$ contains all the coherence isomorphisms in $\cat{C}$ and is closed under composition and tensor product.
 
-We showed in \cref{thm.supply_v2} that every coherence isomorphism in $\cat{C}$ is a $s$-homomorphism; see below \cref{eqn.C_0_homos}. It is obvious that if $f\colon c\to d$ and $g\colon d\to e$ are $s$-homomorphisms then so is $f\cp g$. Finally, if $f_1\colon c_1\to d_1$ and $f_2\colon c_2\to d_2$ are $s$-homomorphisms then so is $(f_1\otimes f_2)$; this follows from \cref{eqn.supply_commute_tensors_v2}.
+We showed in \cref{thm.supply_v2} that every coherence isomorphism in $\cat{C}$ is an $s$-homomorphism; see below \cref{eqn.C_0_homos}. It is obvious that if $f\colon c\to d$ and $g\colon d\to e$ are $s$-homomorphisms then so is $f\cp g$. Finally, if $f_1\colon c_1\to d_1$ and $f_2\colon c_2\to d_2$ are $s$-homomorphisms then so is $(f_1\otimes f_2)$; this follows from \cref{eqn.supply_commute_tensors_v2}.
 
 The final statement is just a repackaging of the statement that every morphism in $\cat{C}_s$ is an $s$-homomorphism; compare \cref{eqn.nat_means_homo,eqn.C_0_homos}.
 \end{proof}
