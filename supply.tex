@@ -153,6 +153,7 @@
 \newcommand{\nn}{\mathbb{N}}
 \newcommand{\pp}{\mathbb{P}}
 \newcommand{\qq}{\mathbb{Q}}
+\newcommand{\zz}{\mathbb{Z}}
 
 \newcommand{\mob}[1]{#1_0}
 
@@ -463,7 +464,7 @@ The main theorems of this paper are that supply and supply preservation are well
  
 % Subsection %
 \paragraph{Acknowledgements.}
-We thank Dmitry Vagner for interesting and useful conversations. We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
+We thank Dmitry Vagner for interesting and useful conversations. \todo{Tobias: author or acknowledge.} We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
 
 
 %======== Chapter ========%
@@ -750,6 +751,8 @@ A category $\cat{C}$ is called \emph{self-dual compact closed} if it supplies se
 The prop for (special, commutative) frobenius monoids is $\cospan$, the category of cospans in $\finset$. A category supplying frobenius monoids is called a \emph{hypergraph category}; see \cite{fong2019hypergraph}.
 \end{example}
 
+\todo{Is it true that a category is (pre-?) additive iff it supplies $\mathsf{Mat}_\zz$?}
+
 \begin{proposition}\label{prop.p_supplies_itself}
 Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
 \end{proposition}
@@ -867,7 +870,7 @@ The argument that braidings are homomorphisms is strictly analogous to the above
 The left-hand and middle diagrams commute by \cref{eqn.supply_commute_tensors} and the right-hand diagram commutes by the unitor axiom.
 \end{proof}
 
-The following was shown as part of the proof of \cref{thm.supply_v2}; see \cref{eqn.C_0_homos}.
+The following was shown as part of the proof of \cref{thm.supply_v2}; see \cref{eqn.C_0_homos} and below.
 \begin{corollary}\label{cor.coherence_isos_homos}
 Suppose $s$ is a supply of $\pp$ in $\cat{C}$. All the coherence isomorphisms in $\cat{C}$ (associators, unitors, and braiding) are $s$-homomorphisms.
 \end{corollary}
