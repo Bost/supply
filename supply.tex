@@ -464,7 +464,7 @@ The main theorems of this paper are that supply and supply preservation are well
  
 % Subsection %
 \paragraph{Acknowledgements.}
-We thank Dmitry Vagner for interesting and useful conversations. \todo{Tobias: author or acknowledge.} We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
+We thank Dmitry Vagner for interesting and useful conversations and Tobias Fritz for catching an error in an earlier draft. We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
 
 
 %======== Chapter ========%
@@ -504,6 +504,8 @@ Many of our results will rely on Mac Lane's coherence theorem for symmetric mono
 
 \begin{definition}\label{def.smf}
 Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Define $\smf(\cat{C},\cat{D})$ to be the symmetric monoidal category whose objects are strong monoidal functors $(F,\varphi)\colon\cat{C}\to\cat{D}$, whose morphisms are monoidal natural transformations, and whose monoidal structure is given pointwise. We refer to the isomorphisms $\varphi\colon I_{\cat{D}}\To{\cong} F(I_{\cat{C}})$ and $\varphi_{c,c'}\colon F(c)\otimes_{\cat{D}} F(c')\To{\cong} F(c\otimes_{\cat{C}} c')$ as \emph{strongators}.
+
+Define $\ssmc$ to be the 2-category whose objects are symmetric monoidal categories and whose hom-categories are given by $\smf$.
 \end{definition}
 
 The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(\cat{C},\cat{D})$ is given by the constant functor at the monoidal unit of $\cat{D}$ and that the monoidal product is given by $(F\otimes G)(c)\coloneqq F(c)\otimes G(c).$ The latter is strong monoidal because for any $c,c'\in\cat{C}$ we have natural symmetry isomorphisms
@@ -749,8 +751,6 @@ A category $\cat{C}$ is called \emph{self-dual compact closed} if it supplies se
 \begin{example}\label{ex.frob_mon}
 The prop for (special, commutative) frobenius monoids is $\cospan$, the category of cospans in $\finset$. A category supplying frobenius monoids is called a \emph{hypergraph category}; see \cite{fong2019hypergraph}.
 \end{example}
-
-\todo{Is it true that a category is (pre-?) additive iff it supplies $\mathsf{Mat}_\zz$?}
 
 \begin{proposition}\label{prop.p_supplies_itself}
 Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
