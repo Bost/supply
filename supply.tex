@@ -499,6 +499,10 @@ We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it inv
 
 Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$. Moreover, composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms.
 
+\begin{definition} \label{def.objectwise_free}
+	Let $\cat{C}$ be a strict monoidal small category; note that its objects form a monoid. We say that $\cat{C}$ is an \emph{objectwise-free} monoidal category if this monoid is isomorphic to the free monoid on some set $G$. We call the elements of $G$ the \emph{generators} of the objectwise-free monoidal category.
+\end{definition}
+
 % Subsection %
 \paragraph{The 2-category $\mathbb{S}\Cat{MC}$.}
 
@@ -544,7 +548,11 @@ is strict monoidal.
 %======== Chapter ========%
 \chapter{Semistrict monoidal functors}
 
+
 \begin{definition} \label{def.semistrict}
+  Let $\pp$ be an objectwise-free symmetric monoidal category with generating set $G$, and let $\cat{C}$ be any symmetric monoidal category. Note that the objects of $\pp$ may be uniquely written as $g_1 \otimes g_2 \otimes \dots \otimes g_n$ where each $g_i \in G$. 
+  
+  A \emph{semistrict} monoidal functor $F\colon \pp \to \cat{C}$ is a strong monoidal functor that sends any object $g_1 \otimes g_2 \otimes \dots \otimes g_n$ in $\pp$ to $(((I \otimes F(g_1)) \otimes F(g_2)) \otimes \dots ) \otimes F(g_n)$.
 \end{definition}
 
 \begin{theorem} \label{thm.sstfae}
