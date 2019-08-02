@@ -499,15 +499,14 @@ We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it inv
 
 Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$. Moreover, composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms.
 
-\begin{definition} \label{def.objectwise_free}
-	Let $\cat{C}$ be a strict monoidal small category; note that its objects form a monoid. We say that $\cat{C}$ is an \emph{objectwise-free} monoidal category if this monoid is isomorphic to the free monoid on some set $G$. We call the elements of $G$ the \emph{generators} of the objectwise-free monoidal category.
-\end{definition}
+Recall that a strong monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ consists of a functor $F$ and natural isomorphisms $\varphi\colon I_{\cat{D}}\To{\cong} F(I_{\cat{C}})$ and $\varphi_{c,c'}\colon F(c)\otimes_{\cat{D}} F(c')\To{\cong} F(c\otimes_{\cat{C}} c')$. We refer to these isomorphism as the \emph{strongators} for $F$. A strong monoidal functor is \emph{strict} if all strongators are identities.
+
 
 % Subsection %
 \paragraph{The 2-category $\mathbb{S}\Cat{MC}$.}
 
 \begin{definition}\label{def.smf}
-Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Define $\smf(\cat{C},\cat{D})$ to be the symmetric monoidal category whose objects are strong monoidal functors $(F,\varphi)\colon\cat{C}\to\cat{D}$, whose morphisms are monoidal natural transformations, and whose symmetric monoidal structure is given pointwise. We refer to the isomorphisms $\varphi\colon I_{\cat{D}}\To{\cong} F(I_{\cat{C}})$ and $\varphi_{c,c'}\colon F(c)\otimes_{\cat{D}} F(c')\To{\cong} F(c\otimes_{\cat{C}} c')$ as \emph{strongators}.
+Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Define $\smf(\cat{C},\cat{D})$ to be the symmetric monoidal category whose objects are strong monoidal functors $(F,\varphi)\colon\cat{C}\to\cat{D}$, whose morphisms are monoidal natural transformations, and whose symmetric monoidal structure is given pointwise.
 
 Define $\ssmc$ to be the 2-category whose objects are symmetric monoidal categories and whose hom-categories are given by $\smf$.
 \end{definition}
@@ -546,7 +545,13 @@ is strict monoidal.
 \end{proposition}
 
 %======== Chapter ========%
-\chapter{Semistrict monoidal functors}
+\chapter{Objectwise free SMCs and semistrict functors}
+
+\todo{Introduce this section; talk about how strictification yields objectwise free things.}
+
+\begin{definition} \label{def.objectwise_free}
+	Let $\cat{C}$ be a strict monoidal small category; note that its objects form a monoid. We say that $\cat{C}$ is an \emph{objectwise-free} monoidal category if this monoid is isomorphic to the free monoid on some set $G$. We call the elements of $G$ the \emph{generators} of the objectwise-free monoidal category.
+\end{definition}
 
 
 \begin{definition} \label{def.semistrict}
@@ -847,7 +852,7 @@ For any symmetric monoidal category $\cat{C}$, let $\mob{\cat{C}}\ss\cat{C}$ den
 Thus $\mob{\cat{C}}$ inherits a symmetric monoidal structure, and we refer to it as the \emph{symmetric monoidal category of $\cat{C}$-objects}. There is an identity-on-objects inclusion $\inc\colon\mob{\cat{C}}\to\cat{C}$. 
 \end{definition}
 
-The reader may find it useful to consider the meaning of $\inc\tpow{n}\in\smf(\mob{\cat{C}},\cat{C})$ for $n\in\nn$. In particular it sends $c\mapsto c\tpow{n}$; see \cref{def.smf}.
+The reader may find it useful to consider the meaning of $\inc\tpow{n}\in\smf(\mob{\cat{C}},\cat{C})$ for $n\in\nn$. In particular it sends $c\mapsto c\tpow{n}=((c\otimes c)\otimes\cdots\otimes c)\otimes c$; see \cref{def.smf}.
 
 \begin{theorem}\label{thm.supply_v2}
 There is a one-to-one correspondence between supplies $s$ as in \cref{def.supply} and semistrict monoidal functors $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ sending $1\mapsto\inc$.
@@ -1284,7 +1289,7 @@ for any $c_1\in\cat{C}_1$ and $c_2\in\cat{C}_2$. This establishes strictness, an
 The 2-category $\ssmc$ has all small products and coproducts.
 \end{theorem*}
 \begin{proof}[Sketch of proof]
-Let $J$ be a set and $\cat{C}_\bullet\colon J\to\ssmc$ be an $J$-indexed collection of symmetric monoidal categories. Their product as categories $\prod_{j\in J}\cat{C}_j$ carries a symmetric monoidal structure given element-wise on $J$. It is easy to check that this, together with the usual projections (which are strict monoidal functors), constitutes the product of the $\cat{C}_j$ in $\ssmc$.
+Let $J$ be a set and $\cat{C}_\bullet\colon J\to\ssmc$ be an $J$-indexed collection of symmetric monoidal categories. Their product as categories $\prod_{j\in J}\cat{C}_j$ carries a symmetric monoidal structure given elementwise on $J$. It is easy to check that this, together with the usual projections (which are strict monoidal functors), constitutes the product of the $\cat{C}_j$ in $\ssmc$.
 
 The coproduct $\bigsqcup_{j\in J}\cat{C}_j$ has the following set of objects, where $I_j$ is the unit in $\cat{C}_j$:
 \[
