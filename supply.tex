@@ -548,42 +548,6 @@ is strict monoidal.
 \end{proposition}
 
 %======== Chapter ========%
-\chapter{Objectwise free SMCs and semistrict functors}
-
-\todo{Introduce this section; talk about how strictification yields objectwise free things.}
-
-\begin{definition} \label{def.objectwise_free}
-	Let $\cat{C}$ be a strict monoidal small category; note that its objects form a monoid. We say that $\cat{C}$ is an \emph{objectwise-free} monoidal category if this monoid is isomorphic to the free monoid on some set $G$. We call the elements of $G$ the \emph{generators} of the objectwise-free monoidal category.
-\end{definition}
-
-
-\begin{definition} \label{def.semistrict}
-  Let $\pp$ be an objectwise-free symmetric monoidal category with generating set $G$, and let $\cat{C}$ be any symmetric monoidal category. Note that the objects of $\pp$ may be uniquely written as $g_1 \otimes g_2 \otimes \dots \otimes g_n$ where each $g_i \in G$. 
-  
-  A \emph{semistrict} monoidal functor $F\colon \pp \to \cat{C}$ is a strong monoidal functor that sends each object $g_1 \otimes g_2 \otimes \dots \otimes g_n$ in $\pp$ to $(((I \otimes F(g_1)) \otimes F(g_2)) \otimes \dots ) \otimes F(g_n)$.
-\end{definition}
-
-\begin{proposition} \label{thm.sstfae}
-  A strong monoidal functor $F\colon \pp \to \cat{C}$ is semistrict if and only if it factors 
-  \[
-    \begin{tikzcd}[column sep=large]
-      \pp \ar[r,dashed] \ar[dr,"F"'] & \strict{\cat{C}} \ar[d]\\
-      & \cat{C}
-    \end{tikzcd}
-  \]
-\end{proposition}
-\begin{proof}
-  Let $F$ be a semistrict monoidal functor. We define $\strict{F}\colon \pp \to \strict{\cat{C}}$ by sending $g_1 \otimes g_2 \otimes \dots \otimes g_n$ to the object $[F(g_1),\dots,F(g_n)]$, and 
-
-  Conversely, given a functor $\pp \to \strict{\cat{C}}$, we simply compose with $s$ to obtain a functor $F\colon \pp \to \cat{C}$. This functor is the composite of two strong monoidal functors, and hence strong monoidal itself, and is indeed semistrict by the definition of $s$.
-\end{proof}
-
-\begin{corollary} \label{cor.strict}
-	A semistrict functor into a strict monoidal category is strict.
-\end{corollary}
-
-
-%======== Chapter ========%
 \chapter{Supply}
 
 In \cref{sec.supply} we give a definition of supply and some first examples. \cref{sec.main_thm} then proves our main theorem: \cref{thm.coherence_isos_homos}, that coherence isomorphisms are supply homomorphisms. We also provide a more compact definition of supply in \cref{thm.supply_v2}. In \cref{sec.further_theory}, we then state some corollaries to the main theorem which are useful when working with supply. 
@@ -591,10 +555,10 @@ In \cref{sec.supply} we give a definition of supply and some first examples. \cr
 %==== Section ====%
 \section{Definition of supply}\label{sec.supply}
 
-Recall that a prop $\pp$ is a symmetric strict monoidal category whose monoid of objects is $(\nn,0,+)$. We denote its objects by $m$, $n$, etc. Recall the definition of semistrict monoidal functors from \cref{def.semistrict}.
+Recall that a prop $\pp$ is a symmetric strict monoidal category whose monoid of objects is $(\nn,0,+)$. We denote its objects by $m$, $n$, etc.
 
 \begin{definition}[Supply]\label{def.supply}
-Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a strong monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that $s_c(m)=c\tpow{m}$ for all $m$, and such that the following diagrams commute for every $c,d\in\cat{C}$:
+Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a strong monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that $s_c(m)=c\tpow{m}$ for all $m\in\nn$, and such that the following diagrams commute for every $c,d\in\cat{C}$:
 \begin{equation}\label{eqn.supply_commute_tensors}
 \begin{tikzcd}[column sep=55pt]
 	c\tpow{m}\otimes d\tpow{m}\ar[r, "s_c(\mu)\otimes s_d(\mu)"]\ar[d, "\sigma"']&
@@ -625,7 +589,7 @@ If every morphism in $\cat{C}$ is an $s$-homomorphism, we say that $s$ is a \emp
 \end{definition}
 
 \begin{example}\label{ex.supply_ids}
-Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique semistrict monoidal functor $s_c\colon\nn\to\cat{C}$ sending $1\mapsto c$, since to be semistrict it must send $m\mapsto c\tpow{m}$. There is nothing more to check for $s$ to be a supply, since $\nn$ is discrete, and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
+Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strict monoidal functor $s_c\colon\nn\to\cat{C}$ sending $m\mapsto c\tpow{m}$. There is nothing more to check for $s$ to be a supply, since $\nn$ is discrete, and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
 
 One might say that every symmetric monoidal category $\cat{C}$ \emph{supplies identities}, and every morphism in $\cat{C}$ is a homomorphism for identities.
 \end{example}
@@ -800,7 +764,7 @@ Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
 \begin{proof}
 The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product by $\cdot n$.
 
-Choose any $k\in\pp$; by \cref{def.supply} we need a semistrict monoidal functor $s_k\colon\pp\to\pp$ with $s_k(1)=k$. On objects put $s_k(n)\coloneqq k\cdot n$; this is strict because $s_k(m+n)=k\cdot(m+n)=(k\cdot m)+(k\cdot n)$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ pieces:
+Choose any $k\in\pp$; by \cref{def.supply} we need a strict monoidal functor $s_k\colon\pp\to\pp$ with $s_k(m)=k\cdot m$; this is strict because $s_k(m+n)=k\cdot(m+n)=(k\cdot m)+(k\cdot n)$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ pieces:
 \begin{equation}\label{eqn.conjugation}
 	k\cdot m\To{\sigma_{k,m}}
 	m\cdot k\To{\mu\cdot k}
