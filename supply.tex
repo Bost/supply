@@ -140,6 +140,7 @@
 \newcommand{\op}{^{\tn{op}}}
 \newcommand{\inv}{^{-1}}
 \newcommand{\tpow}[1]{^{\otimes #1}}
+\newcommand{\strict}[1]{\overline{#1}}
 
 \newcommand{\finset}{\Cat{FinSet}}
 \newcommand{\smset}{\Cat{Set}}
@@ -499,9 +500,13 @@ We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it inv
 
 Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$. Moreover, composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms.
 
+The coherence theorem itself states that that every symmetric monoidal category is equivalent to a symmetric strict monoidal category.
+
 \begin{definition} \label{def.objectwise_free}
 	Let $\cat{C}$ be a strict monoidal small category; note that its objects form a monoid. We say that $\cat{C}$ is an \emph{objectwise-free} monoidal category if this monoid is isomorphic to the free monoid on some set $G$. We call the elements of $G$ the \emph{generators} of the objectwise-free monoidal category.
 \end{definition}
+
+
 
 % Subsection %
 \paragraph{The 2-category $\mathbb{S}\Cat{MC}$.}
@@ -552,11 +557,23 @@ is strict monoidal.
 \begin{definition} \label{def.semistrict}
   Let $\pp$ be an objectwise-free symmetric monoidal category with generating set $G$, and let $\cat{C}$ be any symmetric monoidal category. Note that the objects of $\pp$ may be uniquely written as $g_1 \otimes g_2 \otimes \dots \otimes g_n$ where each $g_i \in G$. 
   
-  A \emph{semistrict} monoidal functor $F\colon \pp \to \cat{C}$ is a strong monoidal functor that sends any object $g_1 \otimes g_2 \otimes \dots \otimes g_n$ in $\pp$ to $(((I \otimes F(g_1)) \otimes F(g_2)) \otimes \dots ) \otimes F(g_n)$.
+  A \emph{semistrict} monoidal functor $F\colon \pp \to \cat{C}$ is a strong monoidal functor that sends each object $g_1 \otimes g_2 \otimes \dots \otimes g_n$ in $\pp$ to $(((I \otimes F(g_1)) \otimes F(g_2)) \otimes \dots ) \otimes F(g_n)$.
 \end{definition}
 
-\begin{theorem} \label{thm.sstfae}
-\end{theorem}
+\begin{proposition} \label{thm.sstfae}
+  A strong monoidal functor $F\colon \pp \to \cat{C}$ is semistrict if and only if it factors 
+  \[
+    \begin{tikzcd}[column sep=large]
+      \pp \ar[r,dashed] \ar[dr,"F"'] & \strict{\cat{C}} \ar[d]\\
+      & \cat{C}
+    \end{tikzcd}
+  \]
+\end{proposition}
+\begin{proof}
+  Let $F$ be a semistrict monoidal functor. We define $\strict{F}\colon \pp \to \strict{\cat{C}}$ by sending $g_1 \otimes g_2 \otimes \dots \otimes g_n$ to the object $[F(g_1),\dots,F(g_n)]$, and 
+
+  Conversely, given a functor $\pp \to \strict{\cat{C}}$, we simply compose with $s$ to obtain a functor $F\colon \pp \to \cat{C}$. This functor is the composite of two strong monoidal functors, and hence strong monoidal itself, and is indeed semistrict by the definition of $s$.
+\end{proof}
 
 \begin{corollary} \label{cor.strict}
 	A semistrict functor into a strict monoidal category is strict.
