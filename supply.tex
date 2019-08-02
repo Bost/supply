@@ -761,7 +761,7 @@ Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
 \begin{proof}
 The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product by $\cdot n$.
 
-Choose any $k\in\pp$; by \cref{def.supply} we need a strict monoidal functor $s_k\colon\pp\to\pp$ with $s_k(m)=k\cdot m$; this is strict because $s_k(m+n)=k\cdot(m+n)=(k\cdot m)+(k\cdot n)$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ pieces:
+Choose any $k\in\pp$; by \cref{def.supply} we need a strict monoidal functor $s_k\colon\pp\to\pp$ with $s_k(n)=k$. On objects put $s_k(n)\coloneqq k\cdot n$; this is strict because $s_k(m+n)=k\cdot(m+n)=(k\cdot m)+(k\cdot n)$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ pieces:
 \begin{equation}\label{eqn.conjugation}
 	k\cdot m\To{\sigma_{k,m}}
 	m\cdot k\To{\mu\cdot k}
