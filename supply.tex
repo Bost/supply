@@ -500,11 +500,6 @@ We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it inv
 
 Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$. Moreover, composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms.
 
-The coherence theorem itself states that that every symmetric monoidal category is equivalent to a symmetric strict monoidal category.
-
-\begin{definition} \label{def.objectwise_free}
-	Let $\cat{C}$ be a strict monoidal small category; note that its objects form a monoid. We say that $\cat{C}$ is an \emph{objectwise-free} monoidal category if this monoid is isomorphic to the free monoid on some set $G$. We call the elements of $G$ the \emph{generators} of the objectwise-free monoidal category.
-\end{definition}
 Recall that a strong monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ consists of a functor $F$ and natural isomorphisms $\varphi\colon I_{\cat{D}}\To{\cong} F(I_{\cat{C}})$ and $\varphi_{c,c'}\colon F(c)\otimes_{\cat{D}} F(c')\To{\cong} F(c\otimes_{\cat{C}} c')$. We refer to these isomorphism as the \emph{strongators} for $F$. A strong monoidal functor is \emph{strict} if all strongators are identities.
 
 
