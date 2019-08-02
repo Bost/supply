@@ -579,7 +579,7 @@ In \cref{sec.supply} we give a definition of supply and some first examples. \cr
 Recall that a prop $\pp$ is a symmetric strict monoidal category whose monoid of objects is $(\nn,0,+)$. We denote its objects by $m$, $n$, etc. Recall the definition of semistrict monoidal functors from \cref{def.semistrict}.
 
 \begin{definition}[Supply]\label{def.supply}
-Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a semistrict monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that $s_c(1)=c$ and such that the following diagrams commute for every $c,d\in\cat{C}$:
+Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a strong monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that $s_c(m)=c\tpow{m}$ for all $m$, and such that the following diagrams commute for every $c,d\in\cat{C}$:
 \begin{equation}\label{eqn.supply_commute_tensors}
 \begin{tikzcd}[column sep=55pt]
 	c\tpow{m}\otimes d\tpow{m}\ar[r, "s_c(\mu)\otimes s_d(\mu)"]\ar[d, "\sigma"']&
