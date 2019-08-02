@@ -563,10 +563,10 @@ In \cref{sec.supply} we give a definition of supply and some first examples. \cr
 %==== Section ====%
 \section{Definition}\label{sec.supply}
 
-Recall that a prop $\pp$ is a symmetric strict monoidal category whose monoid of objects is $(\nn,0,+)$. We denote its objects by $m$, $n$, etc. Recall the definition of semi-strict monoidal functors from \cref{***}.
+Recall that a prop $\pp$ is a symmetric strict monoidal category whose monoid of objects is $(\nn,0,+)$. We denote its objects by $m$, $n$, etc. Recall the definition of semistrict monoidal functors from \cref{def.semistrict}.
 
 \begin{definition}[Supply]\label{def.supply}
-Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a semi-strict monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that $s_c(1)=c$ and such that the following diagrams commute for every $c,d\in\cat{C}$:
+Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a semistrict monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that $s_c(1)=c$ and such that the following diagrams commute for every $c,d\in\cat{C}$:
 \begin{equation}\label{eqn.supply_commute_tensors}
 \begin{tikzcd}[column sep=55pt]
 	c\tpow{m}\otimes d\tpow{m}\ar[r, "s_c(\mu)\otimes s_d(\mu)"]\ar[d, "\sigma"']&
@@ -597,7 +597,7 @@ If every morphism in $\cat{C}$ is an $s$-homomorphism, we say that $s$ is a \emp
 \end{definition}
 
 \begin{example}\label{ex.supply_ids}
-Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique semi-strict monoidal functor $s_c\colon\nn\to\cat{C}$ sending $1\mapsto c$, since to be semi-strict it must send $m\mapsto c\tpow{m}$. There is nothing more to check for $s$ to be a supply, since $\nn$ is discrete, and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
+Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique semistrict monoidal functor $s_c\colon\nn\to\cat{C}$ sending $1\mapsto c$, since to be semistrict it must send $m\mapsto c\tpow{m}$. There is nothing more to check for $s$ to be a supply, since $\nn$ is discrete, and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
 
 One might say that every symmetric monoidal category $\cat{C}$ \emph{supplies identities}, and every morphism in $\cat{C}$ is a homomorphism for identities.
 \end{example}
@@ -772,14 +772,14 @@ Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
 \begin{proof}
 The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product by $\cdot n$.
 
-Choose any $k\in\pp$; by \cref{def.supply} we need a semi-strict monoidal functor $s_k\colon\pp\to\pp$ with $s_k(1)=k$; in fact $s_k$ will be strict by \cref{***}. On objects put $s_k(n)\coloneqq k\cdot n$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ pieces:
+Choose any $k\in\pp$; by \cref{def.supply} we need a semistrict monoidal functor $s_k\colon\pp\to\pp$ with $s_k(1)=k$. On objects put $s_k(n)\coloneqq k\cdot n$; this is strict because $s_k(m+n)=k\cdot(m+n)=(k\cdot m)+(k\cdot n)$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ pieces:
 \begin{equation}\label{eqn.conjugation}
 	k\cdot m\To{\sigma_{k,m}}
 	m\cdot k\To{\mu\cdot k}
 	n\cdot k\To{\sigma_{n,k}}
 	k\cdot n.
 \end{equation}
-It is an easy exercise to show that the diagrams in \cref{eqn.supply_commute_tensors} commute for any $k,\ell\in\pp$.
+This is functorial because $\sigma_{n,k}\cp\sigma_{k,n}=\id_{n\cdot k}$. It is an easy exercise to show that the diagrams in \cref{eqn.supply_commute_tensors} commute for any $k,\ell\in\pp$.
 \end{proof}
 %==== Section ====%
 \section{An equivalent definition}\label{sec.main_thm}
@@ -794,19 +794,21 @@ For any symmetric monoidal category $\cat{C}$, let $\mob{\cat{C}}\ss\cat{C}$ den
 	\item all objects of $\cat{C}$ (and identity morphisms), and
 	\item all coherence isomorphisms---unitors, associators, braiding, and their inverses---from $\cat{C}$.
 \end{enumerate}
-Thus $\mob{\cat{C}}$ inherits a symmetric monoidal structure, and we refer to it as the \emph{symmetric monoidal category of $\cat{C}$-objects}. There is a strict monoidal functor $\inc\colon\mob{\cat{C}}\to\cat{C}$. 
+Thus $\mob{\cat{C}}$ inherits a symmetric monoidal structure, and we refer to it as the \emph{symmetric monoidal category of $\cat{C}$-objects}. There is an identity-on-objects faithful functor $\inc\colon\mob{\cat{C}}\to\cat{C}$. 
 \end{definition}
 
-The following is straightforward, though note that the analogous statement for when $F$ is merely strong \emph{does not hold} in general.
+The following is straightforward, though note that the analogous statement, given by replacing strict by strong, \emph{does not hold} in general.
  
 \begin{proposition}\label{prop.strict_f_objects}
-Any strict monoidal functor $F\colon\cat{C}\to\cat{D}$ induces a strong symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$. Moreover $\mob{F}$ is fully faithful.
+Any strict monoidal functor $F\colon\cat{C}\to\cat{D}$ induces a strict symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$ commuting with the inclusions. Moreover $\mob{F}$ is fully faithful.
 \end{proposition}
 
 The reader may find it useful to consider the meaning of $\inc\tpow{n}\in\smf(\mob{\cat{C}},\cat{C})$ for $n\in\nn$. In particular it sends $c\mapsto c\tpow{n}$; see \cref{def.smf}.
 
+\todo{Break off \cref{cor.coherence_isos_homos} as a lemma}
+
 \begin{theorem}\label{thm.supply_v2}
-There is a one-to-one correspondence between supplies $s$ as in \cref{def.supply} and strict monoidal functors $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ sending $1\mapsto\inc$.
+There is a one-to-one correspondence between supplies $s$ as in \cref{def.supply} and semistrict monoidal functors $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ sending $1\mapsto\inc$.
 \end{theorem}\begin{proof}
 First note that any strict monoidal functor $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ sending $1\mapsto c$ must send the object $n\in\pp$ to the $n$-fold tensor power functor, $s'(n)=(c\mapsto c\tpow{n}, f\mapsto f\tpow{n})$. Thus we write $s'(n)\coloneqq -\tpow{n}$. Its strongator isomorphisms for any $c,d\in\cat{C}$ are given by symmetry isomorphisms $\sigma$:
 \begin{equation}\label{eqn.symmetry_c1c2}
