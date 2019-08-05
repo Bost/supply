@@ -20,7 +20,7 @@
 \usepackage{ifthen}
 %\usepackage[T1]{fontenc}
 %\usepackage{breakcites}
-\usepackage[colorlinks,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue,breaklinks=true]{hyperref}
+\usepackage[colorlinks,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue,breaklinks=true, backref=true]{hyperref}
 \usepackage{tikz}
 \usepackage[capitalize]{cleveref}
 \usepackage[backend=biber, bibencoding=utf8, maxbibnames = 10, style = alphabetic]{biblatex}
@@ -162,8 +162,9 @@
 \newcommand{\cospan}{\Cat{Cospan}}
 \newcommand{\zero}{\cat{I}}
 
-\newcommand{\ust}[1]{#1^{*}}
-\newcommand{\lsh}[1]{#1_{!}}
+\newcommand{\Ldots}[1]{\overset{#1}{\ldots}}
+\newcommand{\Cdots}[1]{\overset{#1}{\cdots}}
+
 
 
 \newcommand{\cp}{\mathbin{\fatsemi}}
@@ -228,8 +229,6 @@ It is common to encounter symmetric monoidal categories $\cat{C}$ for which ever
 
 %Along the way, we also prove that the 2-category of SM categories, strong SM functors, and monoidal natural transformations has biproducts, a fact which does not appear to be well-known and which we had difficulty finding in the literature.
 \end{abstract}
-
-\todo{Add something about strictification?}
 
 %======== Chapter ========%
 \chapter{Introduction}
@@ -400,7 +399,7 @@ Examples abound. To list a few: categories supplying comonoids figure strongly i
 
 Yet despite this plethora of examples, a general definition of supply has not yet been given: to now do so is the first goal of this note. If $\pp$ is a prop and $\cat{C}$ is a symmetric monoidal category, we define what it means for $\cat{C}$ to supply the algebraic structure encoded in $\pp$. We also define what it means for a strong monoidal functor to \emph{preserve supplies}, i.e.\ to send a given supply of $\pp$ in $\cat{C}$ to a given supply of $\pp$ in $\cat{D}$. We give a number of examples both of supply and supply preservation.
 
-The second goal is to provide some basic theory of supply. For example, given a supply of $\pp$ in $\cat{C}$ and a prop functor $\pp'\to\pp$, one obtains a supply of $\pp'$ in $\cat{C}$. We show that if $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$, and that the projections and coprojections preserve supplies.
+The second goal is to provide some basic theory of supply. For example, given a supply of $\pp$ in $\cat{C}$ and a prop functor $\pp'\to\pp$, one obtains a supply of $\pp'$ in $\cat{C}$. We show that if $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$, and that the projections and coprojections preserve supplies. Finally, any supply of $\pp$ in $\cat{C}$ induces a supply of $\pp$ in the strictification $\strict{\cat{C}}$, and it is preserved by the equivalence $\strict{\cat{C}}\to\cat{C}$.
 
 We also discuss what it means for various maps in $(\cat{C},I,\otimes)$ to be \emph{homomorphisms} for the supplied structure. For example, it is well-known that if $\cat{C}$ is cartesian monoidal (i.e.\ if the monoidal product is given by the categorical product) then it supplies comonoids and every morphism $f\colon c\to d$ is a comonoid homomorphism, in the sense that the following diagrams commute:
 \[
@@ -467,7 +466,7 @@ The main theorems of this paper are that supply and supply preservation are well
  
 % Subsection %
 \paragraph{Acknowledgements.}
-We thank Dmitry Vagner for interesting and useful conversations and Tobias Fritz for catching an error in an earlier draft. We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
+We thank Dmitry Vagner for interesting and useful conversations and Tobias Fritz for catching an error in an earlier draft and for suggesting the strictification theorem \cref{thm.supply_strictification}. We also acknowledge support from AFOSR grants FA9550-17-1-0058 and FA9550-19-1-0113.
 
 
 %======== Chapter ========%
@@ -513,10 +512,11 @@ Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Define $\smf(\cat{
 Define $\ssmc$ to be the 2-category whose objects are symmetric monoidal categories and whose hom-categories are given by $\smf$.
 \end{definition}
 
-The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(\cat{C},\cat{D})$ is given by the constant functor at the monoidal unit of $\cat{D}$, that the monoidal product is given by $(F\otimes G)(c)\coloneqq F(c)\otimes G(c).$ The latter is strong monoidal because for any $c,c'\in\cat{C}$ we have natural symmetry isomorphisms
+The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(\cat{C},\cat{D})$ is given by the constant functor at the monoidal unit of $\cat{D}$, that the monoidal product is given by $(F\otimes G)(c)\coloneqq F(c)\otimes G(c).$ The strongator of $F\otimes G$for any $c,c'\in\cat{C}$ is given by the symmetry isomorphism
 \[
+	\sigma\colon
 	\big(F(c)\otimes G(c)\big)\otimes\big(F(c')\otimes G(c')\big)
-	\cong
+	\To{\cong}
 	\big(F(c)\otimes F(c')\big)\otimes\big(G(c')\otimes G(c')\big).
 \]
 
@@ -800,7 +800,7 @@ Choose any $\mu\colon m\to n$ in $\pp$. We need to show that whenever $f\colon x
 \]
 When $f$ is the associator $(a\otimes b)\otimes c\to a\otimes (b\otimes c)$ we consider the following diagram:
 \[
-\begin{tikzcd}[row sep=30pt]
+\begin{tikzcd}[row sep=32pt]
   \big((a\otimes b)\otimes c\big)\tpow{m}\ar[d, "s(\mu)_{(a\otimes b)\otimes c}"']&
   (a\tpow{m}\otimes b\tpow{m})\otimes c\tpow{m}\ar[l, "\sigma"']\ar[r, "\sigma"]\ar[d, "\big(s(\mu)_a\otimes s(\mu)_b\big)\otimes s(\mu)_c" description]&
   \big(a\otimes (b\otimes c)\big)\tpow{m}\ar[d, "s(\mu)_{a\otimes (b\otimes c)}"]\\
@@ -838,7 +838,7 @@ For any symmetric monoidal category $\cat{C}$, let $\mob{\cat{C}}\ss\cat{C}$ den
 Thus $\mob{\cat{C}}$ inherits a symmetric monoidal structure, and we refer to it as the \emph{symmetric monoidal category of $\cat{C}$-objects}. There is an identity-on-objects inclusion $\inc\colon\mob{\cat{C}}\to\cat{C}$. 
 \end{definition}
 
-The reader may find it useful to consider the meaning of $\inc\tpow{n}\in\smf(\mob{\cat{C}},\cat{C})$ for $n\in\nn$. In particular it sends $c\mapsto c\tpow{n}=((c\otimes c)\otimes\cdots\otimes c)\otimes c$; see \cref{def.smf}.
+The reader may find it useful to consider the meaning of $\inc\tpow{m}\in\smf(\mob{\cat{C}},\cat{C})$ for $m\in\nn$. In particular it sends $c\mapsto c\tpow{m}=((c\otimes c)\otimes\cdots\otimes c)\otimes c$ and its strongators are the symmetry isomorphisms; see \cref{def.smf}.
 
 \begin{theorem}\label{thm.supply_v2}
 There is a one-to-one correspondence between supplies $s$ as in \cref{def.supply} and strong monoidal functors $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying
@@ -850,13 +850,13 @@ There is a one-to-one correspondence between supplies $s$ as in \cref{def.supply
 We first unpack what it means to have $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the above two conditions. For any $m\in\nn$, the functor $s'(m)$ acts on objects in $\mob{\cat{C}}$ by $c\mapsto c\tpow{m}$ and similarly for morphisms, and its strongator isomorphisms for any $c,d\in\cat{C}$ are given by symmetry isomorphisms $\sigma$:
 \begin{equation}\label{eqn.symmetry_c1c2}
   \sigma\colon 
-  c\tpow{n}\otimes d\tpow{n}
+  c\tpow{m}\otimes d\tpow{m}
   \Too{\cong}
-  (c\otimes d)\tpow{n}
+  (c\otimes d)\tpow{m}
   \qqand
-  \sigma\colon I\Too{\cong}I\tpow{n}.
+  \sigma\colon I\Too{\cong}I\tpow{m}.
 \end{equation}
-There is no data in any of the above, nor in the strongators $s'(m)\otimes s'(n)\to s'(m+n)$. The data inherent in an $s'$ comes in terms of how it applies to morphisms in $\pp$.
+There is no data in any of the above, nor in the strongators $s'(m)\otimes s'(n)\to s'(m+n)$ by condition 2. The data inherent in an $s'$ comes in terms of how it applies to morphisms in $\pp$.
 
 To a morphism $\mu\colon m\to n$ in $\pp$, the functor $s'$ provides a monoidal natural transformation $s'(\mu)\colon s'(m)\to s'(n)$. This means that for each object $c\in\cat{C}$, we have a morphism $s'(\mu)_c\colon c\tpow{m}\to c\tpow{n}$ natural in $c\in\mob{\cat{C}}$ and commuting with composition and monoidal product in $\pp$: given $\nu\colon n\to p$ and $\mu'\colon m'\to n'$, the following equations hold
 \begin{equation}\label{eqn.supply_composition}
@@ -1040,6 +1040,40 @@ A supply $s$ of $\pp$ in $\cat{C}$ induces a strong monoidal functor $\bigsqcup_
 This follows from \cref{def.supply} and the universal property of coproducts.
 \end{proof}
 
+\begin{lemma}\label{lemma.strictification}
+Let $\cat{C}$ a symmetric monoidal category, $\strict{\cat{C}}$ its strictification, and $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ the strong monoidal equivalence. For any prop $\pp$, a strong monoidal functor $F\colon\pp\to\cat{C}$ factors as $\pp\To{\strict{F}}\strict{\cat{C}}\To{\bigotimes}\cat{C}$, for some strict monoidal functor $\strict{F}$ iff
+\begin{enumerate}
+	\item $F(m)=F(1)\tpow{m}$ for all $m\in\nn$ and
+	\item the strongator $F(m)\otimes F(n)\to F(m+n)$ is the unique coherence isomorphism.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Clearly if $F$ factors as $\strict{F}\cp\bigotimes$ then it satisfies the two conditions. Conversely, if $F$ satisfies the two conditions, define $\strict{F}$ on objects by $\strict{F}(m)\coloneqq[F(1),\Ldots{m},F(1)]$; note that $\strict{F}(m)\cp\bigotimes=F(m)$. On morphisms define $\strict{F}$ to be the composite
+\[\pp(m,n)\To{F}\cat{C}(F(m),F(n))\To{\cong}\strict{\cat{C}}(\strict{F}(m),\strict{F}(n)),\]
+where the second map is the isomorphism coming from the fact that $\bigotimes$ is fully faithful. It is clear both that $\strict{F}$ is strict and that its composite with $\bigotimes$ is $F$.
+\end{proof}
+
+\begin{theorem}\label{thm.supply_strictification}
+For any supply on $\cat{C}$, there is an induced supply on its strictification $\strict{\cat{C}}$.
+\end{theorem}
+\begin{proof}
+Let $\pp$ be a prop, and suppose $s$ is a supply of $\pp$ in $\cat{C}$. For each $c\in\cat{C}$ \cref{lemma.strictification} says that the map $s_c\colon\pp\to\cat{C}$ factors through a strict monoidal functor $s_{[c]}\colon\pp\to\strict{\cat{C}}$ sending $1\mapsto[c]$. It immediately satisfies conditions 1 and 2 of \cref{def.supply}, and it satisfies condition 3 because $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ is faithful.
+
+For an arbitrary object $c=[c_1,\ldots,c_k]\in\strict{C}$, define $\strict{s}_c\colon\pp\to\strict{\cat{C}}$ on each object $m\in\nn$ by $\strict{s}_c(m)\coloneqq[c,\Ldots{m},c]$ and on each morphism $\mu$ by conjugating with the symmetries:
+\[
+\begin{tikzcd}[column sep=90pt]
+	{\big[[c_1,\Ldots{m},c_1],\ldots,[c_k,\Ldots{m}, c_k]\big]}
+		\ar[r, "{\left[s_{[c_1]}(\mu),\ldots, s_{[c_k]}(\mu)\right]}"]&
+	{\big[[c_1,\Ldots{n},c_1],\ldots,[c_k,\Ldots{n}, c_k]\big]}
+		\ar[d, "\sigma"]\\
+	{\big[[c_1,\ldots, c_k],\Ldots{m},[c_1,\ldots,c_k]\big]}
+		\ar[u, "\sigma"]\ar[r, dashed, "\strict{s}_c(\mu)"']&
+	{\big[[c_1,\ldots, c_k],\Ldots{n},[c_1,\ldots,c_k]\big]}
+\end{tikzcd}
+\]
+With this assignment, $\strict{s}$ is easily seen to be a supply of $\pp$ in $\strict{\cat{C}}$.
+\end{proof}
+
 %======== Chapter ========%
 \chapter{Preservation of supply}
 
@@ -1186,12 +1220,21 @@ Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively, an
 Consider an object $m\in\pp$. Along the top-right, it is sent to the functor $c\mapsto F(c\tpow{m})$, and along the left-bottom, it is sent to the functor $c\mapsto F(c)\tpow{m}$. The strongators for $F$ provide the component isomorphisms $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ natural in $c\in\cat{C}$ (and hence in $c\in\cat{C}_s$). For these $\varphi$ to be natural in $\pp$ works out to be exactly the condition that  \cref{eqn.unpack_preserve_supply} commutes for any morphism $\mu\colon m\to n$ in $\pp$.
 \end{proof}
 
+\cref{prop.strict_equiv_pres_supply} follows easily from the proof of \cref{thm.supply_strictification}.
+\begin{proposition}\label{prop.strict_equiv_pres_supply}
+Let $s$ be a supply of $\pp$ in $\cat{C}$ and let $\strict{s}$ be the induced supply of $\pp$ in the strictification $\strict{\cat{C}}$. Then the equivalence $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ preserves the supply.
+\end{proposition}
+
 %======== Chapter ========%
 \chapter{Outlook}
 
 Many of the ideas in this paper should extend to the enriched setting, e.g.\ replacing props and symmetric monoidal categories with 2-props and symmetric monoidal 2-categories, etc. Indeed, in \cite{fong2019abelian}, we work out the theory for the locally posetal case. The results contained here, and their locally posetal generalizations, organize and significantly streamline key arguments in that paper.
 
 We leave the development of the general enriched theory open for future work.
+
+%============ Reference ============%
+
+\printbibliography
 
 %============ Appendix ============%
 \appendix
@@ -1300,8 +1343,4 @@ The monoidal product is given pointwise (and then replace $I\otimes I$ by $I$). 
 \]
 \end{proof}
 
-
-
-
-\printbibliography
 \end{document}
