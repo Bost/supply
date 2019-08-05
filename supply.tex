@@ -74,7 +74,7 @@
   \input{tikz-stuff}
 	
 % biblatex %
-  \addbibresource{Library20190702.bib} 
+  \addbibresource{Library20190805.bib} 
 
 % enumitem %
   \setlist{noitemsep, nolistsep}
@@ -395,7 +395,7 @@ In general, we may talk of algebraic structures on a object being defined by a p
 
 We say that a symmetric monoidal category $\cat{C}$ \emph{supplies} $\pp$ if every object of $\cat{C}$ is equipped with the structure of $\pp$ in a way compatible with the monoidal structure. This notion appears frequently in recent literature. One reason for this is that the compatibility with the monoidal product is a useful, intuitive feature when adding extra icons---``bells and whistles''---into the standard monoidal category string diagram language, yielding equations such as those in \cref{eqn.compat_tensor}.
 
-Examples abound. To list a few: categories supplying comonoids figure strongly in categorical approaches to probability theory \cite{fong2012causal,fritz2019}; categories supplying frobenius monoids---known as hypergraph categories---are important in networks and wiring-diagram languages \cite{fong2019hypergraph}; categories supplying bimonoids underlie a categorical perspective on differentiation \cite{blute2009cartesian}; categories supplying so-called adjoint frobenius monoids and abelian relations underlie alternative approaches to regular and abelian categories \cite{fong2019abelian}, and so on. Indeed, if we add an extra condition, which we call \emph{homomorphic supply}, categories homomorphically supplying commutative comonoids are simply cartesian monoidal categories \cite{fox1976coalgebras}, and categories homomorphically supplying bimonoids are those where the product is a biproduct.
+Examples abound. To list a few: categories supplying comonoids figure strongly in categorical approaches to probability theory \cite{fong2012causal,fritz2019}; categories supplying frobenius monoids---known as hypergraph categories---are important in networks and wiring-diagram languages \cite{Carboni:1991a,fong2019hypergraph}; categories supplying bimonoids underlie a categorical perspective on differentiation \cite{blute2009cartesian}; categories supplying so-called adjoint frobenius monoids and abelian relations underlie alternative approaches to regular and abelian categories \cite{fong2019abelian}, and so on. Indeed, if we add an extra condition, which we call \emph{homomorphic supply}, categories homomorphically supplying commutative comonoids are simply cartesian monoidal categories \cite{fox1976coalgebras}, and categories homomorphically supplying bimonoids are those where the product is a biproduct.
 
 Yet despite this plethora of examples, a general definition of supply has not yet been given: to now do so is the first goal of this note. If $\pp$ is a prop and $\cat{C}$ is a symmetric monoidal category, we define what it means for $\cat{C}$ to supply the algebraic structure encoded in $\pp$. We also define what it means for a strong monoidal functor to \emph{preserve supplies}, i.e.\ to send a given supply of $\pp$ in $\cat{C}$ to a given supply of $\pp$ in $\cat{D}$. We give a number of examples both of supply and supply preservation.
 
@@ -462,7 +462,7 @@ Again in pictures:
 \end{equation}
 These equations hold in any cartesian monoidal category, e.g.\ $\smset$, but they \emph{do not hold} in $\rel$. (As an example, the first equation in \eqref{eqn.homo} does not hold in $\rel$. Take $c=d=1$, take $f\coloneqq\varnothing\ss 1\times 1$ to be the empty relation, and note that $\epsilon_c \neq (f\cp\epsilon_d)$.) We will show that the morphisms in $\cat{C}$ that are homomorphisms for the $\pp$-structure always form a monoidal subcategory.
 
-The main theorems of this paper are that supply and supply preservation are well-behaved with respect to coherence isomorphisms. In \cref{thm.coherence_isos_homos} we show that every associator and unitor in $\cat{C}$ is automatically a homomorphism for any supply. In \cref{thm.pres_supp_strongators_homo} we show that the coherence isomorphisms for strong monoidal functors $F\colon\cat{C}\to\cat{D}$ are automatically homomorphisms whenever $F$ preserves the supply.
+The main theorems of this paper are that supply and supply preservation are well-behaved with respect to coherence isomorphisms. In \cref{thm.coherence_isos_homos} we show that every associator and unitor in $\cat{C}$ is automatically a homomorphism for any supply. In \cref{thm.pres_supp_strongators_homo} we show that the coherence isomorphisms for strong monoidal functors $F\colon\cat{C}\to\cat{D}$ are automatically homomorphisms whenever $F$ preserves the supply. The strictification theorems are \cref{thm.supply_strictification,cor.strict_equiv_pres_supply}.
  
 % Subsection %
 \paragraph{Acknowledgements.}
@@ -1220,10 +1220,11 @@ Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively, an
 Consider an object $m\in\pp$. Along the top-right, it is sent to the functor $c\mapsto F(c\tpow{m})$, and along the left-bottom, it is sent to the functor $c\mapsto F(c)\tpow{m}$. The strongators for $F$ provide the component isomorphisms $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ natural in $c\in\cat{C}$ (and hence in $c\in\cat{C}_s$). For these $\varphi$ to be natural in $\pp$ works out to be exactly the condition that  \cref{eqn.unpack_preserve_supply} commutes for any morphism $\mu\colon m\to n$ in $\pp$.
 \end{proof}
 
-\cref{prop.strict_equiv_pres_supply} follows easily from the proof of \cref{thm.supply_strictification}.
-\begin{proposition}\label{prop.strict_equiv_pres_supply}
+\cref{cor.strict_equiv_pres_supply} follows easily from the proof of \cref{thm.supply_strictification}.
+
+\begin{corollary}\label{cor.strict_equiv_pres_supply}
 Let $s$ be a supply of $\pp$ in $\cat{C}$ and let $\strict{s}$ be the induced supply of $\pp$ in the strictification $\strict{\cat{C}}$. Then the equivalence $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ preserves the supply.
-\end{proposition}
+\end{corollary}
 
 %======== Chapter ========%
 \chapter{Outlook}
