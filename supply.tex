@@ -565,7 +565,7 @@ Recall that a prop $\pp$ is a symmetric strict monoidal category whose monoid of
 Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply of $\pp$ in $\cat{C}$} consists of a strong monoidal functor $s_c\colon\pp\to\cat{C}$ for each object $c\in\cat{C}$, such that
 \begin{enumerate}[label=(\roman*)]
 	\item $s_c(m)=c\tpow{m}$ for each $m\in\nn$, 
-	\item the strongator $c\tpow{m}\otimes c\tpow{n}\to c\tpow{(m+n)}$ is the unique coherence isomorphism for each $m,n\in\nn$ and
+	\item the strongator $c\tpow{m}\otimes c\tpow{n}\to c\tpow{(m+n)}$ is the unique coherence isomorphism for each $m,n\in\nn$, and
 	\item the following diagrams commute for every $c,d\in\cat{C}$:
 \begin{equation}\label{eqn.supply_commute_tensors}
 \begin{tikzcd}[column sep=55pt]
@@ -849,67 +849,112 @@ Thus $\mob{\cat{C}}$ inherits a symmetric monoidal structure, and we refer to it
 The reader may find it useful to consider the meaning of $\inc\tpow{m}\in\smf(\mob{\cat{C}},\cat{C})$ for $m\in\nn$. In particular it sends $c\mapsto c\tpow{m}=((c\otimes c)\otimes\cdots\otimes c)\otimes c$ and its strongators are the symmetry isomorphisms; see \cref{def.smf}.
 
 \begin{theorem}\label{thm.supply_v2}
-There is a one-to-one correspondence between supplies $s$ of $\pp$ in $\cat{C}$ (as in \cref{def.supply}) and strong monoidal functors $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ such that 
+There is a one-to-one correspondence between supplies $s$ of $\pp$ in $\cat{C}$ and strong monoidal functors $\tilde{s}\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ such that 
 \begin{enumerate}[label=(\roman*)]
-	\item $m\mapsto\inc\tpow{m}$ for each $m\in\nn$ and
-	\item each strongator $s'(m)\otimes s'(n)\to s'(m+n)$ is the unique coherence isomorphism.
+	\item $m\mapsto\inc\tpow{m}$ for each $m\in\nn$, and
+	\item the strongator $\tilde{s}(m)\otimes \tilde{s}(n)\to \tilde{s}(m+n)$ is the unique coherence map for each $m,n \in \nn$.
 \end{enumerate}
 \end{theorem}\begin{proof}
-We first unpack what it means to have $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the above two conditions. For any $m\in\nn$, the functor $s'(m)$ acts on objects in $\mob{\cat{C}}$ by $c\mapsto c\tpow{m}$ and similarly for morphisms, and its strongator isomorphisms for any $c,d\in\cat{C}$ are given by symmetry isomorphisms $\sigma$:
-\begin{equation}\label{eqn.symmetry_c1c2}
-  \sigma\colon 
-  c\tpow{m}\otimes d\tpow{m}
-  \Too{\cong}
-  (c\otimes d)\tpow{m}
-  \qqand
-  \sigma\colon I\Too{\cong}I\tpow{m}.
-\end{equation}
-There is no data in any of the above, nor in the strongators $s'(m)\otimes s'(n)\to s'(m+n)$ by condition (ii). The data inherent in an $s'$ comes in terms of how it applies to morphisms in $\pp$.
+A strong monoidal functor $\tilde{s}$ obeying (i) and (ii) is simply a supply $s$ of $\pp$ in $\cat{C}$ such that the coherence maps are $s$-homomorphisms. But \cref{thm.coherence_isos_homos} shows that every supply has this property, and so the two notions coincide. We unpack this in detail.
 
-To a morphism $\mu\colon m\to n$ in $\pp$, the functor $s'$ provides a monoidal natural transformation $s'(\mu)\colon s'(m)\to s'(n)$. This means that for each object $c\in\cat{C}$, we have a morphism $s'(\mu)_c\colon c\tpow{m}\to c\tpow{n}$ natural in $c\in\mob{\cat{C}}$ and commuting with composition and monoidal product in $\pp$: given $\nu\colon n\to p$ and $\mu'\colon m'\to n'$, the following equations hold
-\begin{equation}\label{eqn.supply_composition}
-  s'(\mu\cp\nu)_c=s'(\mu)_c\cp s'(\nu)_c
-  \qqand
-	s'(\mu+\mu')_c=s'(\mu)_c\otimes s'(\mu')_c.
-\end{equation}
-The fact that the natural transformation $s'(\mu)\colon s'(m)\to s'(n)$ is monoidal means the following diagrams commute for any $c,d\in\cat{C}$:
-\begin{equation}\label{eqn.supply_commute_tensors_v2}
-\begin{tikzcd}[column sep=55pt]
-	c\tpow{m}\otimes d\tpow{m}\ar[r, "s'(\mu)_c\otimes s'(\mu)_d"]\ar[d, "\sigma"']&
-	c\tpow{n}\otimes d\tpow{n}\ar[d, "\sigma"]\\
-	(c\otimes d)\tpow{m}\ar[r, "s'(\mu)_{c\otimes d}"']&
-	(c\otimes d)\tpow{n}
-\end{tikzcd}
-\hspace{.7in}
+Let $\tilde{s}$ be a strong monoidal functor obeying (i) and (ii). Note that (i) defines $\tilde{s}$ on objects. On morphisms, each $\mu\colon m \to n$ defines a monoidal natural transformation $\tilde{s}(\mu)\colon \inc\tpow{m} \Rightarrow \inc\tpow{n}$. Explicitly, this is, for each object $c \in \cat{C}$, a morphism $\tilde{s}(\mu)_c \colon c\tpow{m} \to c \tpow{n}$ obeying naturality and monoidality conditions. Naturality requires 
+\begin{equation}\label{eqn.C_0_homos}
 \begin{tikzcd}
-	I\ar[r, equal]\ar[d, "\sigma"']&
-	I\ar[d, "\sigma"]\\
-	I\tpow{m}\ar[r, "s'(\mu)_I"']&
-	I\tpow{n}
-\end{tikzcd}
-\end{equation}
- 
-Now that we have unpacked what it means to have an $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the two conditions, it is easy to recover a supply $\{s_c\mid c\in\cat{C}\}$ as in \cref{def.supply} from one. On objects $n\in\pp$ we put $s_c(n)\coloneqq s'(n)(c)=c\tpow{n}$. On morphisms $\mu\colon m\to n$ in $\pp$, we put $s_c(\mu)\coloneqq s'(\mu)_c\colon c\tpow{m}\to c\tpow{n}$. This is functorial and monoidal by \cref{eqn.supply_composition}, and the commutative diagrams \eqref{eqn.supply_commute_tensors} are just restatements of \eqref{eqn.supply_commute_tensors_v2}.
-
-We now show the converse, that given a supply $s$ as in \cref{def.supply}, one can obtain a strong monoidal functor $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the two conditions. We must define $s'$ on objects so that \cref{eqn.symmetry_c1c2} holds; in particular $s'(n)\coloneqq -\tpow{n}$. Given a morphism $\mu\colon m\to n$ in $\pp$, define the $c$-component $s'(\mu)_c\colon c\tpow{m}\to c\tpow{n}$ by $s'(\mu)_c\coloneqq s_c(\mu)$. Then \cref{eqn.supply_composition,eqn.supply_commute_tensors_v2} hold by the functoriality of $s_c$ and \cref{eqn.supply_commute_tensors}.
- 
- The only thing that remains to check is that $s'(\mu)$ is natural, i.e.\ that the diagram
- \begin{equation}\label{eqn.C_0_homos}
- \begin{tikzcd}
 	c\tpow{m}\ar[d, "s_c(\mu)"']\ar[r, "f\tpow{m}"]&
 	d\tpow{m}\ar[d, "s_d(\mu)"]\\
 	c\tpow{n}\ar[r, "f\tpow{n}"']&
 	d\tpow{n}
 \end{tikzcd}
 \end{equation}
-commutes for any $f\colon c\to d$ in $\mob{\cat{C}}$. But the morphisms in $\mob{\cat{C}}$ are generated by the associators, unitors, braiding, and their inverses, and an isomorphism $f$ is an $s$-homomorphism iff its inverse is. Hence, the commutativity of \cref{eqn.C_0_homos} follows from \cref{thm.coherence_isos_homos}.
+to commute for all maps $f\colon c \to d$ in $\mob{\cat{C}}$---that is, all coherence maps of $\cat{C}$---while monoidality requires the diagrams
+\begin{equation}\label{eqn.supply_commute_tensors_v2}
+\begin{tikzcd}[column sep=55pt]
+	c\tpow{m}\otimes d\tpow{m}\ar[r, "\tilde{s}(\mu)_c\otimes \tilde{s}(\mu)_d"]\ar[d, "\sigma"']&
+	c\tpow{n}\otimes d\tpow{n}\ar[d, "\sigma"]\\
+	(c\otimes d)\tpow{m}\ar[r, "\tilde{s}(\mu)_{c\otimes d}"']&
+	(c\otimes d)\tpow{n}
+\end{tikzcd}
+\hspace{.7in}
+\begin{tikzcd}
+	I\ar[r, equal]\ar[d, "\sigma"']&
+	I\ar[d, "\sigma"]\\
+	I\tpow{m}\ar[r, "\tilde{s}(\mu)_I"']&
+	I\tpow{n}
+\end{tikzcd}
+\end{equation}
+commute for all $m,n \in \nn$.
+
+The functoriality of $\tilde{s}$ requires that for all $\mu\colon m \to n$ and $\nu\colon n\to p$ we have
+\[
+  \tilde{s}(\mu\cp\nu)_c=\tilde{s}(\mu)_c\cp \tilde{s}(\nu)_c
+\]
+while the monoidality of $\tilde{s}$ with respect to the strongators given in condition (ii) imply that for all $\mu\colon m \to n $ and $\mu'\colon m' \to n'$ we have
+\[
+\begin{tikzcd}[column sep=55pt]
+	c\tpow{m}\otimes c\tpow{m'}\ar[r, "\tilde{s}(\mu)_c\otimes \tilde{s}(\mu')_c"]\ar[d, "\alpha"']&
+	c\tpow{n}\otimes c\tpow{n'}\ar[d, "\alpha"]\\
+	c\tpow{m+m'}\ar[r, "\tilde{s}(\mu+\mu')_{c}"']&
+	c\tpow{n+n'}.
+\end{tikzcd}  
+\]
+
+It is now straightforward to see [1] that the functoriality and monoidality of $\tilde{s}$ with respect to the strongators of condition (ii) states exactly that for each $c \in \cat{C}$ the component $\tilde{s}(-)_c$ defines a strong monoidal functor $\pp \to \cat{C}$ obeying conditions (i) and (ii) of \cref{def.supply}, [2] that the monoidality diagrams \cref{eqn.supply_commute_tensors_v2} of each natural transformation $\tilde{s}(\mu)$ are exactly the diagrams \cref{eqn.supply_commute_tensors} of condition (iii) in \cref{def.supply}, and [3] that the naturality of each $\tilde{s}(\mu)$ with respect to $\mob{\cat{C}}$ is exactly the homomorphism property of \cref{thm.coherence_isos_homos}. This proves the theorem.
 \end{proof}
 
+%We first unpack what it means to have $\tilde{s}\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the above two conditions. For any $m\in\nn$, the functor $\tilde{s}(m)$ acts on objects in $\mob{\cat{C}}$ by $c\mapsto c\tpow{m}$ and similarly for morphisms, and its strongator isomorphisms for any $c,d\in\cat{C}$ are given by symmetry isomorphisms $\sigma$:
+%\begin{equation}\label{eqn.symmetry_c1c2}
+%  \sigma\colon 
+%  c\tpow{m}\otimes d\tpow{m}
+%  \Too{\cong}
+%  (c\otimes d)\tpow{m}
+%  \qqand
+%  \sigma\colon I\Too{\cong}I\tpow{m}.
+%\end{equation}
+%There is no data in any of the above, nor in the strongators $\tilde{s}(m)\otimes \tilde{s}(n)\to \tilde{s}(m+n)$ by condition (ii). The data inherent in an $\tilde{s}$ comes in terms of how it applies to morphisms in $\pp$.
+%
+%To a morphism $\mu\colon m\to n$ in $\pp$, the functor $\tilde{s}$ provides a monoidal natural transformation $\tilde{s}(\mu)\colon \tilde{s}(m)\to \tilde{s}(n)$. This means that for each object $c\in\cat{C}$, we have a morphism $\tilde{s}(\mu)_c\colon c\tpow{m}\to c\tpow{n}$ natural in $c\in\mob{\cat{C}}$ and commuting with composition and monoidal product in $\pp$: given $\nu\colon n\to p$ and $\mu'\colon m'\to n'$, the following equations hold
+%\begin{equation}\label{eqn.supply_composition}
+%  \tilde{s}(\mu\cp\nu)_c=\tilde{s}(\mu)_c\cp \tilde{s}(\nu)_c
+%  \qqand
+%	\tilde{s}(\mu+\mu')_c=\tilde{s}(\mu)_c\otimes \tilde{s}(\mu')_c.
+%\end{equation}
+%The fact that the natural transformation $\tilde{s}(\mu)\colon \tilde{s}(m)\to \tilde{s}(n)$ is monoidal means the following diagrams commute for any $c,d\in\cat{C}$:
+%\begin{equation}\label{eqn.supply_commute_tensors_v2}
+%\begin{tikzcd}[column sep=55pt]
+%	c\tpow{m}\otimes d\tpow{m}\ar[r, "\tilde{s}(\mu)_c\otimes \tilde{s}(\mu)_d"]\ar[d, "\sigma"']&
+%	c\tpow{n}\otimes d\tpow{n}\ar[d, "\sigma"]\\
+%	(c\otimes d)\tpow{m}\ar[r, "\tilde{s}(\mu)_{c\otimes d}"']&
+%	(c\otimes d)\tpow{n}
+%\end{tikzcd}
+%\hspace{.7in}
+%\begin{tikzcd}
+%	I\ar[r, equal]\ar[d, "\sigma"']&
+%	I\ar[d, "\sigma"]\\
+%	I\tpow{m}\ar[r, "\tilde{s}(\mu)_I"']&
+%	I\tpow{n}
+%\end{tikzcd}
+%\end{equation}
+% 
+%Now that we have unpacked what it means to have an $\tilde{s}\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the two conditions, it is easy to recover a supply $\{s_c\mid c\in\cat{C}\}$ as in \cref{def.supply}. On objects $n\in\pp$ we put $s_c(n)\coloneqq \tilde{s}(n)(c)=c\tpow{n}$. On morphisms $\mu\colon m\to n$ in $\pp$, we put $s_c(\mu)\coloneqq \tilde{s}(\mu)_c\colon c\tpow{m}\to c\tpow{n}$. This is functorial and monoidal by \cref{eqn.supply_composition}, and the commutative diagrams \eqref{eqn.supply_commute_tensors} are just restatements of \eqref{eqn.supply_commute_tensors_v2}.
+%
+%We now show the converse, that given a supply $s$ as in \cref{def.supply}, one can obtain a strong monoidal functor $\tilde{s}\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ satisfying the two conditions. We must define $\tilde{s}$ on objects so that \cref{eqn.symmetry_c1c2} holds; in particular $\tilde{s}(n)\coloneqq -\tpow{n}$. Given a morphism $\mu\colon m\to n$ in $\pp$, define the $c$-component $\tilde{s}(\mu)_c\colon c\tpow{m}\to c\tpow{n}$ by $\tilde{s}(\mu)_c\coloneqq s_c(\mu)$. Then \cref{eqn.supply_composition,eqn.supply_commute_tensors_v2} hold by the functoriality of $s_c$ and \cref{eqn.supply_commute_tensors}.
+% 
+% The only thing that remains to check is that $\tilde{s}(\mu)$ is natural, i.e.\ that the diagram
+% \begin{equation}\label{eqn.C_0_homos}
+% \begin{tikzcd}
+%	c\tpow{m}\ar[d, "s_c(\mu)"']\ar[r, "f\tpow{m}"]&
+%	d\tpow{m}\ar[d, "s_d(\mu)"]\\
+%	c\tpow{n}\ar[r, "f\tpow{n}"']&
+%	d\tpow{n}
+%\end{tikzcd}
+%\end{equation}
+%commutes for any $f\colon c\to d$ in $\mob{\cat{C}}$. But the morphisms in $\mob{\cat{C}}$ are generated by the associators, unitors, braiding, and their inverses, and an isomorphism $f$ is an $s$-homomorphism iff its inverse is. Hence, the commutativity of \cref{eqn.C_0_homos} follows from \cref{thm.coherence_isos_homos}.
+
 \begin{corollary}\label{cor.strict_supply_v2}
-Let $\cat{C}$ be a symmetric strict monoidal category. There is a one-to-one correspondence between supplies $s$ of $\pp$ in $\cat{C}$ and strict monoidal functors $s'\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ such that $1 \mapsto \inc$.
+Let $\cat{C}$ be a symmetric strict monoidal category. There is a one-to-one correspondence between supplies $s$ of $\pp$ in $\cat{C}$ and strict monoidal functors $\tilde{s}\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ such that $1 \mapsto \inc$.
 \end{corollary}
 
-Because of the one-to-one correspondence \cref{thm.supply_v2}, we often elide the difference between the supply $s$ and the strong monoidal functor $s'$. 
+Because of the one-to-one correspondence \cref{thm.supply_v2}, we often elide the difference between the supply $s$ and the strong monoidal functor $\tilde{s}$. 
 
 %==== Section ====%
 \section{Further theory}\label{sec.further_theory}
@@ -1021,10 +1066,10 @@ Suppose $F\colon\cat{C}\to\cat{D}$ is a strict monoidal, essentially surjective 
 \begin{proof}
 The symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$ is an equivalence by \cref{prop.strict_f_objects}, thus so is $\smf(\mob{F},\cat{D})\colon\smf(\mob{\cat{D}},\cat{D})\to\smf(\mob{\cat{C}},\cat{D})$. Now given a supply $s$ as in the following diagram (see \cref{thm.supply_v2}), one simply defines $t$ using the inverse of $\smf(\mob{F},\cat{D})$:
 \[
-\begin{tikzcd}[column sep=50pt]
+\begin{tikzcd}[column sep=50pt,baseline=(W.base)]
 	\pp\ar[r, "s"]\ar[d, dashed, "t"']&
 	\smf(\mob{\cat{C}},\cat{C})\ar[d, "{\smf(\mob{\cat{C}},F)}"]\\
-	\smf(\mob{\cat{D}},\cat{D})\ar[r, "\cong"']&
+	\smf(\mob{\cat{D}},\cat{D})\ar[r, "\cong"']& |[alias=W]|
 	\smf(\mob{\cat{C}},\cat{D})
 \end{tikzcd}
 \qedhere
@@ -1051,6 +1096,8 @@ A supply $s$ of $\pp$ in $\cat{C}$ induces a strong monoidal functor $\bigsqcup_
 \begin{proof}
 This follows from \cref{def.supply} and the universal property of coproducts.
 \end{proof}
+
+We now prove that if $\cat{C}$ supplies $\pp$, then so does its Mac Lane strictification.
 
 \begin{lemma}\label{lemma.strictification}
 Let $\cat{C}$ a symmetric monoidal category, $\strict{\cat{C}}$ its strictification, and $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ the strong monoidal equivalence. For any prop $\pp$, a strong monoidal functor $F\colon\pp\to\cat{C}$ factors as $\pp\To{\strict{F}}\strict{\cat{C}}\To{\bigotimes}\cat{C}$, for some strict monoidal functor $\strict{F}$ iff
