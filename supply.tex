@@ -554,7 +554,7 @@ is strict monoidal.
 %======== Chapter ========%
 \chapter{Supply}
 
-In \cref{sec.supply} we give a definition of supply and some first examples. \cref{sec.main_thm} then proves our main theorem, \cref{thm.coherence_isos_homos}: coherence isomorphisms are supply homomorphisms. We also provide a more compact definition of supply in \cref{thm.supply_v2}. In \cref{sec.further_theory}, we then state some corollaries to the main theorem which are useful when working with supply. 
+In \cref{sec.supply} we define supply and give some first examples. \cref{sec.main_thm} then proves our main theorem, \cref{thm.coherence_isos_homos}: coherence isomorphisms are supply homomorphisms. We also provide a more compact definition of supply in \cref{thm.supply_v2}. In \cref{sec.further_theory}, we record some useful ways to construct new supplies from old. 
 
 %==== Section ====%
 \section{Definition of supply}\label{sec.supply}
@@ -785,6 +785,13 @@ For any $k\in\pp$ let $s_k\colon\pp\to\pp$ act on objects by $s_k(n)=k\cdot n$; 
 \end{equation}
 This is functorial because $\sigma_{n,k}\cp\sigma_{k,n}=\id_{n\cdot k}$. It is an easy exercise to show that the diagrams in \cref{eqn.supply_commute_tensors} commute for any $k,\ell\in\pp$.
 \end{proof}
+
+Recall that the 2-category $\ssmc$ has strong coproducts (\cref{thm.smc_all_prod_coprod}). It is sometimes useful to note the following basic fact, which follows immediately from the definition of supply (\cref{def.supply}) and the universal property of coproducts.
+
+\begin{proposition}
+A supply $s$ of $\pp$ in $\cat{C}$ induces a strong monoidal functor $\bigsqcup_{c\in\ob(\cat{C})}\pp\to\cat{C}$ that is surjective on objects.
+\end{proposition}
+
 %==== Section ====%
 \section{An equivalent definition}\label{sec.main_thm}
 
@@ -956,14 +963,25 @@ Let $\cat{C}$ be a symmetric strict monoidal category. There is a one-to-one cor
 
 Because of the one-to-one correspondence \cref{thm.supply_v2}, we often elide the difference between the supply $s$ and the strong monoidal functor $\tilde{s}$. 
 
+\begin{theorem}\label{thm.homos_form_subcat}
+Let $s$ be a supply of $\pp$ in $\cat{C}$. Then the collection of $s$-homomorphisms forms a monoidal subcategory $\mob{\cat{C}}\ss\cat{C}_s\ss\cat{C}$, and the functor $s\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ factors through a strong monoidal functor
+\[s\colon\pp\to\smf(\cat{C}_s,\cat{C})\]
+satisfying the two conditions of \cref{thm.supply_v2}.
+\end{theorem}
+\begin{proof}
+We showed in \cref{thm.coherence_isos_homos} that every coherence isomorphism in $\cat{C}$ is an $s$-homomorphism. It is obvious that if $f\colon c\to d$ and $g\colon d\to e$ are $s$-homomorphisms then so is $f\cp g$. Moreover, if $f_1\colon c_1\to d_1$ and $f_2\colon c_2\to d_2$ are $s$-homomorphisms then so is $(f_1\otimes f_2)$; this follows from \cref{eqn.supply_commute_tensors_v2}. Thus $\cat{C}_s$ forms a monoidal subcategory of $\cat{C}$, and $\mob{\cat{C}}\ss\cat{C}_s$. The factoring of $s$ through $\smf(\cat{C}_s,\cat{C})$ is just a repackaging of the statement that every morphism in $\cat{C}_s$ is an $s$-homomorphism. 
+\end{proof}
+
 %==== Section ====%
-\section{Further theory}\label{sec.further_theory}
+\section{Transfer of supply}\label{sec.further_theory}
+
+In this section we present a number of propositions that describe how new supplies may be constructed from old: a prop functor $\pp \to \qq$ means a supply of $\qq$ induces a supply of $\pp$; if $\cat{C}$ and $\cat{D}$ supply $\pp$ then so does their biproduct; a supply transfers along an essentially surjective, strict monoidal functor $\cat{C} \to \cat{D}$, and a supply on $\cat{C}$ induces a supply on its strictification.
 
 Recall that a prop functor $\pp\to\qq$ is a strict monoidal functor sending $1\mapsto 1$.
 
-\begin{corollary}\label{cor.change_of_supply}
+\begin{proposition}\label{cor.change_of_supply}
 Let $F\colon\pp\to\qq$ be a prop functor. For any supply $s$ of $\qq$ in $\cat{C}$, we have a supply $(F\cp s)$ of $\pp$ in $\cat{C}$.
-\end{corollary}
+\end{proposition}
 \begin{proof}
 Given a strong monoidal functor $s\colon\qq\to\smf(\mob{\cat{C}},\cat{C})$, we compose it with $F$ (which is strict) to get the required supply of $\pp$; see \cref{thm.supply_v2}.
 \end{proof}
@@ -1045,26 +1063,22 @@ are both the identity cospan $1=1=1$. Thus by \cref{cor.change_of_supply}, every
 
 Recall from \cref{thm.smc_biprod} that the 2-category of symmetric monoidal categories has biproducts.
 
-\begin{corollary}
+\begin{proposition}
 If $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$.
-\end{corollary}
+\end{proposition}
 \begin{proof}
-This follows from \cref{prop.biprod_smf_strict,thm.supply_v2}.
+Noting that $\mob{(\cat{C}\oplus \cat{D})} =\mob{\cat{C}} \oplus \mob{\cat{D}}$, this follows from \cref{prop.biprod_smf_strict,thm.supply_v2}.
 \end{proof}
 
-The following is straightforward, though note that the analogous statement, given by replacing strict by strong, \emph{does not hold} in general.
- 
-\begin{proposition}\label{prop.strict_f_objects}
-Any strict monoidal functor $F\colon\cat{C}\to\cat{D}$ induces a strict symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$ commuting with the inclusions. Moreover $\mob{F}$ is fully faithful.
+We next prove that supplies transfer along strict monoidal, essentially surjective functors. Note that this assumes the axiom of choice, i.e.\ that fully faithful essentially surjective functors have inverses.
+
+\begin{proposition}\label{cor.strong_bo}
+Suppose $F\colon\cat{C}\to\cat{D}$ is a strict symmetric monoidal, essentially surjective functor. If $\cat{C}$ supplies $\cat{P}$ then so does $\cat{D}$.
 \end{proposition}
-
-\cref{cor.strong_bo} assumes the axiom of choice, i.e.\ that fully faithful essentially surjective functors have inverses.
-
-\begin{corollary}\label{cor.strong_bo}
-Suppose $F\colon\cat{C}\to\cat{D}$ is a strict monoidal, essentially surjective functor. If $\cat{C}$ supplies $\cat{P}$ then so does $\cat{D}$.
-\end{corollary}
 \begin{proof}
-The symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$ is an equivalence by \cref{prop.strict_f_objects}, thus so is $\smf(\mob{F},\cat{D})\colon\smf(\mob{\cat{D}},\cat{D})\to\smf(\mob{\cat{C}},\cat{D})$. Now given a supply $s$ as in the following diagram (see \cref{thm.supply_v2}), one simply defines $t$ using the inverse of $\smf(\mob{F},\cat{D})$:
+Any strict symmetric monoidal functor $F\colon\cat{C}\to\cat{D}$ induces a strict symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$, in fact a fully faithful functor, commuting with the inclusions. (Note that this requires \emph{strictness}; it does not in general hold for strong monoidal functors.) 
+
+Since in this case $F$ is essentially surjective, the symmetric monoidal functor $\mob{F}$ is an equivalence, thus so is $\smf(\mob{F},\cat{D})\colon\smf(\mob{\cat{D}},\cat{D})\to\smf(\mob{\cat{C}},\cat{D})$. Now given a supply $s$ as in the following diagram (see \cref{thm.supply_v2}), one simply defines $t$ using the inverse of $\smf(\mob{F},\cat{D})$:
 \[
 \begin{tikzcd}[column sep=50pt,baseline=(W.base)]
 	\pp\ar[r, "s"]\ar[d, dashed, "t"']&
@@ -1080,30 +1094,13 @@ The symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$ is a
 Using \cref{cor.strong_bo}, a supply of comonoids on $\rel$ can be obtained from the one on $\smset$ via the bijective-on-objects (hence strict) monoidal inclusion $\smset\to\rel$.
 \end{example}
 
-\begin{theorem}\label{thm.homos_form_subcat}
-Let $s$ be a supply of $\pp$ in $\cat{C}$. Then the collection of $s$-homomorphisms forms a monoidal subcategory $\mob{\cat{C}}\ss\cat{C}_s\ss\cat{C}$, and the functor $s\colon\pp\to\smf(\mob{\cat{C}},\cat{C})$ factors through a strong monoidal functor
-\[s\colon\pp\to\smf(\cat{C}_s,\cat{C})\]
-satisfying the two conditions of \cref{thm.supply_v2}.
-\end{theorem}
-\begin{proof}
-The final statement is just a repackaging of the statement that every morphism in $\cat{C}_s$ is an $s$-homomorphism; compare \cref{eqn.nat_means_homo,eqn.C_0_homos}. We showed in \cref{thm.coherence_isos_homos} that $\mob{\cat{C}}\ss\cat{C}_s$, i.e.\ that every coherence isomorphism in $\cat{C}$ is an $s$-homomorphism. It is obvious that if $f\colon c\to d$ and $g\colon d\to e$ are $s$-homomorphisms then so is $f\cp g$. Finally, if $f_1\colon c_1\to d_1$ and $f_2\colon c_2\to d_2$ are $s$-homomorphisms then so is $(f_1\otimes f_2)$; this follows from \cref{eqn.supply_commute_tensors_v2}. This proves the result.
-\end{proof}
-
-Recall that the 2-category $\ssmc$ has strong coproducts (\cref{thm.smc_all_prod_coprod}).
-\begin{proposition}
-A supply $s$ of $\pp$ in $\cat{C}$ induces a strong monoidal functor $\bigsqcup_{c\in\ob(\cat{C})}\pp\to\cat{C}$ that is surjective on objects.
-\end{proposition}
-\begin{proof}
-This follows from \cref{def.supply} and the universal property of coproducts.
-\end{proof}
-
-We now prove that if $\cat{C}$ supplies $\pp$, then so does its Mac Lane strictification.
+Finally, we prove that if $\cat{C}$ supplies $\pp$, then so does its Mac Lane strictification.
 
 \begin{lemma}\label{lemma.strictification}
 Let $\cat{C}$ a symmetric monoidal category, $\strict{\cat{C}}$ its strictification, and $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ the strong monoidal equivalence. For any prop $\pp$, a strong monoidal functor $F\colon\pp\to\cat{C}$ factors as $\pp\To{\strict{F}}\strict{\cat{C}}\To{\bigotimes}\cat{C}$, for some strict monoidal functor $\strict{F}$ iff
-\begin{enumerate}
-	\item $F(m)=F(1)\tpow{m}$ for all $m\in\nn$ and
-	\item the strongator $F(m)\otimes F(n)\to F(m+n)$ is the unique coherence isomorphism.
+\begin{enumerate}[label=(\roman*)]
+	\item $F(m)=F(1)\tpow{m}$ for all $m\in\nn$, and
+	\item the strongator $F(m)\otimes F(n)\to F(m+n)$ is the unique coherence map for all $m,n \in \nn$.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
@@ -1116,27 +1113,28 @@ where the second map is the isomorphism coming from the fact that $\bigotimes$ i
 For any supply on $\cat{C}$, there is an induced supply on its strictification $\strict{\cat{C}}$.
 \end{theorem}
 \begin{proof}
-Let $\pp$ be a prop, and suppose $s$ is a supply of $\pp$ in $\cat{C}$. For each $c\in\cat{C}$ \cref{lemma.strictification} says that the map $s_c\colon\pp\to\cat{C}$ factors through a strict monoidal functor $s_{[c]}\colon\pp\to\strict{\cat{C}}$ sending $1\mapsto[c]$. It immediately satisfies conditions 1 and 2 of \cref{def.supply}, and it satisfies condition 3 because $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ is faithful.
+Let $\pp$ be a prop, and suppose $s$ is a supply of $\pp$ in $\cat{C}$. For each $c\in\cat{C}$, \cref{lemma.strictification} says that the map $s_c\colon\pp\to\cat{C}$ factors through a strict monoidal functor $s_{[c]}\colon\pp\to\strict{\cat{C}}$ sending $1\mapsto[c]$. It immediately satisfies conditions (i) and (ii) of \cref{def.supply}, and it satisfies condition (iii) because $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ is faithful.
 
 For an arbitrary object $c=[c_1,\ldots,c_k]\in\strict{C}$, define $\strict{s}_c\colon\pp\to\strict{\cat{C}}$ on each object $m\in\nn$ by $\strict{s}_c(m)\coloneqq[c,\Ldots{m},c]$ and on each morphism $\mu$ by conjugating with the symmetries:
 \[
 \begin{tikzcd}[column sep=90pt]
-	{\big[[c_1,\Ldots{m},c_1],\ldots,[c_k,\Ldots{m}, c_k]\big]}
-		\ar[r, "{\left[s_{[c_1]}(\mu),\ldots, s_{[c_k]}(\mu)\right]}"]&
-	{\big[[c_1,\Ldots{n},c_1],\ldots,[c_k,\Ldots{n}, c_k]\big]}
+	{[c_1,\Ldots{m},c_1] \cdot \ldots \cdot [c_k,\Ldots{m}, c_k]}
+		\ar[r, "{s_{[c_1]}(\mu) \cdot \ldots \cdot s_{[c_k]}(\mu)}"]&
+	{[c_1,\Ldots{n},c_1] \cdot \ldots\cdot [c_k,\Ldots{n}, c_k]}
 		\ar[d, "\sigma"]\\
-	{\big[[c_1,\ldots, c_k],\Ldots{m},[c_1,\ldots,c_k]\big]}
+	{[c_1,\ldots, c_k] \cdot \Ldots{m} \cdot [c_1,\ldots,c_k]}
 		\ar[u, "\sigma"]\ar[r, dashed, "\strict{s}_c(\mu)"']&
-	{\big[[c_1,\ldots, c_k],\Ldots{n},[c_1,\ldots,c_k]\big]}
+	{[c_1,\ldots, c_k] \cdot \Ldots{n} \cdot [c_1,\ldots,c_k]}
 \end{tikzcd}
 \]
+where we have written $\cdot$ for the monoidal product in $\strict{s}$.
 With this assignment, $\strict{s}$ is easily seen to be a supply of $\pp$ in $\strict{\cat{C}}$.
 \end{proof}
 
 %======== Chapter ========%
 \chapter{Preservation of supply}
 
-In \cref{sec.pres_supply} we define preservation of supply, the notion of homomorphism for categories with supply. After giving examples, in \cref{sec.preserve_thms} we then prove some useful properties of supply preserving functors. Of these, the most important is \cref{thm.pres_supp_strongators_homo}, which says that for any strong monoidal functor preserving supply, the strongators are again homomorphisms.
+In \cref{sec.pres_supply} we define preservation of supply, the notion of homomorphism for categories with supply, and give some basic examples. In \cref{sec.preserve_thms} we then prove some useful properties of supply preserving functors. Of these, the most important is \cref{thm.pres_supp_strongators_homo}, which says that for any strong monoidal functor preserving supply, the strongators are homomorphisms.
 
 
 %==== Section ====%
