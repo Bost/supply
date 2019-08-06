@@ -403,7 +403,7 @@ We say that a symmetric monoidal category $\cat{C}$ \emph{supplies} $\pp$ if eve
 
 Examples abound. To list a few: categories supplying comonoids figure strongly in categorical approaches to probability theory \cite{fong2012causal,fritz2019synthetic}; categories supplying frobenius monoids---known as hypergraph categories---are important in networks and wiring-diagram languages \cite{Carboni:1991a,fong2019hypergraph}; categories supplying bimonoids underlie a categorical perspective on differentiation \cite{blute2009cartesian}; categories supplying so-called adjoint frobenius monoids and abelian relations underlie alternative approaches to regular and abelian categories \cite{fong2019abelian}, and so on. Indeed, if we add an extra condition, which we call \emph{homomorphic supply}, categories homomorphically supplying commutative comonoids are simply cartesian monoidal categories \cite{fox1976coalgebras}, and categories homomorphically supplying bimonoids are those where the product is a biproduct.
 
-Yet despite this plethora of examples, a general definition of supply has not yet been given: to now do so is the first goal of this note. If $\pp$ is a prop and $\cat{C}$ is a symmetric monoidal category, we define what it means for $\cat{C}$ to supply the algebraic structure encoded in $\pp$. We also define what it means for a strong monoidal functor to \emph{preserve supplies}, i.e.\ to send a given supply of $\pp$ in $\cat{C}$ to a given supply of $\pp$ in $\cat{D}$. We give a number of examples both of supply and supply preservation.
+Yet despite this plethora of examples, a general definition of supply has not yet been given: to now do so is the first goal of this note. If $\pp$ is a prop and $\cat{C}$ is a symmetric monoidal category, we define what it means for $\cat{C}$ to supply the algebraic structure encoded in $\pp$. We also define what it means for a strong monoidal functor $\cat{C}\to\cat{D}$ to \emph{preserve supplies}, i.e.\ to send a given supply of $\pp$ in $\cat{C}$ to a given supply of $\pp$ in $\cat{D}$. We give a number of examples both of supply and supply preservation.
 
 The second goal is to provide some basic theory of supply. For example, given a supply of $\pp$ in $\cat{C}$ and a prop functor $\pp'\to\pp$, one obtains a supply of $\pp'$ in $\cat{C}$. We show that if $\cat{C}$ and $\cat{D}$ both supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$, and that the projections and coprojections preserve supplies. Finally, any supply of $\pp$ in $\cat{C}$ induces a supply of $\pp$ in the strictification $\strict{\cat{C}}$, and it is preserved by the equivalence $\strict{\cat{C}}\to\cat{C}$.
 
@@ -466,7 +466,7 @@ Again in pictures:
 	\node at ($(P3.east)!.5!(P4.west)$) {$=$};
 \end{tikzpicture}
 \end{equation}
-These equations hold in any cartesian monoidal category, e.g.\ $\smset$, but they \emph{do not hold} in $\rel$. (As an example, the first equation in \eqref{eqn.homo} does not hold in $\rel$. Take $c=d=1$, take $f\coloneqq\varnothing\ss 1\times 1$ to be the empty relation, and note that $\epsilon_c \neq (f\cp\epsilon_d)$.) We will show that the morphisms in $\cat{C}$ that are homomorphisms for the $\pp$-structure always form a monoidal subcategory.
+These equations hold in any cartesian monoidal category, e.g.\ $\smset$, but they \emph{do not hold} in $\rel$. (As an example, the first equation in \eqref{eqn.homo} does not hold in $\rel$. Take $c=d=1$, take $f\coloneqq\varnothing\ss 1\times 1$ to be the empty relation, and note that $\epsilon_c \neq (f\cp\epsilon_d)$.) We will show that the morphisms in $\cat{C}$ that are homomorphisms for the $\pp$-structure always form a monoidal subcategory. The above notion of homomorphic supply simply refers to the case that this subcategory is all of $\cat{C}$.
 
 The main theorems of this paper are that supply and supply preservation are well-behaved with respect to coherence isomorphisms. In \cref{thm.coherence_isos_homos} we show that every associator and unitor in $\cat{C}$ is automatically a homomorphism for any supply. In \cref{thm.pres_supp_strongators_homo} we show that the coherence isomorphisms for strong monoidal functors $F\colon\cat{C}\to\cat{D}$ are automatically homomorphisms whenever $F$ preserves the supply. We give strictification theorems \cref{thm.supply_strictification,cor.strict_equiv_pres_supply}.
  
@@ -486,11 +486,11 @@ We denote composition of $f\colon a\to b$ and $g\colon b\to c$ by $(f\cp g)\colo
 % Subsection %
 \paragraph{Symmetric monoidal categories and coherence.}
 Suppose $(\cat{C}, I, \otimes)$ is a symmetric monoidal category, $m\in\nn$ is a natural number, and $c\colon\ord{m}\to\cat{C}$ is a family of objects in $\cat{C}$. We denote
-\[
+\begin{equation}\label{eqn.big_mon_prod}
 	\bigotimes_{i\in\ord{m}}c(i)\coloneqq
   \big((c(1)\otimes c(2))\cdots\big)\otimes c(m)
-\]
-with the convention that when $m=0$ and $!\colon\ord{0}\to \cat{C}$ is the unique function, we put $\bigotimes != I$. If $c(i)=c(j)$ for all $i,j\in\ord{m}$, we denote their monoidal product by $c\tpow{m}\coloneqq\bigotimes_{i\in\ord{m}}c$. We take this to be the canonical parenthesation, so $c\otimes d\otimes e$ denotes $(c\otimes d)\otimes e$. 
+\end{equation}
+with the convention that when $m=0$ and $!\colon\ord{0}\to \cat{C}$ is the unique function, we put $\bigotimes !\coloneqq I$. We take this to be the canonical bracketing, so $c\otimes d\otimes e$ denotes $(c\otimes d)\otimes e$. If there exists $b\in\cat{C}$ such that $b=c(i)$ for all $i\in\ord{m}$, we denote the monoidal product in \eqref{eqn.big_mon_prod} by $b\tpow{m}\coloneqq\bigotimes_{i\in\ord{m}}b$. 
 
 If $m,n\in\nn$ are natural numbers, and $c\colon \ord{m}\times \ord{n}\to\cat{C}$ is a family of objects in $\cat{C}$, we also have a natural isomorphism
 \begin{equation}\label{eqn.symmetry}
@@ -504,7 +504,7 @@ We refer to $\sigma$ as the \emph{symmetry} isomorphism, though note that it inv
 \sigma\colon I\Too{\cong} I\tpow{n}.
 \]
 
-Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange parentheses and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$. Moreover, composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms.
+Many of our results will rely on Mac Lane's coherence theorem for symmetric monoidal categories \cite[Theorem XI.1]{MacLane:1998a}, which says the following. For any two ways to arrange brackets and monoidal units into a word with $n$ placeholders for objects in $\cat{C}$, and for each permutation of $n$ letters, there is an associated natural isomorphism, which Mac Lane calls the \emph{canonical isomorphism}, between the resulting functors $\cat{C}^n\to\cat{C}$. Moreover, composites and tensor products of canonical isomorphisms are again canonical. For example, everything we called a symmetry isomorphisms $\sigma$ in \cref{eqn.symmetry} is one of these canonical isomorphisms.
 
 
 % Subsection %
