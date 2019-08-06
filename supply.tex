@@ -1,7 +1,7 @@
 \documentclass[11pt, oneside, article]{memoir}
 
 \settrims{0pt}{0pt} % page and stock same size
-\settypeblocksize{*}{34pc}{*} % {height}{width}{ratio}
+\settypeblocksize{*}{35pc}{*} % {height}{width}{ratio}
 \setlrmargins{*}{*}{1} % {spine}{edge}{ratio}
 \setulmarginsandblock{1.1in}{1.4in}{*} % height of typeblock computed
 \setheadfoot{\onelineskip}{2\onelineskip} % {headheight}{footskip}
@@ -509,7 +509,12 @@ Many of our results will rely on Mac Lane's coherence theorem for symmetric mono
 
 % Subsection %
 \paragraph{The 2-category $\mathbb{S}\Cat{MC}$.}
-Recall that a strong monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ consists of a functor $F$ and natural isomorphisms $\varphi\colon I_{\cat{D}}\To{\cong} F(I_{\cat{C}})$ and $\varphi_{c,c'}\colon F(c)\otimes_{\cat{D}} F(c')\To{\cong} F(c\otimes_{\cat{C}} c')$. We refer to these isomorphism as the \emph{strongators} for $F$. A strong monoidal functor is \emph{strict} if all strongators are identities.
+Recall that a strong monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ consists of a functor $F$ and natural isomorphisms
+\[
+	\varphi\colon I_{\cat{D}}\To{\cong} F(I_{\cat{C}})
+	\qqand
+	\varphi_{c,c'}\colon F(c)\otimes_{\cat{D}} F(c')\To{\cong} F(c\otimes_{\cat{C}} c').\]
+	We refer to these isomorphism as the \emph{strongators} for $F$. A strong monoidal functor is \emph{strict} if all strongators are identities.
 
 \begin{definition}\label{def.smf}
 Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Define $\smf(\cat{C},\cat{D})$ to be the symmetric monoidal category whose objects are strong monoidal functors $(F,\varphi)\colon\cat{C}\to\cat{D}$, whose morphisms are monoidal natural transformations, and whose symmetric monoidal structure is given pointwise.
@@ -517,7 +522,7 @@ Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Define $\smf(\cat{
 Define $\ssmc$ to be the 2-category whose objects are symmetric monoidal categories and whose hom-categories are given by $\smf$.
 \end{definition}
 
-The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(\cat{C},\cat{D})$ is given by the constant functor at the monoidal unit of $\cat{D}$, that the monoidal product is given by $(F\otimes G)(c)\coloneqq F(c)\otimes G(c).$ The strongator of $F\otimes G$ for any $c,c'\in\cat{C}$ is given by the symmetry isomorphism
+The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(\cat{C},\cat{D})$ is given by the constant functor at the monoidal unit of $\cat{D}$ and that the monoidal product is given by $(F\otimes G)(c)\coloneqq F(c)\otimes G(c).$ The strongator of $F\otimes G$ for any $c,c'\in\cat{C}$ is given by the symmetry isomorphism
 \[
 	\sigma\colon
 	\big(F(c)\otimes G(c)\big)\otimes\big(F(c')\otimes G(c')\big)
@@ -529,13 +534,13 @@ The pointwise condition in \cref{def.smf} means that the monoidal unit in $\smf(
 However, they seem important to us, and not sufficiently well known. 
 
 \begin{theorem}\label{thm.smc_all_prod_coprod}
-The 2-category $\ssmc$ has all small products and strong coproducts.
+The 2-category $\ssmc$ has all small products and coproducts, and products are strict.
 \end{theorem}
 
 In fact, finite products and coproducts coincide in $\ssmc$.
 
 \begin{theorem}\label{thm.smc_biprod}
-The 2-category $\ssmc$ of symmetric monoidal categories, strong monoidal functors, and monoidal natural transformations has strong 2-biproducts.
+The 2-category $\ssmc$ of symmetric monoidal categories, strong monoidal functors, and monoidal natural transformations has 2-categorical biproducts.
 \end{theorem}
 
 We denote the biproduct of symmetric monoidal categories $\cat{C}$ and $\cat{D}$ by $\cat{C}\oplus\cat{D}$.
@@ -601,13 +606,13 @@ Note that if $s_c$ is strict, then conditions (i) and (ii) can be replaced by th
 \end{remark}
 
 \begin{example}\label{ex.supply_ids}
-Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strong monoidal functor $s_c\colon\nn\to\cat{C}$ satisfying conditions (i) and (ii) of \cref{def.supply}. There is nothing more to check for $s$ to be a supply, since $\nn$ is discrete, and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
+Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strong monoidal functor $s_c\colon\nn\to\cat{C}$ satisfying conditions (i) and (ii) of \cref{def.supply}. There is nothing more to check for $s$ to be a supply---$\nn$ automatically satisfies (iii) since it is discrete---and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
 
 One might thus say that every symmetric monoidal category $\cat{C}$ uniquely \emph{supplies identities}, and every morphism in $\cat{C}$ is a homomorphism for identities.
 \end{example}
 
 \begin{example}\label{ex.terminal_supply}
-Let $\zero$ denote the zero object in $\ssmc$ (see \cref{thm.smc_biprod}). For any prop $\pp$ there is a unique supply of $\pp$ in $\zero$.
+Let $\zero=\{*\}$ denote the zero object in $\ssmc$ (see \cref{thm.smc_biprod}). For any prop $\pp$ there is a unique supply of $\pp$ in $\zero$.
 \end{example}
 
 \begin{example}[Involutions]\label{ex.supply_involutions}
@@ -703,7 +708,7 @@ and three equations:
 \end{equation}
 It is equivalent to the skeleton of $\finset$, i.e. with $\Hom(m,n)\coloneqq\smset(\ord{m},\ord{n})$. For example, the generators shown in \cref{eqn.gen_monoid} correspond to the unique functions $\ord{0}\to\ord{1}$ and $\ord{2}\to\ord{1}$ respectively.
 
-A supply of commutative monoids in $\cat{C}$ gives a map $\mu_c\colon c\otimes c\to c$ and $\eta_c\colon I\to c$ for every object $c$, compatible with tensor product in $\cat{C}$ and satisfying the usual monoid laws. A morphism $f\colon c\to d$ is a monoid-homomorphism if $\mu_c\cp f=(f\otimes f)\cp \mu_d$ and $\eta_c\cp f=\eta_d$.
+A supply of commutative monoids in $\cat{C}$ gives a map $\mu_c\colon c\otimes c\to c$ and $\eta_c\colon I\to c$ for each object $c$, compatible with tensor product in $\cat{C}$ and satisfying the usual monoid laws. A morphism $f\colon c\to d$ is a monoid-homomorphism in the sense of \cref{def.supply} iff it is in the usual sense: $\mu_c\cp f=(f\otimes f)\cp \mu_d$ and $\eta_c\cp f=\eta_d$.
 
 Similarly, to supply commutative comonoids means to supply the prop given by the skeleton of $\finset\op$.
 \end{example}
@@ -774,7 +779,7 @@ The prop for (special, commutative) frobenius monoids is $\cospan$, the category
 Let $\pp$ be a prop. Then there is a supply of $\pp$ in $\pp$.
 \end{proposition}
 \begin{proof}
-The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product by $\cdot n$.
+The monoidal product in a prop is denoted $+$; we denote the $n$-fold monoidal product of some $k$ by $k\cdot n\coloneqq k+\Cdots{n}+k$.
 
 For any $k\in\pp$ let $s_k\colon\pp\to\pp$ act on objects by $s_k(n)=k\cdot n$; this is strict because $s_k(m+n)=k\cdot(m+n)=(k\cdot m)+(k\cdot n)$. Given $\mu\colon m\to n$ in $\pp$, define $s_k(\mu)\colon k\cdot m\to k\cdot n$ by conjugating with the symmetries and applying $\mu$, on each of the $k$ factors:
 \begin{equation}\label{eqn.conjugation}
@@ -786,7 +791,7 @@ For any $k\in\pp$ let $s_k\colon\pp\to\pp$ act on objects by $s_k(n)=k\cdot n$; 
 This is functorial because $\sigma_{n,k}\cp\sigma_{k,n}=\id_{n\cdot k}$. It is an easy exercise to show that the diagrams in \cref{eqn.supply_commute_tensors} commute for any $k,\ell\in\pp$.
 \end{proof}
 
-Recall that the 2-category $\ssmc$ has strong coproducts (\cref{thm.smc_all_prod_coprod}). It is sometimes useful to note the following basic fact, which follows immediately from the definition of supply (\cref{def.supply}) and the universal property of coproducts.
+Recall that the 2-category $\ssmc$ has coproducts (\cref{thm.smc_all_prod_coprod}). It is sometimes useful to note the following basic fact, which follows immediately from the definition of supply (\cref{def.supply}) and the universal property of coproducts.
 
 \begin{proposition}
 A supply $s$ of $\pp$ in $\cat{C}$ induces a strong monoidal functor $\bigsqcup_{c\in\ob(\cat{C})}\pp\to\cat{C}$ that is surjective on objects.
@@ -812,7 +817,7 @@ Choose any $\mu\colon m\to n$ in $\pp$. We need to show that whenever $f\colon x
 \]
 When $f$ is the associator $(a\otimes b)\otimes c\to a\otimes (b\otimes c)$ we consider the following diagram:
 \[
-\begin{tikzcd}[row sep=24pt, font=\small]
+\begin{tikzcd}[row sep=24pt, font=\small, column sep=25pt]
   \big((a\otimes b)\otimes c\big)\tpow{m}\ar[d, "s(\mu)_{(a\otimes b)\otimes c}" description]&
   (a\tpow{m}\otimes b\tpow{m})\otimes c\tpow{m}\ar[l, "\sigma"']\ar[r, "\alpha"]\ar[d, "(s(\mu)_a\otimes s(\mu)_b)\otimes s(\mu)_c" description]&
   a\tpow{m}\otimes (b\tpow{m}\otimes c\tpow{m})\ar[r, "\sigma"]\ar[d, "s(\mu)_a\otimes (s(\mu)_b\otimes s(\mu)_c)" description]&
@@ -862,7 +867,7 @@ There is a one-to-one correspondence between supplies $s$ of $\pp$ in $\cat{C}$ 
 	\item the strongator $\tilde{s}(m)\otimes \tilde{s}(n)\to \tilde{s}(m+n)$ is the unique coherence map for each $m,n \in \nn$.
 \end{enumerate}
 \end{theorem}\begin{proof}
-A strong monoidal functor $\tilde{s}$ obeying (i) and (ii) is simply a supply $s$ of $\pp$ in $\cat{C}$ such that the coherence maps are $s$-homomorphisms. But \cref{thm.coherence_isos_homos} shows that every supply has this property, and so the two notions coincide. We unpack this in detail.
+A strong monoidal functor $\tilde{s}$ obeying (i) and (ii) is simply a supply $s$ of $\pp$ in $\cat{C}$ such that the coherence maps are $s$-homomorphisms. But \cref{thm.coherence_isos_homos} shows that every supply has this property, and so the two notions coincide. We explain this in detail.
 
 Let $\tilde{s}$ be a strong monoidal functor obeying (i) and (ii). Note that (i) defines $\tilde{s}$ on objects. On morphisms, each $\mu\colon m \to n$ defines a monoidal natural transformation $\tilde{s}(\mu)\colon \inc\tpow{m} \Rightarrow \inc\tpow{n}$. Explicitly, this is, for each object $c \in \cat{C}$, a morphism $\tilde{s}(\mu)_c \colon c\tpow{m} \to c \tpow{n}$ obeying naturality and monoidality conditions. Naturality requires 
 \begin{equation}\label{eqn.C_0_homos}
@@ -975,15 +980,13 @@ We showed in \cref{thm.coherence_isos_homos} that every coherence isomorphism in
 %==== Section ====%
 \section{Transfer of supply}\label{sec.further_theory}
 
-In this section we present a number of propositions that describe how new supplies may be constructed from old: a prop functor $\pp \to \qq$ means a supply of $\qq$ induces a supply of $\pp$; if $\cat{C}$ and $\cat{D}$ supply $\pp$ then so does their biproduct; a supply transfers along an essentially surjective, strict monoidal functor $\cat{C} \to \cat{D}$, and a supply on $\cat{C}$ induces a supply on its strictification.
-
-Recall that a prop functor $\pp\to\qq$ is a strict monoidal functor sending $1\mapsto 1$.
+In this section we present a number of propositions that describe how new supplies may be constructed from old: a supply of $\qq$ in $\cat{C}$ induces a supply of $\pp$ in $\cat{C}$ for any prop functor $\pp \to \qq$; if $\cat{C}$ and $\cat{D}$ supply $\pp$ then so does their biproduct $\cat{C}\oplus\cat{D}$; a supply transfers along an essentially surjective, strict monoidal functor $\cat{C} \to \cat{D}$; and a supply on $\cat{C}$ induces a supply on its strictification $\strict{C}$.
 
 \begin{proposition}\label{cor.change_of_supply}
 Let $F\colon\pp\to\qq$ be a prop functor. For any supply $s$ of $\qq$ in $\cat{C}$, we have a supply $(F\cp s)$ of $\pp$ in $\cat{C}$.
 \end{proposition}
 \begin{proof}
-Given a strong monoidal functor $s\colon\qq\to\smf(\mob{\cat{C}},\cat{C})$, we compose it with $F$ (which is strict) to get the required supply of $\pp$; see \cref{thm.supply_v2}.
+Given a strong monoidal functor $s\colon\qq\to\smf(\mob{\cat{C}},\cat{C})$, we compose it with $F$ (which is strict and sends $1\mapsto 1$) to get the required supply of $\pp$; see \cref{thm.supply_v2}.
 \end{proof}
 
 \begin{example}
@@ -1009,14 +1012,14 @@ to the cospans $2\to 1\from 0$ and $0\to 1\from 2$. It is easy to check that the
   \begin{scope}
   	[every node/.style={circle, fill=black, inner sep=1pt}]
   	\node (a) {};
-  	\node[below right=1 and 1 of a] (b1) {};
+  	\node[below right=1.25 and 1 of a] (b1) {};
   	\node[right=1 of b1] (b2) {};
-  	\node[above=1 of b2] (c1) {};
+  	\node at (a-|b2) (c1) {};
   	\node[right=1 of c1] (c2) {};
   	\node[right=1 of c2] (c3) {};
-  	\node[below=1 of c3] (d1) {};
+  	\node at (c3|-b1) (d1) {};
   	\node[right=1 of d1] (d2) {};	
-  	\node[above right=1 and 1 of d2] (e) {};
+  	\node[right=1] at (d2|-a) (e) {};
   \end{scope}
 	\node[inner sep=2.5pt, draw, fit=(a)] {};
 	\node[inner sep=2.5pt, draw, fit=(b1) (b2)] {};
@@ -1034,14 +1037,14 @@ to the cospans $2\to 1\from 0$ and $0\to 1\from 2$. It is easy to check that the
   \begin{scope}
   	[every node/.style={circle, fill=black, inner sep=1pt}]
   	\node[right=2cm of e] (a) {};
-  	\node[below right=1 and 1 of a] (b1) {};
+  	\node[below right=1.25 and 1 of a] (b1) {};
   	\node[right=1 of b1] (b2) {};
-  	\node[above=1 of b2] (c1) {};
+  	\node at (a-|b2) (c1) {};
   	\node[right=1 of c1] (c2) {};
   	\node[right=1 of c2] (c3) {};
-  	\node[below=1 of c3] (d1) {};
+  	\node at (c3|-b1) (d1) {};
   	\node[right=1 of d1] (d2) {};	
-  	\node[above right=1 and 1 of d2] (e) {};
+  	\node[right=1] at (d2|-a) (e) {};
   \end{scope}
 	\node[inner sep=2.5pt, draw, fit=(a)] {};
 	\node[inner sep=2.5pt, draw, fit=(b1) (b2)] {};
@@ -1078,7 +1081,7 @@ Suppose $F\colon\cat{C}\to\cat{D}$ is a strict symmetric monoidal, essentially s
 \begin{proof}
 Any strict symmetric monoidal functor $F\colon\cat{C}\to\cat{D}$ induces a strict symmetric monoidal functor $\mob{F}\colon\mob{\cat{C}}\to\mob{\cat{D}}$, in fact a fully faithful functor, commuting with the inclusions. (Note that this requires \emph{strictness}; it does not in general hold for strong monoidal functors.) 
 
-Since in this case $F$ is essentially surjective, the symmetric monoidal functor $\mob{F}$ is an equivalence, thus so is $\smf(\mob{F},\cat{D})\colon\smf(\mob{\cat{D}},\cat{D})\to\smf(\mob{\cat{C}},\cat{D})$. Now given a supply $s$ as in the following diagram (see \cref{thm.supply_v2}), one simply defines $t$ using the inverse of $\smf(\mob{F},\cat{D})$:
+Since in this case $F$ is essentially surjective, the symmetric monoidal functor $\mob{F}$ is an equivalence, thus so is $\smf(\mob{F},\cat{D})\colon\smf(\mob{\cat{D}},\cat{D})\to\smf(\mob{\cat{C}},\cat{D})$. Now given a supply $s$ as in the following diagram (see \cref{thm.supply_v2}), one simply defines $t$ using the inverse of the equivalence $\smf(\mob{F},\cat{D})$:
 \[
 \begin{tikzcd}[column sep=50pt,baseline=(W.base)]
 	\pp\ar[r, "s"]\ar[d, dashed, "t"']&
@@ -1127,21 +1130,21 @@ For an arbitrary object $c=[c_1,\ldots,c_k]\in\strict{C}$, define $\strict{s}_c\
 	{[c_1,\ldots, c_k] \cdot \Ldots{n} \cdot [c_1,\ldots,c_k]}
 \end{tikzcd}
 \]
-where we have written $\cdot$ for the monoidal product in $\strict{s}$.
+where we have written $\cdot$ for the monoidal product in $\strict{\cat{C}}$, namely list concatenation.
 With this assignment, $\strict{s}$ is easily seen to be a supply of $\pp$ in $\strict{\cat{C}}$.
 \end{proof}
 
 %======== Chapter ========%
 \chapter{Preservation of supply}
 
-In \cref{sec.pres_supply} we define preservation of supply, the notion of homomorphism for categories with supply, and give some basic examples. In \cref{sec.preserve_thms} we then prove some useful properties of supply preserving functors. Of these, the most important is \cref{thm.pres_supp_strongators_homo}, which says that for any strong monoidal functor preserving supply, the strongators are homomorphisms.
+In \cref{sec.pres_supply} we define preservation of supply---i.e.\ the notion of \emph{homomorphism} between categories equipped with supply---and give some basic examples. In \cref{sec.preserve_thms} we prove some useful properties of supply-preserving functors. Of these, the most important is \cref{thm.pres_supp_strongators_homo}, which says that for any strong monoidal functor preserving supply, the strongators are homomorphisms.
 
 
 %==== Section ====%
 \section{Definition and examples}\label{sec.pres_supply}
 
 \begin{definition}\label{def.preserve_supply}
-Let $\pp$ be a prop, $\cat{C}$ and $\cat{D}$ symmetric monoidal categories, and suppose $s$ is a supply of $\pp$ in $\cat{C}$ and $t$ is a supply of $\pp$ on $\cat{D}$. We say that a strong symmetric monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ \emph{preserves the supply} if the diagrams 
+Let $\pp$ be a prop, $\cat{C}$ and $\cat{D}$ symmetric monoidal categories, and suppose $s$ is a supply of $\pp$ in $\cat{C}$ and $t$ is a supply of $\pp$ in $\cat{D}$. We say that a strong symmetric monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ \emph{preserves the supply} if the diagram
 \begin{equation}\label{eqn.unpack_preserve_supply}
 	\begin{tikzcd}[column sep=large]
   	F(c)\tpow{m}\ar[r, "t_{F(c)}(\mu)"]\ar[d, "\varphi"', "\cong"]&
@@ -1195,7 +1198,7 @@ Let $s$ be a supply of $\pp$ in $\cat{C}$ and let $t$ be a supply of $\pp$ in $\
 \]
 \end{theorem}
 \begin{proof}
-Both are proved by a diagram chase. Indeed, consider the diagram:
+Each of these is proved by a diagram chase. Indeed, consider the diagram:
 \[
 \begin{tikzcd}[column sep=6pt]
 	(Fc\otimes Fc')\tpow{m}
@@ -1294,7 +1297,7 @@ Choose $\mu\colon m\to n$ in $\pp$ and $f\colon c\to d$ in $\cat{C}$, and consid
 	(Fd)\tpow{n}
 \end{tikzcd}
 \]
-The diagrams \textsc{(Fp)} commute as $F$ preserves supply, while the \textsc{(Fm)} commute as $F$ is monoidal. Thus whenever $f$ is an $s$-homomorphism, the functoriality of $F$ implies \textsc{(s)} commutes, and hence that $Ff$ is a $t$-homomorphism.
+The diagrams \textsc{(Fp)} commute because $F$ preserves supply, while the diagrams \textsc{(Fm)} commute because $F$ is monoidal. Thus whenever $f$ is an $s$-homomorphism, the functoriality of $F$ implies \textsc{(s)} commutes, and hence that $F(f)$ is a $t$-homomorphism.
 \end{proof}
 
 \begin{proposition}\label{prop.easy_pres_supply}
@@ -1346,7 +1349,7 @@ The 2-category $\ssmc$ of symmetric monoidal categories, strong monoidal functor
 \begin{proof}
 The terminal category $\zero\coloneqq\{*\}$ is symmetric monoidal, and it is terminal as such. It is also 2-categorically initial: for every monoidal category $(\cat{C},I,\otimes)$, the functor $I\colon\zero\to\cat{C}$ sending $*\mapsto I$ is strong monoidal and any other strong monoidal functor $\zero\to\cat{C}$ is canonically isomorphic to $I$. Thus $\cat{I}$ is a 2-categorically a zero object.
 
-Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Their product $\cat{C}\times\cat{D}$ as categories inherits a symmetric monoidal structure. Indeed, take $(I,I)$ to be the monoidal unit and $(c_1,d_1)\otimes(c_2,d_2)\coloneqq(c_1\otimes c_2,d_1\otimes d_2)$ to be the monoidal product; the associators, unitors, and braiding are given pointwise. We will denote this symmetric monoidal category by $\cat{C}\oplus\cat{D}\coloneqq\cat{C}\times\cat{D}$ and show that it is a biproduct.
+Let $\cat{C}$ and $\cat{D}$ be symmetric monoidal categories. Their product $\cat{C}\times\cat{D}$ as categories inherits a symmetric monoidal structure. Indeed, take $(I,I)$ to be the monoidal unit and $(c_1,d_1)\otimes(c_2,d_2)\coloneqq(c_1\otimes c_2,d_1\otimes d_2)$ to be the monoidal product; the associators, unitors, and braiding are given pointwise. We will denote this symmetric monoidal category by $\cat{C}\oplus\cat{D}\coloneqq\cat{C}\times\cat{D}$ and show that it is a biproduct; more precisely it is both a 2-categorical coproduct and a strict 2-categorical product.
 
 The functor $\pair{\cat{C},I}\colon\cat{C}\to\cat{C}\oplus\cat{D}$ sending $c\mapsto (c,I)$ is clearly strong monoidal. We claim that it and $\pair{I,\cat{D}}\colon\cat{D}\to\cat{C}\oplus\cat{D}$ together form the coprojections under which $\cat{C}\oplus\cat{D}$ is a 2-categorical coproduct. Indeed, given strong monoidal functors $F\colon\cat{C}\to\cat{X}$ and $G\colon\cat{D}\to\cat{X}$, define their copairing $\copair{F,G}\colon\cat{C}\oplus\cat{D}\to\cat{X}$ by $\copair{F,G}(c,d)\coloneqq F(c)\otimes G(d)$, and similarly for morphisms. The result is strong monoidal: as strongator we take the composite
 \begin{align*}
@@ -1416,7 +1419,7 @@ for any $c_1\in\cat{C}_1$ and $c_2\in\cat{C}_2$. This establishes strictness, an
 \end{proof}
 
 \begin{theorem*}[\ref{thm.smc_all_prod_coprod}]\label{page.smc_all_prod_coprod}
-The 2-category $\ssmc$ has all small products and coproducts.
+The 2-category $\ssmc$ has all small products and coproducts, and products are strict.
 \end{theorem*}
 \begin{proof}[Sketch of proof]
 Let $J$ be a set and $\cat{C}_\bullet\colon J\to\ssmc$ be an $J$-indexed collection of symmetric monoidal categories. Their product as categories $\prod_{j\in J}\cat{C}_j$ carries a symmetric monoidal structure given elementwise on $J$. It is easy to check that this, together with the usual projections (which are strict monoidal functors), constitutes the product of the $\cat{C}_j$ in $\ssmc$.
