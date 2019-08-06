@@ -1202,30 +1202,30 @@ Both are proved by a diagram chase. Indeed, consider the diagram:
 		\ar[rrrr, "t_{Fc\otimes Fc'}(\mu)"]
 		\ar[ddddd, "\varphi\tpow{m}"']
 		\ar[from=dr, "\sigma"]&&[18pt]
-		\ar[d, phantom, near start,  "(1)"]&[18pt]&
+		\ar[d, phantom, near start,  "\textsc{\tiny (t)}"]&[18pt]&
 	(Fc\otimes Fc')\tpow{n}
 		\ar[ddddd, "\varphi\tpow{n}"]
 		\ar[from=dl, "\sigma"']\\&
 	(Fc)\tpow{m}\otimes(Fc')\tpow{m}
 		\ar[d, "\varphi"']
 		\ar[rr, "t_{Fc}(\mu)\otimes t_{Fc'}(\mu)"]&
-		\ar[d, phantom, near start, "(2)"]&
+		\ar[d, phantom, near start, "\textsc{\tiny (Fp)}"]&
 	(Fc)\tpow{n}\otimes(Fc')\tpow{n}
 		\ar[d, "\varphi"]\\&
 	F(c\tpow{m})\otimes F(c'\,\tpow{m})
 		\ar[rr, "Fs_c(\mu)\otimes Fs_{c'}(\mu)"]
 		\ar[d, "\varphi"']&
-		\ar[d, phantom, near start, "(3)"]&
+		\ar[d, phantom, near start, "\textsc{\tiny (Fm)}"]&
 	F(c\tpow{n})\otimes F(c'\,\tpow{n})
 		\ar[d, "\varphi"]\\&
 	F(c\tpow{m}\otimes c'\,\tpow{m})
 		\ar[rr, "F(s_c(\mu)\otimes s_{c'}(\mu))"]&
-		\ar[d, phantom, near start, "(4)"]&
+		\ar[d, phantom, near start, "\textsc{\tiny (s)}"]&
 	F(c\tpow{n}\otimes c'\,\tpow{n})\\&
 	F((c\otimes c')\tpow{m})
 		\ar[u, "\sigma"]
 		\ar[rr, "F(s_{c\otimes c'}(\mu))"]&
-		\ar[d, phantom, near start, "(5)"]&
+		\ar[d, phantom, near start, "\textsc{\tiny (Fp)}"]&
 	F((c\otimes c')\tpow{n})
 		\ar[u, "\sigma"']\\
 	F(c\otimes c')\tpow{m}
@@ -1235,9 +1235,9 @@ Both are proved by a diagram chase. Indeed, consider the diagram:
 		\ar[ul, "\varphi"']
 \end{tikzcd}
 \]
-Every vertical or diagonal morphism is an isomorphism, and the (unlabeled) side diagrams commute because symmetries commute with strongators. Diagrams (4) and (1) commute because $s$ and $t$ are supplies (see \cref{eqn.supply_commute_tensors}); diagrams (2) and (5) commute because $F$ preserves the supply \eqref{eqn.unpack_preserve_supply}; and diagram (3) commutes because $F$ is monoidal.
+Every vertical or diagonal morphism is an isomorphism, and the (unlabeled) side diagrams commute because symmetries commute with strongators. Diagrams \textsc{(s)} and \textsc{(t)} commute because $s$ and $t$ are supplies (see \cref{eqn.supply_commute_tensors}); diagrams \textsc{(Fp)} commute because $F$ preserves the supply (see \cref{eqn.unpack_preserve_supply}); and \textsc{(Fm)} commutes because $F$ is monoidal.
 
-The diagram chase for the monoidal unit is similar, except that squares (2) and (5) are not present.
+The proof for the unit is similar, except that squares \textsc{(Fp)} are not present.
 \end{proof}
 
 Recall from \cref{thm.homos_form_subcat} that for any supply $s$ in $\cat{C}$ there is a symmetric monoidal subcategory $\cat{C}_s\ss\cat{C}$ of $s$-homomorphisms.
@@ -1248,22 +1248,57 @@ If $F$ preserves supply, it sends homomorphisms to homomorphisms, i.e.\ it restr
 \begin{proof}
 Choose $\mu\colon m\to n$ in $\pp$ and $f\colon c\to d$ in $\cat{C}$, and consider the diagram below:
 \[
-\begin{tikzcd}[row sep=3pt, column sep=20pt]
-	(Fc)\tpow{m}\ar[rr]\ar[dd]\ar[dr, "\sim"]&&
-	(Fc)\tpow{n}\ar[dr, "\sim"]\ar[dd]\\&
-	F(c\tpow{m})\ar[rr, crossing over]&&
-	F(c\tpow{n})\ar[dd]\\
-	(Fd)\tpow{m}\ar[rr]\ar[dr, "\sim"]&&
-	(Fd)\tpow{n}\ar[dr, "\sim"]\\&
-	F(d\tpow{m})\ar[from=uu, crossing over]\ar[rr]&&
+\begin{tikzcd}[column sep=6pt]
+	(Fc)\tpow{m}
+		\ar[rrrr, "t_{Fc}(\mu)"]
+		\ar[dddd, "(Ff)\tpow{m}"']
+		\ar[dr, "\varphi"]
+		&
+    &[18pt] 
+    \ar[d, phantom, near start,  "\textsc{\tiny (Fp)}"]
+		&[18pt]
+    &
+  (Fc)\tpow{n}
+		\ar[dddd, "(Ff)\tpow{n}"]
+		\ar[dl, "\varphi"']
+		\\
+		&
+	F(c\tpow{m})
+		\ar[dd, "F(f\tpow{m})"]
+    \ar[rr, "F(s_{c}(\mu))"]
+    &
+    ~
+    &
+	F(c\tpow{n})
+    \ar[dd, "F(f\tpow{n})"']
+    \\
+    \ar[r, phantom,"\textsc{\tiny (Fm)}"]
+    &~& 
+    \textsc{\tiny (s)}
+    &~&
+    \ar[l, phantom,"\textsc{\tiny (Fm)}"]
+		\\
+		&
+	F(d\tpow{m})
+		\ar[rr, "F(s_d(\mu))"]
+    \ar[dl, "\varphi"']
+    &
+    \ar[d, phantom, near start, "\textsc{\tiny (Fp)}"]
+    &
 	F(d\tpow{n})
+    \ar[dr, "\varphi"]
+    \\
+	(Fd)\tpow{m}
+		\ar[rrrr, "t_{Fd}(\mu)"']
+		&&~&&
+	(Fd)\tpow{n}
 \end{tikzcd}
 \]
-The top and bottom faces commute by \cref{eqn.unpack_preserve_supply}, and the side faces commute by axioms of monoidal functors. If $f$ is an $s$-homomorphism then the front face commutes (apply $F$ to \eqref{eqn.nat_means_homo}) so the back face does too. Hence $F(f)$ is a $t$-homomorphism.
+The diagrams \textsc{(Fp)} commute as $F$ preserves supply, while the \textsc{(Fm)} commute as $F$ is monoidal. Thus whenever $f$ is an $s$-homomorphism, the functoriality of $F$ implies \textsc{(s)} commutes, and hence that $Ff$ is a $t$-homomorphism.
 \end{proof}
 
 \begin{proposition}\label{prop.easy_pres_supply}
-Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively, and suppose that $F\colon\cat{C}\to\cat{D}$ sends $s$-homomorphisms to $t$-homomorphisms, i.e.\ $F$ factors through $F_{s,t}\colon\cat{C}_s\to\cat{D}_t$. Then $F$ preserves the supply iff there exists a natural isomorphism:
+Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively, and suppose that $F\colon\cat{C}\to\cat{D}$ sends $s$-homomorphisms to $t$-homomorphisms, i.e.\ $F$ factors through $F_{s,t}\colon\cat{C}_s\to\cat{D}_t$. Then $F$ preserves the supply iff the strongators $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ define a natural isomorphism:
 \begin{equation}\label{eqn.pres_supply}
 \begin{tikzcd}[column sep=55pt]
 	\pp\ar[r, "s"]\ar[d, "t"']&
