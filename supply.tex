@@ -1118,9 +1118,9 @@ Clearly if $F$ factors as $\strict{F}\cp\bigotimes$ then it satisfies the two co
 where the second map is the isomorphism coming from the fact that $\bigotimes$ is fully faithful. It is clear both that $\strict{F}$ is strict and that its composite with $\bigotimes$ is $F$.
 \end{proof}
 
-\begin{theorem}\label{thm.supply_strictification}
+\begin{proposition}\label{thm.supply_strictification}
 For any supply on $\cat{C}$, there is an induced supply on its strictification $\strict{\cat{C}}$.
-\end{theorem}
+\end{proposition}
 \begin{proof}
 Let $\pp$ be a prop, and suppose $s$ is a supply of $\pp$ in $\cat{C}$. For each $c\in\cat{C}$, \cref{lemma.strictification} says that the map $s_c\colon\pp\to\cat{C}$ factors through a strict monoidal functor $s_{[c]}\colon\pp\to\strict{\cat{C}}$ sending $1\mapsto[c]$. It immediately satisfies conditions (i) and (ii) of \cref{def.supply}, and it satisfies condition (iii) because $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ is faithful.
 
