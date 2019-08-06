@@ -609,6 +609,8 @@ Note that if $s_c$ is strict, then conditions (i) and (ii) can be replaced by th
 Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strong monoidal functor $s_c\colon\nn\to\cat{C}$ satisfying conditions (i) and (ii) of \cref{def.supply}. There is nothing more to check for $s$ to be a supply---$\nn$ automatically satisfies (iii) since it is discrete---and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
 
 One might thus say that every symmetric monoidal category $\cat{C}$ uniquely \emph{supplies identities}, and every morphism in $\cat{C}$ is a homomorphism for identities.
+
+Note that condition (ii) of \cref{def.supply} is necessary for the supply of $\nn$ to be unique.
 \end{example}
 
 \begin{example}\label{ex.terminal_supply}
@@ -1097,7 +1099,11 @@ Since in this case $F$ is essentially surjective, the symmetric monoidal functor
 Using \cref{cor.strong_bo}, a supply of comonoids on $\rel$ can be obtained from the one on $\smset$ via the bijective-on-objects (hence strict) monoidal inclusion $\smset\to\rel$.
 \end{example}
 
-Finally, we prove that if $\cat{C}$ supplies $\pp$, then so does its Mac Lane strictification.
+\begin{remark}
+  Supplies do not in general transfer along equivalences of categories. For an example, see \cite[Example 2.20]{fong2019hypergraph}, which gives an equivalence of symmetric monoidal categories together with a hypergraph structure on one that cannot be transferred to the other.
+\end{remark}
+
+The failure of supplies to in general transfer along equivalences notwithstanding, we close this section by proving that if $\cat{C}$ supplies $\pp$, then so does its Mac Lane strictification.
 
 \begin{lemma}\label{lemma.strictification}
 Let $\cat{C}$ a symmetric monoidal category, $\strict{\cat{C}}$ its strictification, and $\bigotimes\colon\strict{\cat{C}}\to\cat{C}$ the strong monoidal equivalence. For any prop $\pp$, a strong monoidal functor $F\colon\pp\to\cat{C}$ factors as $\pp\To{\strict{F}}\strict{\cat{C}}\To{\bigotimes}\cat{C}$, for some strict monoidal functor $\strict{F}$ iff
