@@ -1155,7 +1155,10 @@ In \cref{sec.pres_supply} we define preservation of supply---i.e.\ the notion of
 \section{Definition and examples}\label{sec.pres_supply}
 
 \begin{definition}[Preserves supply]\label{def.preserve_supply}
-Let $\pp$ be a prop, $\cat{C}$ and $\cat{D}$ symmetric monoidal categories, and suppose $s$ is a supply of $\pp$ in $\cat{C}$ and $t$ is a supply of $\pp$ in $\cat{D}$. We say that a strong symmetric monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ \emph{preserves the supply} if the diagram
+Let $\pp$ be a prop, $\cat{C}$ and $\cat{D}$ symmetric monoidal categories, and suppose $s$ is a supply of $\pp$ in $\cat{C}$ and $t$ is a supply of $\pp$ in $\cat{D}$. We say that a strong symmetric monoidal functor $(F,\varphi)\colon\cat{C}\to\cat{D}$ \emph{preserves the supply} if the strongators $\varphi$ provide a natural isomorphism $t_{Fc}\cong (s_c\cp F)$ of functors $\pp\to\cat{D}$ for each $c\in\cat{C}$.
+\end{definition}
+
+Unpacking, a strong monoidal functor $(F,\varphi)$ preserves the supply iff the diagram
 \begin{equation}\label{eqn.unpack_preserve_supply}
 	\begin{tikzcd}[column sep=large]
   	F(c)\tpow{m}\ar[r, "t_{F(c)}(\mu)"]\ar[d, "\varphi"', "\cong"]&
@@ -1165,7 +1168,6 @@ Let $\pp$ be a prop, $\cat{C}$ and $\cat{D}$ symmetric monoidal categories, and 
   \end{tikzcd}
 \end{equation}
 commutes for each morphism $\mu\colon m\to n$ in $\pp$ and object $c\in\cat{C}$.
-\end{definition}
 
 \begin{example}
 Taking $\pp=\nn$ as in \cref{ex.supply_ids} we see that every strong monoidal functor $\cat{C}\to\cat{D}$ preserves the supply of identities.
