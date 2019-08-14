@@ -733,10 +733,39 @@ The \emph{prop $\dd$ for self-duals} has two generators
 	\node[fill=white, font=\normalsize] at ($(a.east)!.5!(b.west)$) {and};
 \end{tikzpicture}
 \]
-and two equations
+and four equations
 \begin{equation}\label{eqn.self_duals}
-\begin{tikzpicture}[baseline=(P1)]
-	\node (P1) {
+\begin{tikzpicture}
+	\node (Q1) {
+\begin{tikzpicture}[WD, font=\tiny, bb port length=.5, light gray nodes]
+	\node[bb={2}{0}] (a) {};
+\end{tikzpicture}	
+	};
+	\node (Q2) [right=.5 of Q1] {
+\begin{tikzpicture}[WD, font=\tiny, bb port length=.2, light gray nodes]
+	\node[bb={2}{0}] (a) {};
+	\coordinate (end) at ($(a_in1)+(-1,0)$);
+	\draw (a_in1) to[out=180, in=0] (a_in2-|end);
+	\draw (a_in2) to[out=180, in=0] (a_in1-|end);
+\end{tikzpicture}	
+	};
+	\node (Q3) [right=.9 of Q2]{
+\begin{tikzpicture}[WD, font=\tiny, bb port length=.5, light gray nodes]
+	\node[bb={0}{2}] (a) {};
+\end{tikzpicture}	
+	};
+	\node (Q4) [right=.5 of Q3] {
+\begin{tikzpicture}[WD, font=\tiny, bb port length=.2, light gray nodes]
+	\node[bb={0}{2}] (a) {};
+	\coordinate (end) at ($(a_out1)+(1,0)$);
+	\draw (a_out1) to[out=0, in=180] (a_out2-|end);
+	\draw (a_out2) to[out=0, in=180] (a_out1-|end);
+\end{tikzpicture}	
+	};
+  \node at ($(Q1.east)!.5!(Q2.west)$) {$=$};
+  \node at ($(Q3.east)!.5!(Q4.west)$) {$=$};
+%
+	\node (P1) [right=.9 of Q4] {
   \begin{tikzpicture}[WD, light gray nodes]
   	\node[bb={0}{2}] (a) {};
   	\node[bb={2}{0}, above right=-.75 and .5 of a] (b) {};
@@ -745,14 +774,14 @@ and two equations
   	\draw (b_in1) -- +(-2, 0);
   \end{tikzpicture}
   };
-  \node (P2) [right=.7 of P1] {
+  \node (P2) [right=.5 of P1] {
   \begin{tikzpicture}[WD]
   	\draw (0,0) -- (1.5,0);
   \end{tikzpicture}
   };
   \node at ($(P1.east)!.5!(P2.west)$) {$=$};
 %
-	\node (P3) [right=2.5 of P2]{
+	\node (P3) [right=.9 of P2]{
   \begin{tikzpicture}[WD, light gray nodes]
   	\node[bb={0}{2}] (a) {};
   	\node[bb={2}{0}, below right=-.75 and .5 of a] (b) {};
@@ -761,13 +790,12 @@ and two equations
   	\draw (b_in2) -- +(-2, 0);
   \end{tikzpicture}
   };
-  \node (P4) [right=of P3] {
+  \node (P4) [right=.5 of P3] {
   \begin{tikzpicture}[WD]
   	\draw (0,0) -- (1.5,0);
   \end{tikzpicture}
   };
   \node at ($(P3.east)!.5!(P4.west)$) {$=$};
-  \node at ($(P2.east)!.5!(P3.west)$) {and};
 \end{tikzpicture}
 \end{equation}
 A category suppling self-duals is called a \emph{self-dual compact closed} category.
@@ -996,7 +1024,7 @@ Given a strong monoidal functor $s\colon\qq\to\smf(\mob{\cat{C}},\cat{C})$, we c
 \end{proof}
 
 \begin{example}
-The prop $\dd$ for self-duals was give in \cref{ex.self_duals} and that for frobenius monoids was given in \cref{ex.frob_mon}; it is $\cospan$. There is a prop functor $\dd\to\cospan$ sending the generators\;
+The prop $\dd$ for self-duals was given in \cref{ex.self_duals} and that for frobenius monoids was given in \cref{ex.frob_mon}; it is $\cospan$. There is a prop functor $\dd\to\cospan$ sending the generators\;
 $
 \begin{tikzpicture}[WD, font=\tiny, light gray nodes, bb port sep=.3]
 	\node[bb={2}{0}] (a) {};
