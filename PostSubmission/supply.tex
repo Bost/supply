@@ -149,12 +149,14 @@
 \newcommand{\strict}[1]{\overline{#1}}
 
 \newcommand{\finset}{\Cat{FinSet}}
+\newcommand{\bij}{\bb}
 \newcommand{\smset}{\Cat{Set}}
 \newcommand{\poset}{\Cat{Poset}}
 \newcommand{\smf}{\Cat{SMF}}
 \newcommand{\ssmc}{\CCat{SMC}}
 
 \renewcommand{\aa}{\mathbb{A}} %Not sure what old \aa did
+\newcommand{\bb}{\mathbb{B}} %Not sure what old \aa did
 \newcommand{\dd}{\mathbb{D}}
 \renewcommand{\ll}{\mathbb{L}} %Old \ll is <<
 \newcommand{\nn}{\mathbb{N}}
@@ -571,7 +573,7 @@ Let $\pp$ be a prop and $\cat{C}$ a symmetric monoidal category. A \emph{supply 
 \begin{enumerate}[label=(\roman*)]
 	\item $s_c(m)=c\tpow{m}$ for each $m\in\nn$, 
 	\item the strongator $c\tpow{m}\otimes c\tpow{n}\to c\tpow{(m+n)}$ is the unique coherence isomorphism for each $m,n\in\nn$, and
-	\item the following diagrams commute for every $c,d\in\cat{C}$:
+	\item the following diagrams commute for every $c,d\in\cat{C}$ and $\mu\colon m\to n$ in $\pp$:
 \begin{equation}\label{eqn.supply_commute_tensors}
 \begin{tikzcd}[column sep=55pt]
 	c\tpow{m}\otimes d\tpow{m}\ar[r, "s_c(\mu)\otimes s_d(\mu)"]\ar[d, "\sigma"']&
@@ -606,11 +608,11 @@ Note that if $s_c$ is strict, then conditions (i) and (ii) can be replaced by th
 \end{remark}
 
 \begin{example}\label{ex.supply_ids}
-Let $\nn$ be the discrete prop. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strong monoidal functor $s_c\colon\nn\to\cat{C}$ satisfying conditions (i) and (ii) of \cref{def.supply}. There is nothing more to check for $s$ to be a supply---$\nn$ automatically satisfies (iii) since it is discrete---and in fact every morphism in $\cat{C}$ is an $s$-homomorphism. 
+Let $\bij$ denote the initial prop: $\bij(m,n)$ is the set of bijections $\ord{m}\cong\ord{n}$. For any monoidal category $\cat{C}$ and object $c\in\cat{C}$, there is a unique strong monoidal functor $s_c\colon\bij\to\cat{C}$ satisfying conditions (i) and (ii) of \cref{def.supply}. Because the only morphisms in $\bij$ are the symmetries, it is easy to check that condition (iii) holds\todo{Check}. Every morphism in $\cat{C}$ is an $s$-homomorphism. 
 
-One might thus say that every symmetric monoidal category $\cat{C}$ uniquely \emph{supplies identities}, and every morphism in $\cat{C}$ is a homomorphism for identities.
+One might thus say that every symmetric monoidal category $\cat{C}$ uniquely \emph{supplies symmetries}, and every morphism in $\cat{C}$ is a homomorphism for symmetries.
 
-Note that condition (ii) of \cref{def.supply} is necessary for the supply of $\nn$ to be unique.
+Note that condition (ii) of \cref{def.supply} is necessary for the supply of $\bij$ to be unique.
 \end{example}
 
 \begin{example}\label{ex.terminal_supply}
@@ -1200,7 +1202,7 @@ Unpacking, a strong monoidal functor $(F,\varphi)$ preserves the supply iff the 
 commutes for each morphism $\mu\colon m\to n$ in $\pp$ and object $c\in\cat{C}$.
 
 \begin{example}
-Taking $\pp=\nn$ as in \cref{ex.supply_ids} we see that every strong monoidal functor $\cat{C}\to\cat{D}$ preserves the supply of identities.
+Taking $\pp=\bij$ as in \cref{ex.supply_ids} we see that every strong monoidal functor $\cat{C}\to\cat{D}$ preserves the supply of symmetries.
 \end{example}
 
 \begin{example}
