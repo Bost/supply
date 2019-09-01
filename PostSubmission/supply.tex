@@ -1290,7 +1290,7 @@ The proof for the unit is similar, except that squares \textsc{(Fp)} are not pre
 
 Recall from \cref{thm.homos_form_subcat} that for any supply $s$ in $\cat{C}$ there is a symmetric monoidal subcategory $\cat{C}_s\ss\cat{C}$ of $s$-homomorphisms.
 
-\begin{proposition}
+\begin{proposition}\label{prop.preserve_homs}
 If $F$ preserves supply, it sends homomorphisms to homomorphisms, i.e.\ it restricts to a strong monoidal functor $F_{s,t}\colon\cat{C}_s\to\cat{D}_t$.
 \end{proposition}
 \begin{proof}
@@ -1302,9 +1302,9 @@ Choose $\mu\colon m\to n$ in $\pp$ and $f\colon c\to d$ in $\cat{C}$, and consid
 		\ar[dddd, "(Ff)\tpow{m}"']
 		\ar[dr, "\varphi"]
 		&
-    &[18pt] 
+    &[23pt] 
     \ar[d, phantom, near start,  "\textsc{\tiny (Fp)}"]
-		&[18pt]
+		&[23pt]
     &
   (Fc)\tpow{n}
 		\ar[dddd, "(Ff)\tpow{n}"]
@@ -1328,10 +1328,10 @@ Choose $\mu\colon m\to n$ in $\pp$ and $f\colon c\to d$ in $\cat{C}$, and consid
 		\\
 		&
 	F(d\tpow{m})
-		\ar[rr, "F(s_d(\mu))"]
+		\ar[rr, "F(s_d(\mu))"']
     \ar[dl, "\varphi"']
     &
-    \ar[d, phantom, near start, "\textsc{\tiny (Fp)}"]
+    \ar[d, phantom, pos=.6, "\textsc{\tiny (Fp)}"]
     &
 	F(d\tpow{n})
     \ar[dr, "\varphi"]
@@ -1345,19 +1345,40 @@ Choose $\mu\colon m\to n$ in $\pp$ and $f\colon c\to d$ in $\cat{C}$, and consid
 The diagrams \textsc{(Fp)} commute because $F$ preserves supply, while the diagrams \textsc{(Fm)} commute because $F$ is monoidal. Thus whenever $f$ is an $s$-homomorphism, the functoriality of $F$ implies \textsc{(s)} commutes, and hence that $F(f)$ is a $t$-homomorphism.
 \end{proof}
 
+%\begin{proposition}\label{prop.easy_pres_supply}
+%Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively, and suppose that $F\colon\cat{C}\to\cat{D}$ sends $s$-homomorphisms to $t$-homomorphisms, i.e.\ $F$ factors through $F_{s,t}\colon\cat{C}_s\to\cat{D}_t$. Then $F$ preserves the supply iff the strongators $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ define a natural isomorphism:
+%\begin{equation}\label{eqn.pres_supply}
+%\begin{tikzcd}[column sep=55pt]
+%	\pp\ar[r, "s"]\ar[d, "t"']&
+%	\smf(\cat{C}_s,\cat{C})\ar[d, "{\smf(\cat{C}_s,F)}"]\\
+%	\smf(\cat{D}_t,\cat{D})\ar[r, "{\smf(F_{s,t},\cat{D})}"']&
+%	\smf(\cat{C}_s,\cat{D})\ar[ul, phantom, "\overset{\varphi}{\cong}"]
+%\end{tikzcd}
+%\end{equation}
+%\end{proposition}
+%\begin{proof}
+%Consider an object $m\in\pp$. Along the top-right, it is sent to the functor $c\mapsto F(c\tpow{m})$, and along the left-bottom, it is sent to the functor $c\mapsto F(c)\tpow{m}$. The strongators for $F$ provide the component isomorphisms $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ natural in $c\in\cat{C}$ (and hence in $c\in\cat{C}_s$). For these $\varphi$ to be natural in $\pp$ works out to be exactly the condition that  \cref{eqn.unpack_preserve_supply} commutes for any morphism $\mu\colon m\to n$ in $\pp$.
+%\end{proof}
+
 \begin{proposition}\label{prop.easy_pres_supply}
-Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively, and suppose that $F\colon\cat{C}\to\cat{D}$ sends $s$-homomorphisms to $t$-homomorphisms, i.e.\ $F$ factors through $F_{s,t}\colon\cat{C}_s\to\cat{D}_t$. Then $F$ preserves the supply iff the strongators $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ define a natural isomorphism:
+Let $s$ and $t$ be supplies of $\pp$ in $\cat{C}$ and $\cat{D}$ respectively. Then $F\colon\cat{C}\to\cat{D}$ preserves the supply iff
+\begin{itemize}
+	\item $F$ sends coherence maps to $t$-homomorphisms, i.e.\ it factors through some $F_{0,t}\colon\cat{C}_0\to\cat{D}_t$
+	\item the strongators $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ define a natural isomorphism:
 \begin{equation}\label{eqn.pres_supply}
 \begin{tikzcd}[column sep=55pt]
 	\pp\ar[r, "s"]\ar[d, "t"']&
-	\smf(\cat{C}_s,\cat{C})\ar[d, "{\smf(\cat{C}_s,F)}"]\\
-	\smf(\cat{D}_t,\cat{D})\ar[r, "{\smf(F_{s,t},\cat{D})}"']&
-	\smf(\cat{C}_s,\cat{D})\ar[ul, phantom, "\overset{\varphi}{\cong}"]
+	\smf(\cat{C}_0,\cat{C})\ar[d, "{\smf(\cat{C}_0,F)}"]\\
+	\smf(\cat{D}_t,\cat{D})\ar[r, "{\smf(F_{0,t},\cat{D})}"']&
+	\smf(\cat{C}_0,\cat{D})\ar[ul, phantom, "\overset{\varphi}{\cong}"]
 \end{tikzcd}
 \end{equation}
+\end{itemize}
 \end{proposition}
 \begin{proof}
-Consider an object $m\in\pp$. Along the top-right, it is sent to the functor $c\mapsto F(c\tpow{m})$, and along the left-bottom, it is sent to the functor $c\mapsto F(c)\tpow{m}$. The strongators for $F$ provide the component isomorphisms $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ natural in $c\in\cat{C}$ (and hence in $c\in\cat{C}_s$). For these $\varphi$ to be natural in $\pp$ works out to be exactly the condition that  \cref{eqn.unpack_preserve_supply} commutes for any morphism $\mu\colon m\to n$ in $\pp$.
+By \cref{prop.preserve_homs}, if $F$ preserves the supply then it sends coherence maps (in fact all $s$-homomorphisms) to $t$-homomorphisms. So we may assume we have $F_{0,t}$ and prove that $F$ preserves the supply iff diagram \eqref{eqn.pres_supply} commutes.
+
+Consider an object $m\in\pp$. Along the top-right, it is sent to the functor $c\mapsto F(c\tpow{m})$, and along the left-bottom, it is sent to the functor $c\mapsto F(c)\tpow{m}$. The strongators for $F$ provide the component isomorphisms $\varphi_c\colon F(c)\tpow{m}\to F(c\tpow{m})$ natural in $c\in\cat{C}$ (and hence in $c\in\cat{C}_0$). For these $\varphi$ to be natural in $\pp$ works out to be exactly the condition that  \cref{eqn.unpack_preserve_supply} commutes for any morphism $\mu\colon m\to n$ in $\pp$.
 \end{proof}
 
 \cref{cor.strict_equiv_pres_supply} follows easily from the proof of \cref{thm.supply_strictification}.
